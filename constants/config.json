@@ -1,0 +1,16 @@
+{
+    "OpenLuckToken": {
+        "name": "OpenLuckToken",
+        "symbol": "LUCK",
+        "mainEndpointId": "2",
+        "initialSupplyMainEndpoint": "1000000000000000000000000000"
+    },
+    "vsOpenLuckToken": {
+        "name": "veOpenLuckToken",
+        "symbol": "veLUCK"
+    },
+    "gasAmounts": {
+        "1": "500000",
+        "2": "215000"
+    }
+}

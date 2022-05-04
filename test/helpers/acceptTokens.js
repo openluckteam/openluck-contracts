@@ -1,0 +1,23 @@
+
+// network_id 56
+const bsc = {
+    BNB: "0x0000000000000000000000000000000000000000",
+    WBNB: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+    BUSD: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    USDC: "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    USDT: "0x55d398326f99059fF775485246999027B3197955"
+}
+
+// network_id 97
+const bscTestnet = {
+    BNB: "0x0000000000000000000000000000000000000000",
+    WBNB: "0xae13d989dac2f0debff460ac112a837c89baa7cd",
+    BUSD: "0xc74cc783ed2dbcd06e06266e72ad9d9680cf3cee", //0x665ae6c8b332cce9b1b50d9b2c79d1731516d2fb
+    USDC: "0x64544969ed7ebf5f083679233325356ebe738930",
+    USDT: "0x4f5e291bcfe354393341c1aa5c215427fcdb25d0" //0x14ec6ee23dd1589ea147deb6c41d5ae3d6544893   
+}
+
+module.exports = {
+    bsc,
+    bscTestnet
+} 
