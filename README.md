@@ -1,42 +1,46 @@
-# Advanced Sample Hardhat Project
+# OpenLuck-contracts-v1
 
-This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
+## Develop
 
-The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, preconfigured to work with the project code.
+To deploy the contracts to a local blockchain, run the following:
 
-Try running some of the following tasks:
-
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-npx hardhat help
-REPORT_GAS=true npx hardhat test
-npx hardhat coverage
-npx hardhat run scripts/deploy.js
-node scripts/deploy.js
-npx eslint '**/*.js'
-npx eslint '**/*.js' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
+```bash
+yarn chain --network hardhat
 ```
 
-# Etherscan verification
+To run tests (all, unit, integration):
 
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
-
-In this project, copy the .env.example file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
-
-```shell
-hardhat run --network ropsten scripts/deploy.js
+```bash
+yarn test
+yarn test:unit
+yarn test:integration
 ```
 
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
+You can also filter by version, test name, etc.:
 
-```shell
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
+```bash
+yarn test:unit --grep "ProxyPaymentAddressManager"
 ```
+
+## Verification
+
+To verify the contracts on [Etherscan](https://etherscan.io), make sure you have an `ETHERSCAN_API_KEY` set in your `./.env` file. Then run the following:
+
+```bash
+npx hardhat --network $network etherscan-verify
+```
+
+This will verify all of the deployed contracts in `./deployments`.
+
+If you encounter an error along the lines of the following, compile the problematic contract(s) in isolation first and verify one-by-one:
+
+```
+Error in plugin @nomiclabs/hardhat-etherscan: Source code exceeds max accepted (500k chars) length.
+```
+
+To compile in isolation:
+
+```
+npx hardhat compile:one Tickets
+```
+
