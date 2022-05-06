@@ -175,7 +175,7 @@ module.exports = {
       url: `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`,
       accounts: privatekeys("rinkeby"),
       network_id: 4,
-      gasPrice: 3000000000, //3Gwei
+      gasPrice: 5000000000, //3Gwei
       gas: 10000000
     },
     // bsc network

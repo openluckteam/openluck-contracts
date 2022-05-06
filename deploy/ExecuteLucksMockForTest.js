@@ -59,12 +59,15 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         const WatcherMinter = await deploy('WatcherMinter', { from: deployer, args: [], log: true });        
     }
     else { //ETH Chain
-        // ERC721: BoredApeYachtClub
-        const EthBoredApeYachtClub = await deploy('EthBoredApeYachtClub', { from: deployer, args: [caller, 6], log: true });
-        // ERC721: Azuki
-        const EthAzuki = await deploy('EthAzuki', { from: deployer, args: [caller, 6], log: true });
-        // ERC721: Moonbirds
-        const EthMoonbirds = await deploy('EthMoonbirds', { from: deployer, args: [caller, 6], log: true });
+        // // ERC721: BoredApeYachtClub
+        // const EthBoredApeYachtClub = await deploy('EthBoredApeYachtClub', { from: deployer, args: [caller, 6], log: true });
+        // // ERC721: Azuki
+        // const EthAzuki = await deploy('EthAzuki', { from: deployer, args: [caller, 6], log: true });
+        // // ERC721: Moonbirds
+        // const EthMoonbirds = await deploy('EthMoonbirds', { from: deployer, args: [caller, 6], log: true });
+        // // ERC721: EthOtherdeed
+        const EthOtherdeed = await deploy('EthOtherdeed', { from: deployer, args: [caller, 6], log: true });
+
     }
 
     console.log('DEPLOY >> done Deploy NFTS');
