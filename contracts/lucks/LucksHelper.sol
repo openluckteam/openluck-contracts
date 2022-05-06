@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 // Openluck interfaces
 import {ILucksExecutor, TaskItem, TaskExt, TaskStatus} from "../interfaces/ILucksExecutor.sol";
@@ -19,8 +20,8 @@ import {ILucksAuto} from "../interfaces/ILucksAuto.sol";
 /** @title Openluck LucksHelper.
  * @notice It is the contract for protocol settings
  */
-contract LucksHelper is ILucksHelper, Ownable 
-{
+contract LucksHelper is ILucksHelper, Ownable {
+    using SafeMath for uint256;
     // ============ Openluck interfaces ============
 
     ILucksExecutor public EXECUTOR;
@@ -113,7 +114,8 @@ contract LucksHelper is ILucksHelper, Ownable
         require(item.tokenIds.length > 0, "Empty tokenIds");
         require(block.timestamp < item.endTime, "Invalid time range");
         require(item.endTime - block.timestamp > 84600 , "Duration too short"); // at least 23.5 hour
-        require(item.price > 0 && item.price < item.targetAmount,"Invalid price or targetAmount");
+        require(item.price > 0 && item.price < item.targetAmount && item.targetAmount % item.price == 0,"Invalid price or targetAmount");
+
         require(item.amountCollected == 0, "Invalid amountCollected");    
        
         // check nftContract
@@ -154,7 +156,7 @@ contract LucksHelper is ILucksHelper, Ownable
         require(item.status == TaskStatus.Pending || item.status == TaskStatus.Open, "Invalid status");
 
         // Calculate number of TOKEN to this contract
-        uint256 amount = item.price * num;
+        uint256 amount = item.price.mul(num);
         require(amount > 0, "Invalid amount");
 
         // check Exclusive

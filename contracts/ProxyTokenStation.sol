@@ -5,13 +5,14 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 // interfaces
 import {IProxyTokenStation} from "./interfaces/IProxyTokenStation.sol";
 import {IWETH} from "./interfaces/IWETH.sol";
 
 contract ProxyTokenStation is IProxyTokenStation, Ownable {
-
+    using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
     // ============ Public  ============    
@@ -57,7 +58,7 @@ contract ProxyTokenStation is IProxyTokenStation, Ownable {
         //zero address means Chain Navite Token, support ETH+WETH
          if (token == address(0)) { 
             // allow ETH+WETH
-            uint256 wrapTokenAmount = amount - msg.value;
+            uint256 wrapTokenAmount = amount.sub(msg.value);
             require(wrapTokenAmount >= 0, "deposit: Msg.value too high");
             if (wrapTokenAmount > 0) {
                 require(address(WETH) != address(0), "wrapp token not set or msg.value too small");

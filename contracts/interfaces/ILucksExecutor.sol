@@ -73,6 +73,8 @@ interface ILucksExecutor {
     event JoinTask(uint256 taskId, address buyer, uint256 amount, uint256 count, uint32 number,string note);
     event PickWinner(uint256 taskId, address winner, uint32 number);
     event ClaimToken(uint256 taskId, address caller, uint256 amount, address acceptToken);
+    event ClaimNFT(uint256 taskId, address seller, address nftContract, uint256[] tokenIds);
+    
     event CreateTickets(uint256 taskId, address buyer, uint32 num, uint32 start, uint32 end);
 
     // ============= functions ====================

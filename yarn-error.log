@@ -2,7 +2,7 @@ Arguments:
   C:\Program Files\nodejs\node.exe C:\Users\85310\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js
 
 PATH: 
-  C:\Go\bin;C:\Python310\Scripts\;C:\Python310\;C:\Python27\Scripts\;C:\Python27\;C:\Program Files (x86)\NetSarang\Xshell 6\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files (x86)\NetSarang\Xftp 7\;C:\Program Files (x86)\NetSarang\Xshell 7\;C:\Program Files\nodejs\;C:\Go\bin;C:\Users\85310\AppData\Local\Programs\Python\Python36\Scripts\;C:\Users\85310\AppData\Local\Programs\Python\Python36\;C:\Users\85310\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\PyCharm 2021.1.3\bin;C:\Program Files\JetBrains\IntelliJ IDEA 2020.2.3\bin;C:\Users\85310\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Azure Data Studio\bin;C:\Users\85310\.dotnet\tools;C:\Users\85310\AppData\Local\Programs\IPFS Desktop\resources\app.asar.unpacked\src\ipfs-on-path\scripts\bin-win;C:\Users\85310\AppData\Local\GitHubDesktop\bin;C:\Program Files\OpenSSL-Win64\bin;C:\Users\85310\AppData\Roaming\npm
+  C:\Python310\Scripts\;C:\Python310\;C:\Python27\Scripts\;C:\Python27\;C:\Program Files (x86)\NetSarang\Xshell 6\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files (x86)\NetSarang\Xftp 7\;C:\Program Files (x86)\NetSarang\Xshell 7\;C:\Program Files\nodejs\;C:\Go\bin;C:\Users\85310\AppData\Local\Programs\Python\Python36\Scripts\;C:\Users\85310\AppData\Local\Programs\Python\Python36\;C:\Users\85310\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\PyCharm 2021.1.3\bin;C:\Program Files\JetBrains\IntelliJ IDEA 2020.2.3\bin;C:\Users\85310\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Azure Data Studio\bin;C:\Users\85310\.dotnet\tools;C:\Users\85310\AppData\Local\Programs\IPFS Desktop\resources\app.asar.unpacked\src\ipfs-on-path\scripts\bin-win;C:\Users\85310\AppData\Local\GitHubDesktop\bin;C:\Program Files\OpenSSL-Win64\bin;C:\Users\85310\AppData\Roaming\npm
 
 Yarn version: 
   1.22.17
@@ -38,6 +38,7 @@ npm manifest:
       "@nomiclabs/hardhat-ethers": "^2.0.2",
       "@nomiclabs/hardhat-ganache": "^2.0.1",
       "@nomiclabs/hardhat-waffle": "^2.0.1",
+      "@nomiclabs/hardhat-etherscan": "^2.1.4",
       "@rarible/royalties": "^0.7.4",
       "axios": "^0.24.0",
       "chai": "^4.3.4",
@@ -52,7 +53,6 @@ npm manifest:
     },
     "dependencies": {
       "@chainlink/contracts": "^0.4.0",
-      "@nomiclabs/hardhat-etherscan": "^2.1.4",
       "@openzeppelin/contracts": "^4.5.0",
       "@paulrberg/contracts": "3.4.0",
       "@layerzerolabs/contracts": "latest",
@@ -85,17 +85,61 @@ npm manifest:
       "clean": "rimraf ./cache && rimraf ./artifacts",
       "compile": "yarn clean && hardhat compile",
       "pretty": "prettier --write \"./**/*.{js,jsx,json}\"",
-      "deploy:localhost": "npx hardhat deploy --network localhost",
-      "test:localhost": "npx hardhat test test/index.js --network localhost",
-      "test:unit:localhost": "npx hardhat test test/unit/index.js --network localhost",
-      "test:integration:localhost": "npx hardhat test test/integration/index.js --network localhost",
-      "deploy:dev": "npx hardhat deploy --network dev",
-      "test:dev": "npx hardhat test test/index.js --network dev",
-      "deploy:testnet": "npx hardhat deploy --network bscTestnet",
-      "test:testnet": "npx hardhat test --network bscTestnet",
+  
+      "comment-mainnet": "//=============== for mainnet ===============================",
+  
+      "deploy:eth": "npx hardhat deploy --network eth",
       "deploy:bsc": "npx hardhat deploy --network bsc",
       "verify:bsc": "npx hardhat --network bsc etherscan-verify",
-      "verify:testnet": "npx hardhat --network bscTestnet etherscan-verify"
+      "wireBridges:eth": "npx hardhat --network eth wireBridges --target-networks bsc",
+      "wireBridges:bsc": "npx hardhat --network bsc wireBridges --target-networks eth",
+  
+  
+      "comment-testnet": "//=============== for testnet ===============================",
+  
+      "deploy:test-eth": "npx hardhat deploy --network rinkeby-testnet",
+      "deploy:test-bsc": "npx hardhat deploy --network bsctestnet-testnet",
+      "deploy:test-avax": "npx hardhat deploy --network fuji-testnet",
+  
+      "wireBridges:test-eth-bsc": "npx hardhat --network rinkeby-testnet wireBridges --target-networks bsctestnet-testnet",
+      "wireBridges:test-bsc-eth": "npx hardhat --network bsctestnet-testnet wireBridges --target-networks rinkeby-testnet",
+      
+      "wireBridges:test-eth-avax": "npx hardhat --network rinkeby-testnet wireBridges --target-networks fuji-testnet",
+      "wireBridges:test-avax-eth": "npx hardhat --network fuji-testnet wireBridges --target-networks rinkeby-testnet",
+  
+      "wireBridges:test-bsc-avax": "npx hardhat --network bsctestnet-testnet wireBridges --target-networks fuji-testnet",
+      "wireBridges:test-avax-bsc": "npx hardhat --network fuji-testnet wireBridges --target-networks bsctestnet-testnet",
+  
+      "test:test-eth": "npx hardhat test test/index.js --network rinkeby-testnet",
+      "test:test-bsc": "npx hardhat test test/index.js --network bsctestnet-testnet",
+      "test:test-avax": "npx hardhat test test/index.js --network fuji-testnet",
+  
+      "verify:test-eth": "npx hardhat --network rinkeby-testnet etherscan-verify",
+      "verify:test-bsc": "npx hardhat --network bsctestnet-testnet etherscan-verify",
+  
+      "verify:test-bsc-LucksAutoCloseTask": "npx hardhat verify --network bsctestnet-testnet --constructor-args ./scripts/verify/LucksAutoCloseTask-testnet.js 0x9DE8332C133d56BEDf6723824eE4Dee05819d54c",
+      "verify:test-bsc-LucksAutoDrawTask": "npx hardhat verify --network bsctestnet-testnet --constructor-args ./scripts/verify/LucksAutoDrawTask-testnet.js 0x621a1Ae37E5c9a825979b822E6E758230B709751",
+  
+      "verify:test-eth-nft": "npx hardhat verify --contract contracts/tests/NFTs-ETH/EthBoredApeYachtClub.sol:EthBoredApeYachtClub --network rinkeby-testnet --constructor-args ./scripts/verify/ETH-NFT-testnet.js 0x5e181EAd74816D885F1a9C4E899A4c76757b0d12",
+  
+      "bind:test": "yarn wireBridges:test-eth-bsc && yarn wireBridges:test-bsc-eth",
+      
+  
+      "comment-localhost": "//=============== for localhost ===============================",
+  
+      "deploy:localhost-eth": "npx hardhat deploy --network localhost-eth",
+      "deploy:localhost-bsc": "npx hardhat deploy --network localhost-bsc",
+      
+      "wireBridges:localhost-eth": "npx hardhat --network localhost-eth wireBridges --target-networks localhost-bsc",
+      "wireBridges:localhost-bsc": "npx hardhat --network localhost-bsc wireBridges --target-networks localhost-eth",
+  
+      "mock:localhost-eth": "npx hardhat --network localhost-eth lzEndpointMock --target-networks localhost-bsc",
+      "mock:localhost-bsc": "npx hardhat --network localhost-bsc lzEndpointMock --target-networks localhost-eth",
+  
+      "test:localhost-eth": "npx hardhat test test/index.js --network localhost-eth",
+      "test:localhost-bsc": "npx hardhat test test/index.js --network localhost-bsc",
+  
+      "run:local": "yarn wireBridges:localhost-eth && yarn wireBridges:localhost-bsc && yarn mock:localhost-eth && yarn mock:localhost-bsc && yarn test:localhost-eth"
     }
   }
 

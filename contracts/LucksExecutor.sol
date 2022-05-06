@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 // Openluck interfaces
 import {ILucksExecutor, TaskItem, TaskExt, TaskStatus, Ticket} from "./interfaces/ILucksExecutor.sol";
@@ -18,8 +19,8 @@ import {ILucksBridge, lzTxObj} from "./interfaces/ILucksBridge.sol";
  * @notice It is the core contract for crowd funds to buy NFTs result to one lucky winner
  * randomness provided externally.
  */
-contract LucksExecutor is ILucksExecutor, ReentrancyGuard, Ownable 
-{
+contract LucksExecutor is ILucksExecutor, ReentrancyGuard, Ownable {    
+    using SafeMath for uint256;
     using Counters for Counters.Counter;
 
     Counters.Counter private ids;
@@ -126,7 +127,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuard, Ownable
         HELPER.checkJoinTask(msg.sender, taskId, num, note);
 
         // Calculate number of TOKEN to this contract
-        uint256 amount = tasks[taskId].price * num;
+        uint256 amount = tasks[taskId].price.mul(num);
 
         // deposit payment to token station.        
         PROXY_TOKEN.deposit{value: msg.value}(msg.sender, tasks[taskId].acceptToken, amount);
@@ -138,7 +139,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuard, Ownable
         if (tasks[taskId].status == TaskStatus.Pending) {
             tasks[taskId].status = TaskStatus.Open; 
         }
-        tasks[taskId].amountCollected += amount;    
+        tasks[taskId].amountCollected = tasks[taskId].amountCollected.add(amount);
 
         emit JoinTask(taskId, msg.sender, amount, num, lastTKID, note);
     }
@@ -369,7 +370,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuard, Ownable
         require(userClaimeds[msg.sender][taskId] == 0, "Claimed");
 
         // Calculate the funds buyer payed
-        uint256 amount = item.price * userTickets[msg.sender][taskId];
+        uint256 amount = item.price.mul(userTickets[msg.sender][taskId]);
         
         // update claim info
         userClaimeds[msg.sender][taskId] = amount;
@@ -391,6 +392,8 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuard, Ownable
         
         // withdraw NFTs to winner (maybe cross chain)     
         _withdrawNFTs(taskId, payable(seller), true, _param);
+
+        emit ClaimNFT(taskId, seller, tasks[taskId].nftContract, tasks[taskId].tokenIds);
     }
 
     function _withdrawNFTs(uint256 taskId, address payable user, bool enableCrossChain, lzTxObj memory _param) internal
@@ -419,10 +422,10 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuard, Ownable
         uint256 sellerAmount = collected;
 
         // 1. Calculate protocol fee
-        uint256 fee = (collected * HELPER.getProtocolFee()) / 10000;
+        uint256 fee = (collected.mul(HELPER.getProtocolFee())).div(10000);
         address feeRecipient = HELPER.getProtocolFeeRecipient();
         require(fee >= 0, "Invalid fee");
-        sellerAmount -= fee;
+        sellerAmount = sellerAmount.sub(fee);
 
         // 2. Calculate winner share amount with payment stragey (up to 50%)
         uint256 winnerAmount = 0;
@@ -434,8 +437,8 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuard, Ownable
             require(winnerShare >= 0 && winnerShare <= 5000, "Invalid strategy");
             require(splitShare.length <= 10, "Invalid splitShare"); // up to 10 splitter
             if (winnerShare > 0) {
-                winnerAmount = (collected * winnerShare) / 10000;
-                sellerAmount -= winnerAmount;
+                winnerAmount = (collected.mul(winnerShare)).div(10000);
+                sellerAmount = sellerAmount.sub(winnerAmount);
             }
         }
         
@@ -454,9 +457,9 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuard, Ownable
                 uint256 splited = 10000;                
                 for (uint i=0; i < splitShare.length; i++) {   
                     // make sure spliter cannot overflow
-                    if ((splited - splitShare[i]) >=0 && splitShare[i] > 0) { 
-                        _transferOut(acceptToken, splitAddr[i], (winnerAmount * splitShare[i] / 10000));
-                        splited -= splitShare[i];
+                    if ((splited.sub(splitShare[i])) >=0 && splitShare[i] > 0) { 
+                        _transferOut(acceptToken, splitAddr[i], (winnerAmount.mul(splitShare[i]).div(10000)));
+                        splited = splited.div(splitShare[i]);
                     }
                 }
             }

@@ -104,9 +104,9 @@ module.exports = {
           },
           "libraries": {}
         },
-      },
+      },     
       {
-        version: '0.4.11',
+        version: '0.6.8',
         settings: {
           optimizer: {
             enabled: true,
@@ -115,7 +115,16 @@ module.exports = {
         },
       },
       {
-        version: '0.6.8',
+        version: '0.6.0',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 999999,
+          },
+        },
+      },
+      {
+        version: '0.4.11',
         settings: {
           optimizer: {
             enabled: true,
