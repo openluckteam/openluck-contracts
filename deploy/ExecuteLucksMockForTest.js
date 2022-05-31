@@ -1,5 +1,6 @@
 const { utils } = require('ethers');
 const { isTestnet, isLocalhost, getEndpointId, isNetworkAllowTaskForTest } = require("../utils/network")
+const CONFIG = require("../constants/config.json")
 
 function getDependencies() {
     if (isLocalhost()) {
@@ -15,7 +16,8 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 
     console.log('DEPLOY >> deploy Mock for Tests: starting')
 
-    const executor = await ethers.getContract("LucksExecutor");
+    const LucksExecutorBox = await ethers.getContractFactory("LucksExecutor");
+    const executor = LucksExecutorBox.attach(CONFIG.ProxyContract[hre.network.name]);
 
     // =================== Deploy Local VRF ===================
     const lucksHelper = await ethers.getContract("LucksHelper");
@@ -56,16 +58,16 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         // ERC721: DracooMaster
         const DracooMaster = await deploy('DracooMaster', { from: deployer, args: [joiner2, 5], log: true });
         // ERC1155: WatcherMinter
-        const WatcherMinter = await deploy('WatcherMinter', { from: deployer, args: [], log: true });        
+        const WatcherMinter = await deploy('WatcherMinter', { from: deployer, args: [], log: true });
     }
     else { //ETH Chain
-        // // ERC721: BoredApeYachtClub
-        // const EthBoredApeYachtClub = await deploy('EthBoredApeYachtClub', { from: deployer, args: [caller, 6], log: true });
-        // // ERC721: Azuki
-        // const EthAzuki = await deploy('EthAzuki', { from: deployer, args: [caller, 6], log: true });
-        // // ERC721: Moonbirds
-        // const EthMoonbirds = await deploy('EthMoonbirds', { from: deployer, args: [caller, 6], log: true });
-        // // ERC721: EthOtherdeed
+        // ERC721: BoredApeYachtClub
+        const EthBoredApeYachtClub = await deploy('EthBoredApeYachtClub', { from: deployer, args: [caller, 6], log: true });
+        // ERC721: Azuki
+        const EthAzuki = await deploy('EthAzuki', { from: deployer, args: [caller, 6], log: true });
+        // ERC721: Moonbirds
+        const EthMoonbirds = await deploy('EthMoonbirds', { from: deployer, args: [caller, 6], log: true });
+        // ERC721: EthOtherdeed
         const EthOtherdeed = await deploy('EthOtherdeed', { from: deployer, args: [caller, 6], log: true });
 
     }
@@ -108,7 +110,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         }
     }
     else {
-       // ETH chain
+        // ETH chain
         // mint ERC721 for target user
         let targetUser = '0x0e5575C90b1C97740DF1C1dA9740c4b52f2A1050';
         if (await (await ethers.getContract("EthBoredApeYachtClub")).connect(deployerSign).balanceOf(targetUser) < 1) {
@@ -135,10 +137,10 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
             [
                 "0x0000000000000000000000000000000000000000",
                 TokenWBNB.address,
-                TokenBUSD.address, 
-                TokenUSDC.address, 
+                TokenBUSD.address,
+                TokenUSDC.address,
                 TokenUSDT.address
-            ],true
+            ], true
         );
 
         // approve Token to openluck
@@ -182,8 +184,6 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 module.exports.skip = ({ getChainId }) =>
     new Promise(async (resolve, reject) => {
         try {
-            // const chainId = await getChainId();
-            // resolve(chainId !== "31337")
             resolve(!isTestnet());
         } catch (error) {
             reject(error)

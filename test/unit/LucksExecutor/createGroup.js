@@ -1,9 +1,6 @@
 const { expect } = require("chai");
-const { BigNumber, utils } = require("ethers");
-const { ethers } = require('hardhat');
-
+const { utils } = require("ethers");
 const { testArgs, tryRevert, tryCall } = require('../../helpers');
-const { approveToken } = require('../../helpers/utils');
 
 module.exports = async function () {
 
@@ -22,15 +19,15 @@ module.exports = async function () {
         let { deployer, joiner, joiner2, contracts, acceptToken } = args;
         const {
           arg_item,
-        } = succesTest.fn({ joiner, acceptToken, joiner2,deployer });
-        
+        } = succesTest.fn({ joiner, acceptToken, joiner2, deployer });
+
         let tx = contracts.LucksGroup.connect(joiner).createGroup(arg_item.taskId, arg_item.seat);
-        
+
         // submit
-        if (!await tryCall(tx)){
+        if (!await tryCall(tx)) {
           return false;
-        }    
-               
+        }
+
         let groupId = await contracts.LucksGroup.userGroups(arg_item.user, arg_item.taskId);
         // expect(groupId).to.greaterThan(0);
 
@@ -55,7 +52,7 @@ module.exports = async function () {
           revert,
         } = failureTest.fn({ joiner, acceptToken });
 
-        
+
         let tx = contracts.LucksGroup.connect(joiner).createGroup(arg_item.taskId, arg_item.seat);
 
         await tryRevert(tx, revert);
@@ -80,7 +77,7 @@ const tests = {
           price: utils.parseEther("0.01"),
         },
       }),
-    },         
+    },
     {
       description: 'createGroup tokenId-2 accept-USDC joiner tk-100',
       fn: ({ joiner, acceptToken }) => ({
@@ -94,7 +91,7 @@ const tests = {
         },
       }),
     },
-      
+
     {
       description: 'createGroup tokenId-3 accept-USDT joiner tk-1',
       fn: ({ joiner, acceptToken }) => ({
@@ -107,7 +104,7 @@ const tests = {
           price: utils.parseEther("0.1"),
         },
       }),
-    }     
+    }
   ],
   failure: [
     {
@@ -152,20 +149,20 @@ const tests = {
         revert: 'Over join limit',
       }),
     },
-    // {
-    //   description: 'createGroup - Insufficient funds',
-    //   fn: ({ joiner, acceptToken } ) => ({                        
-    //     arg_item: {
-    //       taskId: testTaskId,
-    //       seat: 10000,
-    //       user: joiner.address,                 
-    //       acceptToken: acceptToken.BNB,                 
-    //       targetAmount: utils.parseEther("10"),
-    //       price: utils.parseEther("0.1"),
-    //     },            
-    //     revert: "sender doesn't have enough funds to send tx",
-    //   }),
-    // },       
+    {
+      description: 'createGroup - Insufficient funds',
+      fn: ({ joiner, acceptToken } ) => ({                        
+        arg_item: {
+          taskId: testTaskId,
+          seat: 10000,
+          user: joiner.address,                 
+          acceptToken: acceptToken.BNB,                 
+          targetAmount: utils.parseEther("10"),
+          price: utils.parseEther("0.1"),
+        },            
+        revert: "sender doesn't have enough funds to send tx",
+      }),
+    },       
     {
       description: 'createGroup - Insufficient balance',
       fn: ({ joiner, acceptToken }) => ({
@@ -194,19 +191,19 @@ const tests = {
         revert: 'Invalid status',
       }),
     },
-    // {
-    //   description: 'createGroup - checkExclusive not pass',
-    //   fn: ({ joiner, acceptToken } ) => ({                        
-    //     arg_item: {
-    //       taskId: 2,
-    //       seat: 3,
-    //       user: joiner.address,                 
-    //       acceptToken: acceptToken.USDC,                 
-    //       targetAmount: utils.parseEther("10"),
-    //       price: utils.parseEther("0.1"),      
-    //     },            
-    //     revert: 'checkExclusive not pass',
-    //   }),
-    // }              
+    {
+      description: 'createGroup - checkExclusive not pass',
+      fn: ({ joiner, acceptToken } ) => ({                        
+        arg_item: {
+          taskId: 2,
+          seat: 3,
+          user: joiner.address,                 
+          acceptToken: acceptToken.USDC,                 
+          targetAmount: utils.parseEther("10"),
+          price: utils.parseEther("0.1"),      
+        },            
+        revert: 'checkExclusive not pass',
+      }),
+    }              
   ]
 };

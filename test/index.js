@@ -1,8 +1,8 @@
 const { ethers, config } = require('hardhat');
-const unit =  require('./unit');
-// const integration =  require('./integration');
+const unit = require('./unit');
+const integration =  require('./integration');
 
-module.exports = function (){
+module.exports = function () {
 
   // Run the tests.
   describe('Unit', unit);

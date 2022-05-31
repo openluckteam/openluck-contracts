@@ -9,7 +9,7 @@ function getSettings(chainId, deployer, ethers) {
 
         testing: true,
         multisigAddress: deployer,
-        
+
         chainLink_vrfId: 1,
         chainLink_linkToken: AddressZero,
         chainLink_vrfCoordinator: AddressZero,
@@ -28,12 +28,17 @@ function getSettings(chainId, deployer, ethers) {
 
         lzChainId: getEndpointId(),
         isAllowTask: isNetworkAllowTaskForTest(),
-        AddressZero: AddressZero
+        AddressZero: AddressZero,
+        
+
+        deployedAddress: {
+            LucksExecutor: AddressZero
+        }
     }
 
     switch (chainId) {
         // eth mainnet
-        case "1":            
+        case "1":
             setting.isAllowTask = false;
             break;
         // eth rinkeby
@@ -54,7 +59,7 @@ function getSettings(chainId, deployer, ethers) {
                 "0x64544969ed7EBf5f083679233325356EbE738930", //USDC
                 "0x55d398326f99059fF775485246999027B3197955" //USDT
             ],
-            setting.priceOracle = '0x0567f2323251f0aab15c8dfb1967e4e8a7d42aee';
+                setting.priceOracle = '0x0567f2323251f0aab15c8dfb1967e4e8a7d42aee';
             setting.WETH = '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c';
 
             setting.chainLink_keeper = "0x7b3EC232b08BD7b4b3305BE0C044D907B2DF960B";
@@ -68,7 +73,7 @@ function getSettings(chainId, deployer, ethers) {
             setting.priceOracle = '0x2514895c72f50D8bd4B4F9b1110F0D6bD2c97526';
 
             setting.chainLink_keeper = "0xA3E3026562a3ADAF7A761B10a45217c400a4054A";
-            break;       
+            break;
         // Avalanche mainnet
         case "43114":
             // setting.chainLink_keeper = "";

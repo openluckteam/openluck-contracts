@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: BUSL-1.1
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 struct DepositNFT {
@@ -11,11 +11,11 @@ struct DepositNFT {
 
 interface IProxyNFTStation {
 
-    event Deposit(uint256 depositId, address indexed user, address nft, uint256[] tokenIds, uint256[] amounts, uint256 endTime);
-    event Withdraw(uint256 depositId, address indexed to, address nft, uint256[] tokenIds, uint256[] amounts);
-    event Redeem(uint256 depositId, address indexed to, address nft, uint256[] tokenIds, uint256[] amounts);
+    event Deposit(address indexed executor, uint256 depositId, address indexed user, address nft, uint256[] tokenIds, uint256[] amounts, uint256 endTime);
+    event Withdraw(address indexed executor, uint256 depositId, address indexed to, address nft, uint256[] tokenIds, uint256[] amounts);
+    event Redeem(address indexed executor, uint256 depositId, address indexed to, address nft, uint256[] tokenIds, uint256[] amounts);
 
     function deposit(address user, address nft, uint256[] memory tokenIds, uint256[] memory amounts, uint256 endTime) external payable returns (uint256 depositId);    
     function withdraw(uint256 depositId, address to) external;    
-    function redeem(uint256 depositId, address to) external;    
+    function redeem(address executor, uint256 depositId, address to) external;    
 }

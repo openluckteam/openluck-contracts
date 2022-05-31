@@ -1,0 +1,534 @@
+{
+  "address": "0x045532ce35135Df907Fd5F1281788640E63f8Ec6",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "taskId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "count",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "num",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "buyer",
+          "type": "address"
+        }
+      ],
+      "name": "addTicket",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "taskId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "count",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "num",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "buyer",
+          "type": "address"
+        }
+      ],
+      "name": "addTicket2",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "taskId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "number",
+          "type": "uint256"
+        }
+      ],
+      "name": "findWinnerTicket",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "number",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "count",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "owner",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct TestTicket.Ticket",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "taskId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "number",
+          "type": "uint256"
+        }
+      ],
+      "name": "findWinnerTicket2",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "number",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "count",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "owner",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct TestTicket.Ticket",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "lastTIDs",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "count",
+          "type": "uint256"
+        }
+      ],
+      "name": "testFind",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "count",
+          "type": "uint256"
+        }
+      ],
+      "name": "testFind2",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "ticketIds",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "tickets",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "number",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "count",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "userTickets",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x031a1703cd0ce0d52ff71eee20187e0825f46eaf7734481197e43c9e7c7a957b",
+  "receipt": {
+    "to": null,
+    "from": "0x8c623589Ce38936A138a70cCE554553473BbC0f4",
+    "contractAddress": "0x045532ce35135Df907Fd5F1281788640E63f8Ec6",
+    "transactionIndex": 0,
+    "gasUsed": "1048638",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x1eb5389339ede2b0589ff6f39af9fae971b9eecc50586e3bdc002013d0475815",
+    "transactionHash": "0x031a1703cd0ce0d52ff71eee20187e0825f46eaf7734481197e43c9e7c7a957b",
+    "logs": [],
+    "blockNumber": 18153,
+    "cumulativeGasUsed": "1048638",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "70231f361b17e0bcfd950564ac90e3b4",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.6+commit.11564f7e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"taskId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"count\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"num\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"buyer\",\"type\":\"address\"}],\"name\":\"addTicket\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"taskId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"count\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"num\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"buyer\",\"type\":\"address\"}],\"name\":\"addTicket2\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"taskId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"number\",\"type\":\"uint256\"}],\"name\":\"findWinnerTicket\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"number\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"count\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"internalType\":\"struct TestTicket.Ticket\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"taskId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"number\",\"type\":\"uint256\"}],\"name\":\"findWinnerTicket2\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"number\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"count\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"internalType\":\"struct TestTicket.Ticket\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"lastTIDs\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"count\",\"type\":\"uint256\"}],\"name\":\"testFind\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"count\",\"type\":\"uint256\"}],\"name\":\"testFind2\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"ticketIds\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"tickets\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"number\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"count\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"userTickets\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"findWinnerTicket(uint256,uint256)\":{\"params\":{\"number\":\"final number\",\"taskId\":\"task id\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"findWinnerTicket(uint256,uint256)\":{\"notice\":\"search a winner ticket by number\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/TestTicket.sol\":\"TestTicket\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":999999},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/utils/Arrays.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts v4.4.1 (utils/Arrays.sol)\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"./math/Math.sol\\\";\\n\\n/**\\n * @dev Collection of functions related to array types.\\n */\\nlibrary Arrays {\\n    /**\\n     * @dev Searches a sorted `array` and returns the first index that contains\\n     * a value greater or equal to `element`. If no such index exists (i.e. all\\n     * values in the array are strictly less than `element`), the array length is\\n     * returned. Time complexity O(log n).\\n     *\\n     * `array` is expected to be sorted in ascending order, and to contain no\\n     * repeated elements.\\n     */\\n    function findUpperBound(uint256[] storage array, uint256 element) internal view returns (uint256) {\\n        if (array.length == 0) {\\n            return 0;\\n        }\\n\\n        uint256 low = 0;\\n        uint256 high = array.length;\\n\\n        while (low < high) {\\n            uint256 mid = Math.average(low, high);\\n\\n            // Note that mid will always be strictly less than high (i.e. it will be a valid array index)\\n            // because Math.average rounds down (it does integer division with truncation).\\n            if (array[mid] > element) {\\n                high = mid;\\n            } else {\\n                low = mid + 1;\\n            }\\n        }\\n\\n        // At this point `low` is the exclusive upper bound. We will return the inclusive upper bound.\\n        if (low > 0 && array[low - 1] == element) {\\n            return low - 1;\\n        } else {\\n            return low;\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0xa7bc891be2bc5948340a8fb14ad36c8846230c9086269e37f3febf0dc239c9f7\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/math/Math.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.5.0) (utils/math/Math.sol)\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Standard math utilities missing in the Solidity language.\\n */\\nlibrary Math {\\n    /**\\n     * @dev Returns the largest of two numbers.\\n     */\\n    function max(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a >= b ? a : b;\\n    }\\n\\n    /**\\n     * @dev Returns the smallest of two numbers.\\n     */\\n    function min(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a < b ? a : b;\\n    }\\n\\n    /**\\n     * @dev Returns the average of two numbers. The result is rounded towards\\n     * zero.\\n     */\\n    function average(uint256 a, uint256 b) internal pure returns (uint256) {\\n        // (a + b) / 2 can overflow.\\n        return (a & b) + (a ^ b) / 2;\\n    }\\n\\n    /**\\n     * @dev Returns the ceiling of the division of two numbers.\\n     *\\n     * This differs from standard division with `/` in that it rounds up instead\\n     * of rounding down.\\n     */\\n    function ceilDiv(uint256 a, uint256 b) internal pure returns (uint256) {\\n        // (a + b - 1) / b can overflow on addition, so we distribute.\\n        return a / b + (a % b == 0 ? 0 : 1);\\n    }\\n}\\n\",\"keccak256\":\"0xc995bddbca1ae19788db9f8b61e63385edd3fddf89693b612d5abd1a275974d2\",\"license\":\"MIT\"},\"contracts/TestTicket.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.0;\\r\\n\\r\\nimport \\\"./libraries/RedBlackTreeLibrary.sol\\\";\\r\\nimport \\\"@openzeppelin/contracts/utils/Arrays.sol\\\";\\r\\n\\r\\n\\r\\ncontract TestTicket {\\r\\n\\r\\n    using Arrays for uint256[];\\r\\n\\r\\n    struct Ticket {\\r\\n        uint256 number;  // the ticket's id, equal to the end number (last ticket id)\\r\\n        uint256 count;   // how many QTY the ticket joins, (number-count+1) equal to the start number of this ticket.\\r\\n        address owner;  // ticket owner\\r\\n    }\\r\\n\\r\\n    using RedBlackTreeLibrary for RedBlackTreeLibrary.Tree;\\r\\n\\r\\n    mapping(uint256 => RedBlackTreeLibrary.Tree) private trees;\\r\\n\\r\\n    mapping(uint256 => mapping(uint256 => Ticket)) public tickets;\\r\\n\\r\\n    mapping(uint256 => uint256[]) public ticketIds; \\r\\n\\r\\n    mapping(address => mapping(uint256 => uint256)) public userTickets;\\r\\n\\r\\n    mapping(uint256 => uint256) public lastTIDs; \\r\\n\\r\\n    function addTicket(uint256 taskId, uint256 count, uint256 num, address buyer) external {\\r\\n        for(uint256 i=0; i< count; i++){\\r\\n            _createTickets(taskId, num, buyer);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function addTicket2(uint256 taskId, uint256 count, uint256 num, address buyer) external {\\r\\n        for(uint256 i=0; i< count; i++){\\r\\n            _createTickets2(taskId, num, buyer);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @notice join task succes. create tickets for buyer\\r\\n     * @param taskId task id\\r\\n     * @param num how many ticket\\r\\n     * @param buyer buery\\r\\n     */\\r\\n    function _createTickets(uint256 taskId, uint256 num, address buyer) internal returns (uint256) \\r\\n    {\\r\\n        uint256 start = lastTIDs[taskId] + 1;\\r\\n        uint256 lastTKID = start + num - 1;\\r\\n\\r\\n        tickets[taskId][lastTKID] = Ticket(lastTKID, num, buyer);\\r\\n        lastTIDs[taskId] = lastTKID;\\r\\n\\r\\n        trees[taskId].insert(lastTKID);\\r\\n\\r\\n        return lastTKID;\\r\\n    }\\r\\n\\r\\n    function _createTickets2(uint256 taskId, uint256 num, address buyer) internal returns (uint256) \\r\\n    {\\r\\n        uint256 start = lastTIDs[taskId] + 1;\\r\\n        uint256 lastTKID = start + num - 1;\\r\\n\\r\\n        tickets[taskId][lastTKID] = Ticket(lastTKID, num, buyer);\\r\\n        lastTIDs[taskId] = lastTKID;\\r\\n\\r\\n        ticketIds[taskId].push(lastTKID);\\r\\n\\r\\n        userTickets[buyer][taskId] += num;\\r\\n\\r\\n        return lastTKID;\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @notice search a winner ticket by number\\r\\n     * @param taskId task id\\r\\n     * @param number final number\\r\\n     */\\r\\n    function findWinnerTicket(uint256 taskId, uint256 number) external returns (Ticket memory)\\r\\n    {\\r\\n        // find by ticketId\\r\\n        Ticket memory ticket = tickets[taskId][number];\\r\\n\\r\\n        if (ticket.number == 0) {\\r\\n        \\r\\n            uint256 node = ticketIds[taskId].findUpperBound(number);\\r\\n\\r\\n            ticket = tickets[taskId][node];\\r\\n        }\\r\\n       \\r\\n        return ticket;\\r\\n    }\\r\\n\\r\\n    function findWinnerTicket2(uint256 taskId, uint256 number) external returns (Ticket memory)\\r\\n    {\\r\\n        // find by ticketId\\r\\n        Ticket memory ticket = tickets[taskId][number];\\r\\n\\r\\n        if (ticket.number == 0) {\\r\\n        \\r\\n            uint node = trees[taskId].greaterThan(number);\\r\\n\\r\\n            ticket = tickets[taskId][node];\\r\\n        }\\r\\n       \\r\\n        return ticket;\\r\\n    }\\r\\n\\r\\n    function testFind(uint256 count) external pure returns(uint256){\\r\\n        uint256 a = 0;\\r\\n        for(uint256 i=0; i< count; i++){\\r\\n            a = i;\\r\\n        }\\r\\n        return a;\\r\\n    }\\r\\n\\r\\n    function testFind2(uint256 count) external pure returns(uint256){\\r\\n\\r\\n        for(uint256 i=0; i< count; i++){\\r\\n\\r\\n        }\\r\\n        return count;\\r\\n    }\\r\\n}\",\"keccak256\":\"0x3c50af106137106a46d3621af537db3b49bbe970c0002ac01401314adfdc18ad\",\"license\":\"MIT\"},\"contracts/libraries/RedBlackTreeLibrary.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.0;\\r\\n\\r\\n\\r\\nlibrary RedBlackTreeLibrary {\\r\\n\\r\\n    struct Node {\\r\\n        uint parent;\\r\\n        uint left;\\r\\n        uint right;\\r\\n        bool red;\\r\\n    }\\r\\n\\r\\n    struct Tree {\\r\\n        uint root;\\r\\n        mapping(uint => Node) nodes;\\r\\n    }\\r\\n\\r\\n    uint private constant EMPTY = 0;\\r\\n\\r\\n    function first(Tree storage self) internal view returns (uint _key) {\\r\\n        _key = self.root;\\r\\n        if (_key != EMPTY) {\\r\\n            while (self.nodes[_key].left != EMPTY) {\\r\\n                _key = self.nodes[_key].left;\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n    function last(Tree storage self) internal view returns (uint _key) {\\r\\n        _key = self.root;\\r\\n        if (_key != EMPTY) {            \\r\\n            while (self.nodes[_key].right != EMPTY) {\\r\\n                _key = self.nodes[_key].right;\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function next(Tree storage self, uint target) internal view returns (uint cursor) {\\r\\n        require(target != EMPTY);\\r\\n        if (self.nodes[target].right != EMPTY) {\\r\\n            cursor = treeMinimum(self, self.nodes[target].right);\\r\\n        } else {\\r\\n            cursor = self.nodes[target].parent;\\r\\n            while (cursor != EMPTY && target == self.nodes[cursor].right) {\\r\\n                target = cursor;\\r\\n                cursor = self.nodes[cursor].parent;\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function greaterThan(Tree storage self, uint value) internal view returns (uint cursor) {\\r\\n        uint node = self.root;\\r\\n        if (node != EMPTY) {\\r\\n            if (value < node){\\r\\n                cursor = node;\\r\\n                node = prev(self, node);              \\r\\n                while(cursor != EMPTY && node > value) {\\r\\n                    cursor = node;\\r\\n                    node = prev(self, node);\\r\\n                }\\r\\n            }\\r\\n            else {\\r\\n                node = next(self, node);\\r\\n                cursor = node;\\r\\n                while(cursor != EMPTY && node < value) {            \\r\\n                    node = next(self, node);\\r\\n                    cursor = node;\\r\\n                }\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function prev(Tree storage self, uint target) internal view returns (uint cursor) {\\r\\n        require(target != EMPTY);\\r\\n        if (self.nodes[target].left != EMPTY) {\\r\\n            cursor = treeMaximum(self, self.nodes[target].left);\\r\\n        } else {\\r\\n            cursor = self.nodes[target].parent;\\r\\n            while (cursor != EMPTY && target == self.nodes[cursor].left) {\\r\\n                target = cursor;\\r\\n                cursor = self.nodes[cursor].parent;\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n\\r\\n\\r\\n    function exists(Tree storage self, uint key) internal view returns (bool) {\\r\\n        return (key != EMPTY) && ((key == self.root) || (self.nodes[key].parent != EMPTY));\\r\\n    }\\r\\n    function isEmpty(uint key) internal pure returns (bool) {\\r\\n        return key == EMPTY;\\r\\n    }\\r\\n    function getEmpty() internal pure returns (uint) {\\r\\n        return EMPTY;\\r\\n    }\\r\\n    function getNode(Tree storage self, uint key) internal view returns (uint _returnKey, uint _parent, uint _left, uint _right, bool _red) {\\r\\n        require(exists(self, key));\\r\\n        return(key, self.nodes[key].parent, self.nodes[key].left, self.nodes[key].right, self.nodes[key].red);\\r\\n    }\\r\\n\\r\\n    function insert(Tree storage self, uint key) internal {\\r\\n        require(key != EMPTY);\\r\\n        require(!exists(self, key));\\r\\n        uint cursor = EMPTY;\\r\\n        uint probe = self.root;\\r\\n        while (probe != EMPTY) {\\r\\n            cursor = probe;\\r\\n            if (key < probe) {\\r\\n                probe = self.nodes[probe].left;\\r\\n            } else {\\r\\n                probe = self.nodes[probe].right;\\r\\n            }\\r\\n        }\\r\\n        self.nodes[key] = Node({parent: cursor, left: EMPTY, right: EMPTY, red: true});\\r\\n        if (cursor == EMPTY) {\\r\\n            self.root = key;\\r\\n        } else if (key < cursor) {\\r\\n            self.nodes[cursor].left = key;\\r\\n        } else {\\r\\n            self.nodes[cursor].right = key;\\r\\n        }\\r\\n        insertFixup(self, key);\\r\\n    }\\r\\n    function remove(Tree storage self, uint key) internal {\\r\\n        require(key != EMPTY);\\r\\n        require(exists(self, key));\\r\\n        uint probe;\\r\\n        uint cursor;\\r\\n        if (self.nodes[key].left == EMPTY || self.nodes[key].right == EMPTY) {\\r\\n            cursor = key;\\r\\n        } else {\\r\\n            cursor = self.nodes[key].right;\\r\\n            while (self.nodes[cursor].left != EMPTY) {\\r\\n                cursor = self.nodes[cursor].left;\\r\\n            }\\r\\n        }\\r\\n        if (self.nodes[cursor].left != EMPTY) {\\r\\n            probe = self.nodes[cursor].left;\\r\\n        } else {\\r\\n            probe = self.nodes[cursor].right;\\r\\n        }\\r\\n        uint yParent = self.nodes[cursor].parent;\\r\\n        self.nodes[probe].parent = yParent;\\r\\n        if (yParent != EMPTY) {\\r\\n            if (cursor == self.nodes[yParent].left) {\\r\\n                self.nodes[yParent].left = probe;\\r\\n            } else {\\r\\n                self.nodes[yParent].right = probe;\\r\\n            }\\r\\n        } else {\\r\\n            self.root = probe;\\r\\n        }\\r\\n        bool doFixup = !self.nodes[cursor].red;\\r\\n        if (cursor != key) {\\r\\n            replaceParent(self, cursor, key);\\r\\n            self.nodes[cursor].left = self.nodes[key].left;\\r\\n            self.nodes[self.nodes[cursor].left].parent = cursor;\\r\\n            self.nodes[cursor].right = self.nodes[key].right;\\r\\n            self.nodes[self.nodes[cursor].right].parent = cursor;\\r\\n            self.nodes[cursor].red = self.nodes[key].red;\\r\\n            (cursor, key) = (key, cursor);\\r\\n        }\\r\\n        if (doFixup) {\\r\\n            removeFixup(self, probe);\\r\\n        }\\r\\n        delete self.nodes[cursor];\\r\\n    }\\r\\n\\r\\n    function treeMinimum(Tree storage self, uint key) private view returns (uint) {\\r\\n        while (self.nodes[key].left != EMPTY) {\\r\\n            key = self.nodes[key].left;\\r\\n        }\\r\\n        return key;\\r\\n    }\\r\\n    function treeMaximum(Tree storage self, uint key) private view returns (uint) {\\r\\n        while (self.nodes[key].right != EMPTY) {\\r\\n            key = self.nodes[key].right;\\r\\n        }\\r\\n        return key;\\r\\n    }\\r\\n\\r\\n    function rotateLeft(Tree storage self, uint key) private {\\r\\n        uint cursor = self.nodes[key].right;\\r\\n        uint keyParent = self.nodes[key].parent;\\r\\n        uint cursorLeft = self.nodes[cursor].left;\\r\\n        self.nodes[key].right = cursorLeft;\\r\\n        if (cursorLeft != EMPTY) {\\r\\n            self.nodes[cursorLeft].parent = key;\\r\\n        }\\r\\n        self.nodes[cursor].parent = keyParent;\\r\\n        if (keyParent == EMPTY) {\\r\\n            self.root = cursor;\\r\\n        } else if (key == self.nodes[keyParent].left) {\\r\\n            self.nodes[keyParent].left = cursor;\\r\\n        } else {\\r\\n            self.nodes[keyParent].right = cursor;\\r\\n        }\\r\\n        self.nodes[cursor].left = key;\\r\\n        self.nodes[key].parent = cursor;\\r\\n    }\\r\\n    function rotateRight(Tree storage self, uint key) private {\\r\\n        uint cursor = self.nodes[key].left;\\r\\n        uint keyParent = self.nodes[key].parent;\\r\\n        uint cursorRight = self.nodes[cursor].right;\\r\\n        self.nodes[key].left = cursorRight;\\r\\n        if (cursorRight != EMPTY) {\\r\\n            self.nodes[cursorRight].parent = key;\\r\\n        }\\r\\n        self.nodes[cursor].parent = keyParent;\\r\\n        if (keyParent == EMPTY) {\\r\\n            self.root = cursor;\\r\\n        } else if (key == self.nodes[keyParent].right) {\\r\\n            self.nodes[keyParent].right = cursor;\\r\\n        } else {\\r\\n            self.nodes[keyParent].left = cursor;\\r\\n        }\\r\\n        self.nodes[cursor].right = key;\\r\\n        self.nodes[key].parent = cursor;\\r\\n    }\\r\\n\\r\\n    function insertFixup(Tree storage self, uint key) private {\\r\\n        uint cursor;\\r\\n        while (key != self.root && self.nodes[self.nodes[key].parent].red) {\\r\\n            uint keyParent = self.nodes[key].parent;\\r\\n            if (keyParent == self.nodes[self.nodes[keyParent].parent].left) {\\r\\n                cursor = self.nodes[self.nodes[keyParent].parent].right;\\r\\n                if (self.nodes[cursor].red) {\\r\\n                    self.nodes[keyParent].red = false;\\r\\n                    self.nodes[cursor].red = false;\\r\\n                    self.nodes[self.nodes[keyParent].parent].red = true;\\r\\n                    key = self.nodes[keyParent].parent;\\r\\n                } else {\\r\\n                    if (key == self.nodes[keyParent].right) {\\r\\n                      key = keyParent;\\r\\n                      rotateLeft(self, key);\\r\\n                    }\\r\\n                    keyParent = self.nodes[key].parent;\\r\\n                    self.nodes[keyParent].red = false;\\r\\n                    self.nodes[self.nodes[keyParent].parent].red = true;\\r\\n                    rotateRight(self, self.nodes[keyParent].parent);\\r\\n                }\\r\\n            } else {\\r\\n                cursor = self.nodes[self.nodes[keyParent].parent].left;\\r\\n                if (self.nodes[cursor].red) {\\r\\n                    self.nodes[keyParent].red = false;\\r\\n                    self.nodes[cursor].red = false;\\r\\n                    self.nodes[self.nodes[keyParent].parent].red = true;\\r\\n                    key = self.nodes[keyParent].parent;\\r\\n                } else {\\r\\n                    if (key == self.nodes[keyParent].left) {\\r\\n                      key = keyParent;\\r\\n                      rotateRight(self, key);\\r\\n                    }\\r\\n                    keyParent = self.nodes[key].parent;\\r\\n                    self.nodes[keyParent].red = false;\\r\\n                    self.nodes[self.nodes[keyParent].parent].red = true;\\r\\n                    rotateLeft(self, self.nodes[keyParent].parent);\\r\\n                }\\r\\n            }\\r\\n        }\\r\\n        self.nodes[self.root].red = false;\\r\\n    }\\r\\n\\r\\n    function replaceParent(Tree storage self, uint a, uint b) private {\\r\\n        uint bParent = self.nodes[b].parent;\\r\\n        self.nodes[a].parent = bParent;\\r\\n        if (bParent == EMPTY) {\\r\\n            self.root = a;\\r\\n        } else {\\r\\n            if (b == self.nodes[bParent].left) {\\r\\n                self.nodes[bParent].left = a;\\r\\n            } else {\\r\\n                self.nodes[bParent].right = a;\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n    \\r\\n    function removeFixup(Tree storage self, uint key) private {\\r\\n        uint cursor;\\r\\n        while (key != self.root && !self.nodes[key].red) {\\r\\n            uint keyParent = self.nodes[key].parent;\\r\\n            if (key == self.nodes[keyParent].left) {\\r\\n                cursor = self.nodes[keyParent].right;\\r\\n                if (self.nodes[cursor].red) {\\r\\n                    self.nodes[cursor].red = false;\\r\\n                    self.nodes[keyParent].red = true;\\r\\n                    rotateLeft(self, keyParent);\\r\\n                    cursor = self.nodes[keyParent].right;\\r\\n                }\\r\\n                if (!self.nodes[self.nodes[cursor].left].red && !self.nodes[self.nodes[cursor].right].red) {\\r\\n                    self.nodes[cursor].red = true;\\r\\n                    key = keyParent;\\r\\n                } else {\\r\\n                    if (!self.nodes[self.nodes[cursor].right].red) {\\r\\n                        self.nodes[self.nodes[cursor].left].red = false;\\r\\n                        self.nodes[cursor].red = true;\\r\\n                        rotateRight(self, cursor);\\r\\n                        cursor = self.nodes[keyParent].right;\\r\\n                    }\\r\\n                    self.nodes[cursor].red = self.nodes[keyParent].red;\\r\\n                    self.nodes[keyParent].red = false;\\r\\n                    self.nodes[self.nodes[cursor].right].red = false;\\r\\n                    rotateLeft(self, keyParent);\\r\\n                    key = self.root;\\r\\n                }\\r\\n            } else {\\r\\n                cursor = self.nodes[keyParent].left;\\r\\n                if (self.nodes[cursor].red) {\\r\\n                    self.nodes[cursor].red = false;\\r\\n                    self.nodes[keyParent].red = true;\\r\\n                    rotateRight(self, keyParent);\\r\\n                    cursor = self.nodes[keyParent].left;\\r\\n                }\\r\\n                if (!self.nodes[self.nodes[cursor].right].red && !self.nodes[self.nodes[cursor].left].red) {\\r\\n                    self.nodes[cursor].red = true;\\r\\n                    key = keyParent;\\r\\n                } else {\\r\\n                    if (!self.nodes[self.nodes[cursor].left].red) {\\r\\n                        self.nodes[self.nodes[cursor].right].red = false;\\r\\n                        self.nodes[cursor].red = true;\\r\\n                        rotateLeft(self, cursor);\\r\\n                        cursor = self.nodes[keyParent].left;\\r\\n                    }\\r\\n                    self.nodes[cursor].red = self.nodes[keyParent].red;\\r\\n                    self.nodes[keyParent].red = false;\\r\\n                    self.nodes[self.nodes[cursor].left].red = false;\\r\\n                    rotateRight(self, keyParent);\\r\\n                    key = self.root;\\r\\n                }\\r\\n            }\\r\\n        }\\r\\n        self.nodes[key].red = false;\\r\\n    }\\r\\n}\",\"keccak256\":\"0xf4fa1d91dc7a2d9187ad75d4673de30b63ebea1ab06449b5f9cc7a1e622aca03\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5061120a806100206000396000f3fe608060405234801561001057600080fd5b50600436106100be5760003560e01c806378df3a5211610076578063a374e43f1161005b578063a374e43f146101a2578063cf260baf1461021f578063f661b2411461024a57600080fd5b806378df3a521461017c57806382ef95311461018f57600080fd5b80631523323e116100a75780631523323e1461010b57806315d7b156146101565780631ae1420c1461016957600080fd5b80630828f88d146100c35780630b3b4718146100f6575b600080fd5b6100e36100d1366004611059565b60046020526000908152604090205481565b6040519081526020015b60405180910390f35b610109610104366004611094565b61025d565b005b61011e610119366004611072565b61028d565b6040805182518152602080840151908201529181015173ffffffffffffffffffffffffffffffffffffffff16908201526060016100ed565b610109610164366004611094565b610398565b6100e3610177366004611059565b6103c1565b6100e361018a366004611072565b6103ea565b6100e361019d366004611059565b61041b565b6101ee6101b0366004611072565b6001602081815260009384526040808520909152918352912080549181015460029091015473ffffffffffffffffffffffffffffffffffffffff1683565b60408051938452602084019290925273ffffffffffffffffffffffffffffffffffffffff16908201526060016100ed565b6100e361022d36600461102f565b600360209081526000928352604080842090915290825290205481565b61011e610258366004611072565b610440565b60005b83811015610286576102738584846104e9565b508061027e8161113d565b915050610260565b5050505050565b6102c760405180606001604052806000815260200160008152602001600073ffffffffffffffffffffffffffffffffffffffff1681525090565b60008381526001602081815260408084208685528252928390208351606081018552815480825293820154928101929092526002015473ffffffffffffffffffffffffffffffffffffffff169281019290925261038f57600084815260208190526040812061033690856105d0565b600086815260016020818152604080842094845293815291839020835160608101855281548152918101549282019290925260029091015473ffffffffffffffffffffffffffffffffffffffff16918101919091529150505b90505b92915050565b60005b83811015610286576103ae858484610656565b50806103b98161113d565b91505061039b565b600080805b838110156103e357905080806103db8161113d565b9150506103c6565b5092915050565b6002602052816000526040600020818154811061040657600080fd5b90600052602060002001600091509150505481565b6000805b8281101561043957806104318161113d565b91505061041f565b5090919050565b61047a60405180606001604052806000815260200160008152602001600073ffffffffffffffffffffffffffffffffffffffff1681525090565b60008381526001602081815260408084208685528252928390208351606081018552815480825293820154928101929092526002015473ffffffffffffffffffffffffffffffffffffffff169281019290925261038f576000848152600260205260408120610336908561076c565b60008381526004602052604081205481906105059060016110d3565b90506000600161051586846110d3565b61051f9190611126565b60408051606081018252828152602080820189815273ffffffffffffffffffffffffffffffffffffffff89811684860190815260008d8152600180865287822089835286528782209651875593519386019390935551600290940180547fffffffffffffffffffffffff000000000000000000000000000000000000000016949091169390931790925589825260048152828220849055819052209091506105c7908261082f565b95945050505050565b815460009080156103e3578083101561061f578091506105f08482610966565b90505b811580159061060157508281115b1561061a578091506106138482610966565b90506105f3565b6103e3565b6106298482610a03565b90508091505b811580159061063d57508281105b156103e35761064c8482610a03565b905080915061062f565b60008381526004602052604081205481906106729060016110d3565b90506000600161068286846110d3565b61068c9190611126565b60408051606081018252828152602080820189815273ffffffffffffffffffffffffffffffffffffffff89811684860181815260008e815260018087528882208a83528752888220975188559451878601559051600296870180547fffffffffffffffffffffffff00000000000000000000000000000000000000001691909416179092558c825260048452858220879055938352848120805492830181558152828120909101859055918252600381528282208a835290529081208054929350879290919061075d9084906110d3565b90915550909695505050505050565b815460009061077d57506000610392565b82546000905b808210156107d95760006107978383610a99565b9050848682815481106107ac576107ac6111a5565b906000526020600020015411156107c5578091506107d3565b6107d08160016110d3565b92505b50610783565b60008211801561080e575083856107f1600185611126565b81548110610801576108016111a5565b9060005260206000200154145b156108275761081e600183611126565b92505050610392565b509050610392565b8061083957600080fd5b6108438282610ab4565b1561084d57600080fd5b81546000905b8015610896578091508083101561087d576000908152600180850160205260409091200154610853565b6000908152600184016020526040902060020154610853565b60408051608081018252838152600060208083018281528385018381526001606086018181528a86528b8201909452959093209351845551938301939093555160028201559051600390910180547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00169115159190911790558161091c57828455610956565b8183101561093f5760008281526001808601602052604090912001839055610956565b600082815260018501602052604090206002018390555b6109608484610ae3565b50505050565b60008161097257600080fd5b6000828152600180850160205260409091200154156109b15760008281526001808501602052604090912001546109aa908490610de4565b9050610392565b5060008181526001830160205260409020545b80158015906109e55750600081815260018085016020526040909120015482145b156103925760008181526001840160205260409020549091506109c4565b600081610a0f57600080fd5b600082815260018401602052604090206002015415610a475760008281526001840160205260409020600201546109aa908490610e21565b5060008181526001830160205260409020545b8015801590610a7b5750600081815260018401602052604090206002015482145b15610392576000818152600184016020526040902054909150610a5a565b6000610aa860028484186110eb565b61038f908484166110d3565b6000811580159061038f5750825482148061038f57505060009081526001919091016020526040902054151590565b60005b82548214801590610b105750600082815260018401602052604080822054825290206003015460ff165b15610da4576000828152600180850160205260408083205480845281842054845292200154811415610c6f5760008181526001850160205260408082205482528082206002015480835291206003015490925060ff1615610bd757600081815260018086016020526040808320600380820180547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00908116909155878652838620820180548216905582548652928520018054909216909217905590829052549250610d9e565b6000818152600185016020526040902060020154831415610bff57809250610bff8484610e59565b5060008281526001808501602052604080832054808452818420600380820180547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00908116909155825487529386200180549093169093179091559182905254610c6a908590610f31565b610d9e565b6000818152600180860160205260408083205483528083209091015480835291206003015490925060ff1615610d0b57600081815260018086016020526040808320600380820180547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00908116909155878652838620820180548216905582548652928520018054909216909217905590829052549250610d9e565b6000818152600180860160205260409091200154831415610d3357809250610d338484610f31565b5060008281526001808501602052604080832054808452818420600380820180547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00908116909155825487529386200180549093169093179091559182905254610d9e908590610e59565b50610ae6565b50508054600090815260019091016020526040902060030180547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00169055565b60005b600082815260018401602052604090206002015415610e1b5760009182526001830160205260409091206002015490610de7565b50919050565b60005b600082815260018085016020526040909120015415610e1b576000918252600180840160205260409092209091015490610e24565b600081815260018084016020526040808320600281018054915482865292852090930154938590529183905590918015610ea157600081815260018601602052604090208490555b6000838152600186016020526040902082905581610ec157828555610f0e565b6000828152600180870160205260409091200154841415610ef75760008281526001808701602052604090912001839055610f0e565b600082815260018601602052604090206002018390555b505060008181526001938401602052604080822090940183905591825291902055565b60008181526001808401602052604080832091820180549254838552918420600201549385905283905590918015610f7757600081815260018601602052604090208490555b6000838152600186016020526040902082905581610f9757828555610fe4565b6000828152600186016020526040902060020154841415610fcd5760008281526001860160205260409020600201839055610fe4565b600082815260018087016020526040909120018390555b5050600081815260019093016020526040808420600201839055918352912055565b803573ffffffffffffffffffffffffffffffffffffffff8116811461102a57600080fd5b919050565b6000806040838503121561104257600080fd5b61104b83611006565b946020939093013593505050565b60006020828403121561106b57600080fd5b5035919050565b6000806040838503121561108557600080fd5b50508035926020909101359150565b600080600080608085870312156110aa57600080fd5b8435935060208501359250604085013591506110c860608601611006565b905092959194509250565b600082198211156110e6576110e6611176565b500190565b600082611121577f4e487b7100000000000000000000000000000000000000000000000000000000600052601260045260246000fd5b500490565b60008282101561113857611138611176565b500390565b60007fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff82141561116f5761116f611176565b5060010190565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fdfea2646970667358221220e97690865735adbdacf0f1cce1002c186c6d395a9998cff232658ee274d8cd7464736f6c63430008060033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100be5760003560e01c806378df3a5211610076578063a374e43f1161005b578063a374e43f146101a2578063cf260baf1461021f578063f661b2411461024a57600080fd5b806378df3a521461017c57806382ef95311461018f57600080fd5b80631523323e116100a75780631523323e1461010b57806315d7b156146101565780631ae1420c1461016957600080fd5b80630828f88d146100c35780630b3b4718146100f6575b600080fd5b6100e36100d1366004611059565b60046020526000908152604090205481565b6040519081526020015b60405180910390f35b610109610104366004611094565b61025d565b005b61011e610119366004611072565b61028d565b6040805182518152602080840151908201529181015173ffffffffffffffffffffffffffffffffffffffff16908201526060016100ed565b610109610164366004611094565b610398565b6100e3610177366004611059565b6103c1565b6100e361018a366004611072565b6103ea565b6100e361019d366004611059565b61041b565b6101ee6101b0366004611072565b6001602081815260009384526040808520909152918352912080549181015460029091015473ffffffffffffffffffffffffffffffffffffffff1683565b60408051938452602084019290925273ffffffffffffffffffffffffffffffffffffffff16908201526060016100ed565b6100e361022d36600461102f565b600360209081526000928352604080842090915290825290205481565b61011e610258366004611072565b610440565b60005b83811015610286576102738584846104e9565b508061027e8161113d565b915050610260565b5050505050565b6102c760405180606001604052806000815260200160008152602001600073ffffffffffffffffffffffffffffffffffffffff1681525090565b60008381526001602081815260408084208685528252928390208351606081018552815480825293820154928101929092526002015473ffffffffffffffffffffffffffffffffffffffff169281019290925261038f57600084815260208190526040812061033690856105d0565b600086815260016020818152604080842094845293815291839020835160608101855281548152918101549282019290925260029091015473ffffffffffffffffffffffffffffffffffffffff16918101919091529150505b90505b92915050565b60005b83811015610286576103ae858484610656565b50806103b98161113d565b91505061039b565b600080805b838110156103e357905080806103db8161113d565b9150506103c6565b5092915050565b6002602052816000526040600020818154811061040657600080fd5b90600052602060002001600091509150505481565b6000805b8281101561043957806104318161113d565b91505061041f565b5090919050565b61047a60405180606001604052806000815260200160008152602001600073ffffffffffffffffffffffffffffffffffffffff1681525090565b60008381526001602081815260408084208685528252928390208351606081018552815480825293820154928101929092526002015473ffffffffffffffffffffffffffffffffffffffff169281019290925261038f576000848152600260205260408120610336908561076c565b60008381526004602052604081205481906105059060016110d3565b90506000600161051586846110d3565b61051f9190611126565b60408051606081018252828152602080820189815273ffffffffffffffffffffffffffffffffffffffff89811684860190815260008d8152600180865287822089835286528782209651875593519386019390935551600290940180547fffffffffffffffffffffffff000000000000000000000000000000000000000016949091169390931790925589825260048152828220849055819052209091506105c7908261082f565b95945050505050565b815460009080156103e3578083101561061f578091506105f08482610966565b90505b811580159061060157508281115b1561061a578091506106138482610966565b90506105f3565b6103e3565b6106298482610a03565b90508091505b811580159061063d57508281105b156103e35761064c8482610a03565b905080915061062f565b60008381526004602052604081205481906106729060016110d3565b90506000600161068286846110d3565b61068c9190611126565b60408051606081018252828152602080820189815273ffffffffffffffffffffffffffffffffffffffff89811684860181815260008e815260018087528882208a83528752888220975188559451878601559051600296870180547fffffffffffffffffffffffff00000000000000000000000000000000000000001691909416179092558c825260048452858220879055938352848120805492830181558152828120909101859055918252600381528282208a835290529081208054929350879290919061075d9084906110d3565b90915550909695505050505050565b815460009061077d57506000610392565b82546000905b808210156107d95760006107978383610a99565b9050848682815481106107ac576107ac6111a5565b906000526020600020015411156107c5578091506107d3565b6107d08160016110d3565b92505b50610783565b60008211801561080e575083856107f1600185611126565b81548110610801576108016111a5565b9060005260206000200154145b156108275761081e600183611126565b92505050610392565b509050610392565b8061083957600080fd5b6108438282610ab4565b1561084d57600080fd5b81546000905b8015610896578091508083101561087d576000908152600180850160205260409091200154610853565b6000908152600184016020526040902060020154610853565b60408051608081018252838152600060208083018281528385018381526001606086018181528a86528b8201909452959093209351845551938301939093555160028201559051600390910180547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00169115159190911790558161091c57828455610956565b8183101561093f5760008281526001808601602052604090912001839055610956565b600082815260018501602052604090206002018390555b6109608484610ae3565b50505050565b60008161097257600080fd5b6000828152600180850160205260409091200154156109b15760008281526001808501602052604090912001546109aa908490610de4565b9050610392565b5060008181526001830160205260409020545b80158015906109e55750600081815260018085016020526040909120015482145b156103925760008181526001840160205260409020549091506109c4565b600081610a0f57600080fd5b600082815260018401602052604090206002015415610a475760008281526001840160205260409020600201546109aa908490610e21565b5060008181526001830160205260409020545b8015801590610a7b5750600081815260018401602052604090206002015482145b15610392576000818152600184016020526040902054909150610a5a565b6000610aa860028484186110eb565b61038f908484166110d3565b6000811580159061038f5750825482148061038f57505060009081526001919091016020526040902054151590565b60005b82548214801590610b105750600082815260018401602052604080822054825290206003015460ff165b15610da4576000828152600180850160205260408083205480845281842054845292200154811415610c6f5760008181526001850160205260408082205482528082206002015480835291206003015490925060ff1615610bd757600081815260018086016020526040808320600380820180547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00908116909155878652838620820180548216905582548652928520018054909216909217905590829052549250610d9e565b6000818152600185016020526040902060020154831415610bff57809250610bff8484610e59565b5060008281526001808501602052604080832054808452818420600380820180547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00908116909155825487529386200180549093169093179091559182905254610c6a908590610f31565b610d9e565b6000818152600180860160205260408083205483528083209091015480835291206003015490925060ff1615610d0b57600081815260018086016020526040808320600380820180547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00908116909155878652838620820180548216905582548652928520018054909216909217905590829052549250610d9e565b6000818152600180860160205260409091200154831415610d3357809250610d338484610f31565b5060008281526001808501602052604080832054808452818420600380820180547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00908116909155825487529386200180549093169093179091559182905254610d9e908590610e59565b50610ae6565b50508054600090815260019091016020526040902060030180547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00169055565b60005b600082815260018401602052604090206002015415610e1b5760009182526001830160205260409091206002015490610de7565b50919050565b60005b600082815260018085016020526040909120015415610e1b576000918252600180840160205260409092209091015490610e24565b600081815260018084016020526040808320600281018054915482865292852090930154938590529183905590918015610ea157600081815260018601602052604090208490555b6000838152600186016020526040902082905581610ec157828555610f0e565b6000828152600180870160205260409091200154841415610ef75760008281526001808701602052604090912001839055610f0e565b600082815260018601602052604090206002018390555b505060008181526001938401602052604080822090940183905591825291902055565b60008181526001808401602052604080832091820180549254838552918420600201549385905283905590918015610f7757600081815260018601602052604090208490555b6000838152600186016020526040902082905581610f9757828555610fe4565b6000828152600186016020526040902060020154841415610fcd5760008281526001860160205260409020600201839055610fe4565b600082815260018087016020526040909120018390555b5050600081815260019093016020526040808420600201839055918352912055565b803573ffffffffffffffffffffffffffffffffffffffff8116811461102a57600080fd5b919050565b6000806040838503121561104257600080fd5b61104b83611006565b946020939093013593505050565b60006020828403121561106b57600080fd5b5035919050565b6000806040838503121561108557600080fd5b50508035926020909101359150565b600080600080608085870312156110aa57600080fd5b8435935060208501359250604085013591506110c860608601611006565b905092959194509250565b600082198211156110e6576110e6611176565b500190565b600082611121577f4e487b7100000000000000000000000000000000000000000000000000000000600052601260045260246000fd5b500490565b60008282101561113857611138611176565b500390565b60007fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff82141561116f5761116f611176565b5060010190565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fdfea2646970667358221220e97690865735adbdacf0f1cce1002c186c6d395a9998cff232658ee274d8cd7464736f6c63430008060033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "findWinnerTicket(uint256,uint256)": {
+        "params": {
+          "number": "final number",
+          "taskId": "task id"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "findWinnerTicket(uint256,uint256)": {
+        "notice": "search a winner ticket by number"
+      }
+    },
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 8482,
+        "contract": "contracts/TestTicket.sol:TestTicket",
+        "label": "trees",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_mapping(t_uint256,t_struct(Tree)9886_storage)"
+      },
+      {
+        "astId": 8489,
+        "contract": "contracts/TestTicket.sol:TestTicket",
+        "label": "tickets",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_struct(Ticket)8473_storage))"
+      },
+      {
+        "astId": 8494,
+        "contract": "contracts/TestTicket.sol:TestTicket",
+        "label": "ticketIds",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)"
+      },
+      {
+        "astId": 8500,
+        "contract": "contracts/TestTicket.sol:TestTicket",
+        "label": "userTickets",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_mapping(t_address,t_mapping(t_uint256,t_uint256))"
+      },
+      {
+        "astId": 8504,
+        "contract": "contracts/TestTicket.sol:TestTicket",
+        "label": "lastTIDs",
+        "offset": 0,
+        "slot": "4",
+        "type": "t_mapping(t_uint256,t_uint256)"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_array(t_uint256)dyn_storage": {
+        "base": "t_uint256",
+        "encoding": "dynamic_array",
+        "label": "uint256[]",
+        "numberOfBytes": "32"
+      },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_mapping(t_address,t_mapping(t_uint256,t_uint256))": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => mapping(uint256 => uint256))",
+        "numberOfBytes": "32",
+        "value": "t_mapping(t_uint256,t_uint256)"
+      },
+      "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => uint256[])",
+        "numberOfBytes": "32",
+        "value": "t_array(t_uint256)dyn_storage"
+      },
+      "t_mapping(t_uint256,t_mapping(t_uint256,t_struct(Ticket)8473_storage))": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => mapping(uint256 => struct TestTicket.Ticket))",
+        "numberOfBytes": "32",
+        "value": "t_mapping(t_uint256,t_struct(Ticket)8473_storage)"
+      },
+      "t_mapping(t_uint256,t_struct(Node)9878_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct RedBlackTreeLibrary.Node)",
+        "numberOfBytes": "32",
+        "value": "t_struct(Node)9878_storage"
+      },
+      "t_mapping(t_uint256,t_struct(Ticket)8473_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct TestTicket.Ticket)",
+        "numberOfBytes": "32",
+        "value": "t_struct(Ticket)8473_storage"
+      },
+      "t_mapping(t_uint256,t_struct(Tree)9886_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct RedBlackTreeLibrary.Tree)",
+        "numberOfBytes": "32",
+        "value": "t_struct(Tree)9886_storage"
+      },
+      "t_mapping(t_uint256,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_struct(Node)9878_storage": {
+        "encoding": "inplace",
+        "label": "struct RedBlackTreeLibrary.Node",
+        "members": [
+          {
+            "astId": 9871,
+            "contract": "contracts/TestTicket.sol:TestTicket",
+            "label": "parent",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 9873,
+            "contract": "contracts/TestTicket.sol:TestTicket",
+            "label": "left",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 9875,
+            "contract": "contracts/TestTicket.sol:TestTicket",
+            "label": "right",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 9877,
+            "contract": "contracts/TestTicket.sol:TestTicket",
+            "label": "red",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_bool"
+          }
+        ],
+        "numberOfBytes": "128"
+      },
+      "t_struct(Ticket)8473_storage": {
+        "encoding": "inplace",
+        "label": "struct TestTicket.Ticket",
+        "members": [
+          {
+            "astId": 8468,
+            "contract": "contracts/TestTicket.sol:TestTicket",
+            "label": "number",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 8470,
+            "contract": "contracts/TestTicket.sol:TestTicket",
+            "label": "count",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 8472,
+            "contract": "contracts/TestTicket.sol:TestTicket",
+            "label": "owner",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_address"
+          }
+        ],
+        "numberOfBytes": "96"
+      },
+      "t_struct(Tree)9886_storage": {
+        "encoding": "inplace",
+        "label": "struct RedBlackTreeLibrary.Tree",
+        "members": [
+          {
+            "astId": 9880,
+            "contract": "contracts/TestTicket.sol:TestTicket",
+            "label": "root",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 9885,
+            "contract": "contracts/TestTicket.sol:TestTicket",
+            "label": "nodes",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint256,t_struct(Node)9878_storage)"
+          }
+        ],
+        "numberOfBytes": "64"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

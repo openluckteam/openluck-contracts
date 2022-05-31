@@ -1,9 +1,6 @@
 const { expect } = require("chai");
-const { BigNumber, utils } = require("ethers");
-const { ethers } = require('hardhat');
-
+const { utils } = require("ethers");
 const { testArgs, tryRevert, tryCall } = require('../../helpers');
-const { approveToken } = require('../../helpers/utils');
 
 module.exports = async function () {
 
@@ -22,15 +19,15 @@ module.exports = async function () {
         let { deployer, joiner, joiner2, contracts, acceptToken } = args;
         const {
           arg_item,
-        } = succesTest.fn({ joiner, acceptToken, joiner2,deployer });
-        
+        } = succesTest.fn({ joiner, acceptToken, joiner2, deployer });
+
         let tx = contracts.LucksGroup.connect(joiner).joinGroup(arg_item.taskId, arg_item.groupId, arg_item.seat);
-        
+
         // submit
-        await tryCall(tx, 1);       
-               
+        await tryCall(tx, 1);
+
         // let groupId = await contracts.LucksGroup.userGroups(arg_item.user, arg_item.taskId);
-        
+
       });
     });
   });
@@ -51,11 +48,11 @@ module.exports = async function () {
           arg_item,
           revert,
         } = failureTest.fn({ joiner, acceptToken });
-        
+
         let tx = contracts.LucksGroup.connect(joiner).joinGroup(arg_item.taskId, arg_item.groupId, arg_item.seat);
 
         // submit
-        await tryRevert(tx, revert);      
+        await tryRevert(tx, revert);
 
       });
     });
@@ -77,136 +74,136 @@ const tests = {
         },
       }),
     },
-    // {
-    //   description: 'joinGroup tokenId-1 accept-BNB joiner tk-20',
-    //   fn: ({ joiner, acceptToken }) => ({
-    //     arg_item: {
-    //       taskId: testTaskId,
-    //       groupId: 2,
-    //       user: joiner.address,
-    //       acceptToken: acceptToken.BNB,
-    //       targetAmount: utils.parseEther("1"),
-    //       price: utils.parseEther("0.01"),
-    //     },
-    //   }),
-    // },
-    // {
-    //   description: 'joinGroup tokenId-1 accept-BNB joiner tk-60',
-    //   fn: ({ joiner, acceptToken }) => ({
-    //     arg_item: {
-    //       taskId: testTaskId,
-    //       groupId: 3,
-    //       user: joiner.address,
-    //       acceptToken: acceptToken.BNB,
-    //       targetAmount: utils.parseEther("1"),
-    //       price: utils.parseEther("0.01"),
-    //     },
-    //   }),
-    // },
-    // {
-    //   description: 'joinGroup tokenId-1 accept-BNB joiner2 tk-10',
-    //   fn: ({ joiner, acceptToken, joiner2 }) => ({
-    //     arg_item: {
-    //       taskId: testTaskId,
-    //       groupId: 1,
-    //       user: joiner2.address,
-    //       acceptToken: acceptToken.BNB,
-    //       targetAmount: utils.parseEther("1"),
-    //       price: utils.parseEther("0.01"),
-    //     },
-    //   }),
-    // },
-    // {
-    //   description: 'joinGroup tokenId-1 accept-BNB joiner2 tk-11',
-    //   fn: ({ joiner, acceptToken, joiner2 }) => ({
-    //     arg_item: {
-    //       taskId: testTaskId,
-    //       groupId: 1,
-    //       user: joiner2.address,
-    //       acceptToken: acceptToken.BNB,
-    //       targetAmount: utils.parseEther("1"),
-    //       price: utils.parseEther("0.01"),
-    //     },
-    //   }),
-    // },
-    // {
-    //   description: 'joinGroup tokenId-2 accept-USDC joiner tk-100',
-    //   fn: ({ joiner, acceptToken }) => ({
-    //     arg_item: {
-    //       taskId: 2,
-    //       groupId: 1,
-    //       user: joiner.address,
-    //       acceptToken: acceptToken.USDC,
-    //       targetAmount: utils.parseEther("10"),
-    //       seat: 10,
-    //     },
-    //   }),
-    // },
-    // {
-    //   description: 'joinGroup tokenId-2 accept-USDC joiner2 tk-100',
-    //   fn: ({ joiner, acceptToken, joiner2 }) => ({
-    //     arg_item: {
-    //       taskId: 2,
-    //       groupId: 1,
-    //       user: joiner2.address,
-    //       acceptToken: acceptToken.USDC,
-    //       targetAmount: utils.parseEther("10"),
-    //       seat: 10,
-    //     },
-    //   }),
-    // },
-    // {
-    //   description: 'joinGroup tokenId-2 accept-USDC deployer tk-100',
-    //   fn: ({ joiner, acceptToken, joiner2, deployer }) => ({
-    //     arg_item: {
-    //       taskId: 2,
-    //       groupId: 1,
-    //       user: deployer.address,
-    //       acceptToken: acceptToken.USDC,
-    //       targetAmount: utils.parseEther("10"),
-    //       seat: 10,
-    //     },
-    //   }),
-    // },
-    // {
-    //   description: 'joinGroup tokenId-3 accept-USDT joiner tk-1',
-    //   fn: ({ joiner, acceptToken }) => ({
-    //     arg_item: {
-    //       taskId: 3,
-    //       groupId: 1,
-    //       user: joiner.address,
-    //       acceptToken: acceptToken.USDT,
-    //       targetAmount: utils.parseEther("10"),
-    //       seat: 10,
-    //     },
-    //   }),
-    // },
-    // {
-    //   description: 'joinGroup tokenId-3 accept-USDT joiner tk-88',
-    //   fn: ({ joiner, acceptToken }) => ({
-    //     arg_item: {
-    //       taskId: 3,
-    //       groupId: 8,
-    //       user: joiner.address,
-    //       acceptToken: acceptToken.USDT,
-    //       targetAmount: utils.parseEther("10"),
-    //       seat: 10,
-    //     },
-    //   }),
-    // },
-    // {
-    //   description: 'joinGroup tokenId-3 accept-USDT joiner2 tk-33',
-    //   fn: ({ joiner, acceptToken, joiner2 }) => ({
-    //     arg_item: {
-    //       taskId: 3,
-    //       groupId: 3,
-    //       user: joiner2.address,
-    //       acceptToken: acceptToken.USDT,
-    //       targetAmount: utils.parseEther("10"),
-    //       seat: 10,
-    //     },
-    //   }),
-    // }
+    {
+      description: 'joinGroup tokenId-1 accept-BNB joiner tk-20',
+      fn: ({ joiner, acceptToken }) => ({
+        arg_item: {
+          taskId: testTaskId,
+          groupId: 2,
+          user: joiner.address,
+          acceptToken: acceptToken.BNB,
+          targetAmount: utils.parseEther("1"),
+          price: utils.parseEther("0.01"),
+        },
+      }),
+    },
+    {
+      description: 'joinGroup tokenId-1 accept-BNB joiner tk-60',
+      fn: ({ joiner, acceptToken }) => ({
+        arg_item: {
+          taskId: testTaskId,
+          groupId: 3,
+          user: joiner.address,
+          acceptToken: acceptToken.BNB,
+          targetAmount: utils.parseEther("1"),
+          price: utils.parseEther("0.01"),
+        },
+      }),
+    },
+    {
+      description: 'joinGroup tokenId-1 accept-BNB joiner2 tk-10',
+      fn: ({ joiner, acceptToken, joiner2 }) => ({
+        arg_item: {
+          taskId: testTaskId,
+          groupId: 1,
+          user: joiner2.address,
+          acceptToken: acceptToken.BNB,
+          targetAmount: utils.parseEther("1"),
+          price: utils.parseEther("0.01"),
+        },
+      }),
+    },
+    {
+      description: 'joinGroup tokenId-1 accept-BNB joiner2 tk-11',
+      fn: ({ joiner, acceptToken, joiner2 }) => ({
+        arg_item: {
+          taskId: testTaskId,
+          groupId: 1,
+          user: joiner2.address,
+          acceptToken: acceptToken.BNB,
+          targetAmount: utils.parseEther("1"),
+          price: utils.parseEther("0.01"),
+        },
+      }),
+    },
+    {
+      description: 'joinGroup tokenId-2 accept-USDC joiner tk-100',
+      fn: ({ joiner, acceptToken }) => ({
+        arg_item: {
+          taskId: 2,
+          groupId: 1,
+          user: joiner.address,
+          acceptToken: acceptToken.USDC,
+          targetAmount: utils.parseEther("10"),
+          seat: 10,
+        },
+      }),
+    },
+    {
+      description: 'joinGroup tokenId-2 accept-USDC joiner2 tk-100',
+      fn: ({ joiner, acceptToken, joiner2 }) => ({
+        arg_item: {
+          taskId: 2,
+          groupId: 1,
+          user: joiner2.address,
+          acceptToken: acceptToken.USDC,
+          targetAmount: utils.parseEther("10"),
+          seat: 10,
+        },
+      }),
+    },
+    {
+      description: 'joinGroup tokenId-2 accept-USDC deployer tk-100',
+      fn: ({ joiner, acceptToken, joiner2, deployer }) => ({
+        arg_item: {
+          taskId: 2,
+          groupId: 1,
+          user: deployer.address,
+          acceptToken: acceptToken.USDC,
+          targetAmount: utils.parseEther("10"),
+          seat: 10,
+        },
+      }),
+    },
+    {
+      description: 'joinGroup tokenId-3 accept-USDT joiner tk-1',
+      fn: ({ joiner, acceptToken }) => ({
+        arg_item: {
+          taskId: 3,
+          groupId: 1,
+          user: joiner.address,
+          acceptToken: acceptToken.USDT,
+          targetAmount: utils.parseEther("10"),
+          seat: 10,
+        },
+      }),
+    },
+    {
+      description: 'joinGroup tokenId-3 accept-USDT joiner tk-88',
+      fn: ({ joiner, acceptToken }) => ({
+        arg_item: {
+          taskId: 3,
+          groupId: 8,
+          user: joiner.address,
+          acceptToken: acceptToken.USDT,
+          targetAmount: utils.parseEther("10"),
+          seat: 10,
+        },
+      }),
+    },
+    {
+      description: 'joinGroup tokenId-3 accept-USDT joiner2 tk-33',
+      fn: ({ joiner, acceptToken, joiner2 }) => ({
+        arg_item: {
+          taskId: 3,
+          groupId: 3,
+          user: joiner2.address,
+          acceptToken: acceptToken.USDT,
+          targetAmount: utils.parseEther("10"),
+          seat: 10,
+        },
+      }),
+    }
   ],
   failure: [
     {

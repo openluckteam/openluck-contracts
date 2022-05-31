@@ -9,7 +9,12 @@ const pickWinner = require("./pickWinner.js")
 const claimTokens = require("./claimTokens.js")
 const claimNFTs = require("./claimNFTs.js")
 const localVRF = require("./localVRF.js")
-const { getEndpointId, isNetworkAllowTaskForTest } = require("../../../utils/network")
+const autoCloseTask = require("./autoCloseTask.js")
+const testTicket = require("./testTicket.js")
+const joinTaskLarge = require("./joinTaskLarge.js")
+const joinTaskLarge2 = require("./joinTaskLarge2.js")
+
+const { isNetworkAllowTaskForTest } = require("../../../utils/network")
 
 
 module.exports = function () {
@@ -19,19 +24,24 @@ module.exports = function () {
 
   });
 
-  
+
   // Test each function.
   if (isNetworkAllowTaskForTest()) {
     // describe('createTask(...)', createTask);
     // describe('joinTask(...)', joinTask);
+    describe('joinTaskLarge(...)', joinTaskLarge);
+    // describe('joinTaskLarge2(...)', joinTaskLarge2);
     // describe('createGroup(...)', createGroup);
     // describe('joinGroup(...)', joinGroup);
-    // describe('cancelTask(...)', cancelTask); 
-    describe('closeTask(...)', closeTask);
+    // describe('cancelTask(...)', cancelTask);
+    // describe('closeTask(...)', closeTask);
     // describe('localVRF(...)', localVRF);
     // describe('pickWinner(...)', pickWinner);
     // describe('claimTokens(...)', claimTokens); 
-    describe('claimNFTs(...)', claimNFTs); 
+    // describe('claimNFTs(...)', claimNFTs); 
+    // describe('autoCloseTask(...)', autoCloseTask);
+    // describe('testTicket(...)', testTicket);
+    
   }
   else {
     describe('createTaskETH(...)', createTaskETH);

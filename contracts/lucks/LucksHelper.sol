@@ -35,7 +35,7 @@ contract LucksHelper is ILucksHelper, Ownable {
     address public feeRecipient;    // protocol fee recipient
 
     uint32 public MAX_PER_JOIN_NUM = 10000;    // limit user per jointask num (default 10000), to avoid block fail and huge gas fee
-    uint32 public DRAW_DELAY_SEC = 120;    // picker winner need a delay time from task close. (default 2min)
+    uint32 public DRAW_DELAY_SEC = 30;    // picker winner need a delay time from task close. (default 30sec)
     uint256 public protocolFee = 200;     // acceptToken (200 = 2%, 1,000 = 10%)
 
     mapping(address => bool) public operators;     // protocol income balance (address => bool)
@@ -114,7 +114,11 @@ contract LucksHelper is ILucksHelper, Ownable {
         require(item.tokenIds.length > 0, "Empty tokenIds");
         require(block.timestamp < item.endTime, "Invalid time range");
         require(item.endTime - block.timestamp > 84600 , "Duration too short"); // at least 23.5 hour
-        require(item.price > 0 && item.price < item.targetAmount && item.targetAmount % item.price == 0,"Invalid price or targetAmount");
+        require(item.endTime - block.timestamp < 2678400 , "Duration too long"); // 31 days limit
+        require(item.price > 0 && item.price < item.targetAmount && item.targetAmount.mod(item.price) == 0,"Invalid price or targetAmount");
+
+        uint num = item.targetAmount.div(item.price);
+        require(num > 0 && num <= 100000 && num.mod(10) == 0, "Invalid num");
 
         require(item.amountCollected == 0, "Invalid amountCollected");    
        
@@ -322,6 +326,13 @@ contract LucksHelper is ILucksHelper, Ownable {
     }
 
     /**
+    @notice set operator
+     */
+    function setExecutor(ILucksExecutor _executor) external onlyOwner {
+        EXECUTOR = _executor;
+    }
+
+    /**
     @notice set the VRF
      */
     function setLucksVRF(ILucksVRF addr) external onlyOperator {
@@ -334,13 +345,6 @@ contract LucksHelper is ILucksHelper, Ownable {
     function setLucksGroup(ILucksGroup addr) external onlyOperator {
         GROUPS = addr;
     }
-
-    // /**
-    // @notice set the LucksRewards
-    //  */
-    // function setLucksRewards(ILucksRewards addr) external onlyOperator {
-    //     REWARDS = addr;
-    // }
 
     /**
     @notice set the PaymentStrategy

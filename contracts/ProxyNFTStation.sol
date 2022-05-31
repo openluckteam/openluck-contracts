@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: BUSL-1.1
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 // imports
@@ -24,17 +24,15 @@ contract ProxyNFTStation is IProxyNFTStation, ERC721Holder, ERC1155Holder, Ownab
     bytes4 public constant ID_ERC721 = 0x80ac58cd;  // ERC721    
     bytes4 public constant ID_ERC1155 = 0xd9b67a26; // ERC1155
 
-    uint public DELAY_REDEEM_SEC = 172800; // 48 hours
+    // OpenLuck executors
+    mapping(address => bool) public executors;
 
-    // OpenLuck executor
-    address public immutable executor;
-
-    // store user deposited nfts
-    mapping(uint256 => DepositNFT) public deposits;
+    // store user deposited nfts, support multiple executors (executor-address => depositId => NFT)    
+    mapping(address => mapping(uint256 => DepositNFT)) public deposits;
 
 
     modifier onlyExecutor() {
-        require(msg.sender == executor, "Lucks: caller must be LucksExecutor.");
+        require(executors[msg.sender] == true, "Lucks: caller must be LucksExecutor.");
         _;
     }
 
@@ -45,7 +43,7 @@ contract ProxyNFTStation is IProxyNFTStation, ERC721Holder, ERC1155Holder, Ownab
      * @param _executor address
      */
     constructor(address _executor) {
-       executor = _executor;
+       executors[_executor]= true;
     }
 
     // ============ Public functions ============
@@ -60,49 +58,28 @@ contract ProxyNFTStation is IProxyNFTStation, ERC721Holder, ERC1155Holder, Ownab
         _depositIds.increment();
         depositId = _depositIds.current();
 
-        deposits[depositId] = DepositNFT(user, nft, tokenIds, amounts, endTime);
+        deposits[msg.sender][depositId] = DepositNFT(user, nft, tokenIds, amounts, endTime);
         
-        emit Deposit(depositId, user, nft, tokenIds, amounts, endTime);   
+        emit Deposit(msg.sender, depositId, user, nft, tokenIds, amounts, endTime);   
     }
 
     function withdraw(uint256 depositId, address to) override external onlyExecutor {
 
-        require(deposits[depositId].tokenIds.length > 0, "Invalid depositId");
+        require(deposits[msg.sender][depositId].tokenIds.length > 0, "Invalid depositId");
 
-        address nft = deposits[depositId].nftContract;
-        uint256[] memory tokenIds = deposits[depositId].tokenIds;
-        uint256[] memory amounts = deposits[depositId].amounts;
+        address nft = deposits[msg.sender][depositId].nftContract;
+        uint256[] memory tokenIds = deposits[msg.sender][depositId].tokenIds;
+        uint256[] memory amounts = deposits[msg.sender][depositId].amounts;
 
         // update storage
-        delete deposits[depositId];
+        delete deposits[msg.sender][depositId];
 
         // transfer out nft
         _transferNFTs(nft, address(this), to, tokenIds, amounts);
 
-        emit Withdraw(depositId, to, nft, tokenIds, amounts);   
+        emit Withdraw(msg.sender, depositId, to, nft, tokenIds, amounts);   
     }
 
-
-    // for user to redeem
-    // in case of cross chain deposit suck, user can redeem back nft after endTime
-    function redeem(uint256 depositId, address to) override external {
-        
-        require(deposits[depositId].tokenIds.length > 0, "Invalid depositId");
-        require(block.timestamp > deposits[depositId].endTime + DELAY_REDEEM_SEC, "Not time to redeem");
-        require(deposits[depositId].user == to , "Invalid redeem to");
-
-        address nft = deposits[depositId].nftContract;
-        uint256[] memory tokenIds = deposits[depositId].tokenIds;
-        uint256[] memory amounts = deposits[depositId].amounts;
-
-        // update storage
-        delete deposits[depositId];
-
-        // transfer back nft to user
-        _transferNFTs(nft, address(this), to, tokenIds, amounts);
-
-        emit Redeem(depositId, to, nft, tokenIds, amounts);   
-    }
 
     // ============ Internal functions ============
 
@@ -130,12 +107,40 @@ contract ProxyNFTStation is IProxyNFTStation, ERC721Holder, ERC1155Holder, Ownab
         }
     }
 
+    
+    // ============ only Owner ============
+
+    /**
+     * @notice for enmergency case
+     * for user to redeem
+     * in case of cross chain withdraw suck nft, enable to redeem back to seller nft after endTime
+    */
+    function redeem(address executor, uint256 depositId, address to) override external onlyOwner {
+        
+        require(deposits[executor][depositId].tokenIds.length > 0, "Invalid depositId");
+        require(block.timestamp > deposits[executor][depositId].endTime, "Not time to redeem");
+        require(deposits[executor][depositId].user == to , "Invalid redeem to");
+
+        address nft = deposits[executor][depositId].nftContract;
+        uint256[] memory tokenIds = deposits[executor][depositId].tokenIds;
+        uint256[] memory amounts = deposits[executor][depositId].amounts;
+
+        // update storage
+        delete deposits[executor][depositId];
+
+        // transfer back nft to user
+        _transferNFTs(nft, address(this), to, tokenIds, amounts);
+
+        emit Redeem(msg.sender, depositId, to, nft, tokenIds, amounts);   
+    }
+
+
     //  ============ onlyOwner  functions  ============
 
     /**
     @notice set operator
      */
-    function setRedeemDelay(uint second) external onlyOwner {
-        DELAY_REDEEM_SEC = second;
+    function setExecutor(address executor) external onlyOwner {
+        executors[executor] = true;
     }
 } 

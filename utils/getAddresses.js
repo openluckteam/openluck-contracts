@@ -1,4 +1,4 @@
-const {getNetworksForEnv} = require("@layerzerolabs/core-sdk");
+const { getNetworksForEnv } = require("@layerzerolabs/core-sdk");
 const fs = require('fs');
 
 const environmentArg = process.argv[2]
@@ -25,7 +25,7 @@ async function getAddresses(environment, contractCsv) {
 }
 
 function getAddressForNetwork(file, network) {
-    return new Promise( (res) => {
+    return new Promise((res) => {
         fs.readFile(file, (error, content) => {
             if (content == undefined) {
                 console.log(`File: ${file} does not exsist`);

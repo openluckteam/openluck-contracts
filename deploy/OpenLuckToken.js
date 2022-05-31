@@ -1,7 +1,6 @@
 const { getLayerZeroAddress } = require("../utils/layerzero")
 const CONFIG = require("../constants/config.json")
-const { isTestnet, isLocalhost,getEndpointIdByName } = require("../utils/network")
-// const { getEndpointIdByName } = require("@layerzerolabs/core-sdk")
+const { isTestnet, isLocalhost, getEndpointIdByName } = require("../utils/network")
 
 function getDependencies() {
     if (isLocalhost()) {
@@ -10,8 +9,14 @@ function getDependencies() {
 }
 
 module.exports = async ({ getNamedAccounts, deployments }) => {
-    const { deploy } = deployments
-    const { deployer } = await getNamedAccounts()
+    const { deploy } = deployments;
+    const { deployer } = await getNamedAccounts();
+
+    let mainEndpointId = CONFIG.OpenLuckToken.mainEndpointId // BSC
+    if (isTestnet() && !isLocalhost()) {
+        // for testnet, mint a bunch of tokens on every chain
+        mainEndpointId = getEndpointIdByName(hre.network.name)
+    }
 
     let lzAddress
     if (isLocalhost()) {
@@ -23,25 +28,36 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         console.log(`  -> OpenLuckToken needs LayerZero: ${hre.network.name} LayerZeroEndpoint: ${lzAddress}`)
     }
 
-    let mainEndpointId = CONFIG.OpenLuckToken.mainEndpointId // BSC
-    if (isTestnet() && !isLocalhost()) {
-        // for testnet, mint a bunch of tokens on every chain
-        mainEndpointId = getEndpointIdByName(hre.network.name)
-    }
-
-    let tokenName = CONFIG.OpenLuckToken.name
-    let tokenSymbol = CONFIG.OpenLuckToken.symbol
+    const premintAddress = CONFIG.OpenLuckToken.premintAddress
+    const premintAmount = ethers.utils.parseUnits(CONFIG.OpenLuckToken.premintAmount, 18);
+    const globalSupply = ethers.utils.parseUnits(CONFIG.OpenLuckToken.globalSupply, 18);
     if (hre.network.name !== "hardhat") {
-        console.log(`OpenLuckToken name: ${tokenName}, symbol:${tokenSymbol} | mainEndpointId: ${mainEndpointId} | isTestnet: ${isTestnet()}`)
+        console.log(`OpenLuckToken | mainEndpointId: ${mainEndpointId} | isTestnet: ${isTestnet()}`)
     }
     await deploy("OpenLuckToken", {
         from: deployer,
-        args: [tokenName, tokenSymbol, lzAddress, mainEndpointId, CONFIG.OpenLuckToken.initialSupplyMainEndpoint],
+        args: [
+            lzAddress,
+            premintAddress,
+            premintAmount,
+            globalSupply
+        ],
         log: true,
         skipIfAlreadyDeployed: true,
         waitConfirmations: 1,
     })
 }
+
+//only deploy for BNB Chain
+module.exports.skip = ({ getChainId }) =>
+    new Promise(async (resolve, reject) => {
+        try {
+            resolve(hre.network.name.indexOf("bsc") < 0)
+        } catch (error) {
+            reject(error)
+        }
+    });
+
 
 module.exports.tags = ["OpenLuckToken", "test"]
 module.exports.dependencies = getDependencies()

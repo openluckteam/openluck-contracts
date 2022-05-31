@@ -1,0 +1,1804 @@
+{
+  "manifestVersion": "3.2",
+  "admin": {
+    "address": "0x9863578d4279f1A133818f1Cccb3C36d37Ce7a1D",
+    "txHash": "0xd9bbd8ce62050fba631af98ddec86d11f4bec06b2b913aac627bc59469da6833"
+  },
+  "proxies": [
+    {
+      "address": "0x8388fC658D5ce3Ee71A2ef2714De95A880eEC189",
+      "txHash": "0x025225373cac38f5f8d2fbfd5c6e069d7ebf8575d356a1f2fc95c11110db49ec",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x314a051Fe16Cd23043F4Dd38940C4A62e6e87faC",
+      "txHash": "0x1f01beee514321599d66b9c58390b141b85f1323c0cc66e27caabfe51d177c4e",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x51f57486F8b09Df7b37Ee78821E19d566B8dEd3d",
+      "txHash": "0x921a982fbce718fe7f94c13491aeec1227aed76dddde64fe96dce7501db179ea",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "8cc668a32c4aaa6e675948a53761b945ba5fe768caec9a422c42ba646d274f92": {
+      "address": "0x14A96150A137e25BD26D1B476f8EC19C56D49CE9",
+      "txHash": "0xf3ebb6ee0e198aef0506ccb02601871b496ad1d1872dec8167e9c242785576f4",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:74"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:87"
+          },
+          {
+            "label": "ids",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_struct(Counter)4842_storage",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:28"
+          },
+          {
+            "label": "HELPER",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_contract(ILucksHelper)10062",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:32"
+          },
+          {
+            "label": "PROXY_NFT",
+            "offset": 0,
+            "slot": "153",
+            "type": "t_contract(IProxyNFTStation)10369",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:33"
+          },
+          {
+            "label": "PROXY_TOKEN",
+            "offset": 0,
+            "slot": "154",
+            "type": "t_contract(IProxyTokenStation)10410",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:34"
+          },
+          {
+            "label": "BRIDGE",
+            "offset": 0,
+            "slot": "155",
+            "type": "t_contract(ILucksBridge)9593",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:35"
+          },
+          {
+            "label": "lzChainId",
+            "offset": 20,
+            "slot": "155",
+            "type": "t_uint16",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:37"
+          },
+          {
+            "label": "isAllowTask",
+            "offset": 22,
+            "slot": "155",
+            "type": "t_bool",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:38"
+          },
+          {
+            "label": "tasks",
+            "offset": 0,
+            "slot": "156",
+            "type": "t_mapping(t_uint256,t_struct(TaskItem)9644_storage)",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:43"
+          },
+          {
+            "label": "tickets",
+            "offset": 0,
+            "slot": "157",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_struct(Ticket)9658_storage))",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:44"
+          },
+          {
+            "label": "ticketIds",
+            "offset": 0,
+            "slot": "158",
+            "type": "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:45"
+          },
+          {
+            "label": "infos",
+            "offset": 0,
+            "slot": "159",
+            "type": "t_mapping(t_uint256,t_struct(TaskInfo)9665_storage)",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:46"
+          },
+          {
+            "label": "userTickets",
+            "offset": 0,
+            "slot": "160",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_uint256))",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:47"
+          },
+          {
+            "label": "userClaimeds",
+            "offset": 0,
+            "slot": "161",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_uint256))",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:48"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(ILucksBridge)9593": {
+            "label": "contract ILucksBridge",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ILucksHelper)10062": {
+            "label": "contract ILucksHelper",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IProxyNFTStation)10369": {
+            "label": "contract IProxyNFTStation",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IProxyTokenStation)10410": {
+            "label": "contract IProxyTokenStation",
+            "numberOfBytes": "20"
+          },
+          "t_enum(TaskStatus)9604": {
+            "label": "enum TaskStatus",
+            "members": [
+              "Pending",
+              "Open",
+              "Close",
+              "Success",
+              "Fail",
+              "Cancel"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_uint256))": {
+            "label": "mapping(address => mapping(uint256 => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(uint256 => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_struct(Ticket)9658_storage))": {
+            "label": "mapping(uint256 => mapping(uint256 => struct Ticket))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TaskInfo)9665_storage)": {
+            "label": "mapping(uint256 => struct TaskInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TaskItem)9644_storage)": {
+            "label": "mapping(uint256 => struct TaskItem)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Ticket)9658_storage)": {
+            "label": "mapping(uint256 => struct Ticket)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Counter)4842_storage": {
+            "label": "struct Counters.Counter",
+            "members": [
+              {
+                "label": "_value",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ExclusiveToken)9609_storage": {
+            "label": "struct ExclusiveToken",
+            "members": [
+              {
+                "label": "token",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(TaskInfo)9665_storage": {
+            "label": "struct TaskInfo",
+            "members": [
+              {
+                "label": "lastTID",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "closeTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "finalNumber",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
+          },
+          "t_struct(TaskItem)9644_storage": {
+            "label": "struct TaskItem",
+            "members": [
+              {
+                "label": "seller",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "nftChainId",
+                "type": "t_uint16",
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "nftContract",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "tokenIds",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "tokenAmounts",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "acceptToken",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "status",
+                "type": "t_enum(TaskStatus)9604",
+                "offset": 20,
+                "slot": "4"
+              },
+              {
+                "label": "startTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "endTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "targetAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "price",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "paymentStrategy",
+                "type": "t_uint16",
+                "offset": 0,
+                "slot": "9"
+              },
+              {
+                "label": "exclusiveToken",
+                "type": "t_struct(ExclusiveToken)9609_storage",
+                "offset": 0,
+                "slot": "10"
+              },
+              {
+                "label": "amountCollected",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "12"
+              },
+              {
+                "label": "depositId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "13"
+              }
+            ],
+            "numberOfBytes": "448"
+          },
+          "t_struct(Ticket)9658_storage": {
+            "label": "struct Ticket",
+            "members": [
+              {
+                "label": "number",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "count",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "owner",
+                "type": "t_address",
+                "offset": 4,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "1e47859973bf204cd144cb577fbc8a195d89951195a11338bbe3b1c34b09ab12": {
+      "address": "0x7CFE51eA5e624d05556ECb5dB444659D6eF417DD",
+      "txHash": "0x823cbdf87694e6e6e756634ce3b2822c0fd7e5bfae0995c24547a1dbb34854ef",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:74"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:87"
+          },
+          {
+            "label": "ids",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_struct(Counter)4842_storage",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:28"
+          },
+          {
+            "label": "HELPER",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_contract(ILucksHelper)10067",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:31"
+          },
+          {
+            "label": "NFT",
+            "offset": 0,
+            "slot": "153",
+            "type": "t_contract(IProxyNFTStation)10374",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:32"
+          },
+          {
+            "label": "TOKEN",
+            "offset": 0,
+            "slot": "154",
+            "type": "t_contract(IProxyTokenStation)10415",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:33"
+          },
+          {
+            "label": "BRIDGE",
+            "offset": 0,
+            "slot": "155",
+            "type": "t_contract(ILucksBridge)9593",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:34"
+          },
+          {
+            "label": "lzChainId",
+            "offset": 20,
+            "slot": "155",
+            "type": "t_uint16",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:36"
+          },
+          {
+            "label": "isAllowTask",
+            "offset": 22,
+            "slot": "155",
+            "type": "t_bool",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:37"
+          },
+          {
+            "label": "tasks",
+            "offset": 0,
+            "slot": "156",
+            "type": "t_mapping(t_uint256,t_struct(TaskItem)9644_storage)",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:42"
+          },
+          {
+            "label": "infos",
+            "offset": 0,
+            "slot": "157",
+            "type": "t_mapping(t_uint256,t_struct(TaskInfo)9665_storage)",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:43"
+          },
+          {
+            "label": "tickets",
+            "offset": 0,
+            "slot": "158",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_struct(Ticket)9658_storage))",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:44"
+          },
+          {
+            "label": "ticketIds",
+            "offset": 0,
+            "slot": "159",
+            "type": "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:45"
+          },
+          {
+            "label": "userState",
+            "offset": 0,
+            "slot": "160",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_struct(UserState)9670_storage))",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:46"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(ILucksBridge)9593": {
+            "label": "contract ILucksBridge",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ILucksHelper)10067": {
+            "label": "contract ILucksHelper",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IProxyNFTStation)10374": {
+            "label": "contract IProxyNFTStation",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IProxyTokenStation)10415": {
+            "label": "contract IProxyTokenStation",
+            "numberOfBytes": "20"
+          },
+          "t_enum(TaskStatus)9604": {
+            "label": "enum TaskStatus",
+            "members": [
+              "Pending",
+              "Open",
+              "Close",
+              "Success",
+              "Fail",
+              "Cancel"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_struct(UserState)9670_storage))": {
+            "label": "mapping(address => mapping(uint256 => struct UserState))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(uint256 => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_struct(Ticket)9658_storage))": {
+            "label": "mapping(uint256 => mapping(uint256 => struct Ticket))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TaskInfo)9665_storage)": {
+            "label": "mapping(uint256 => struct TaskInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TaskItem)9644_storage)": {
+            "label": "mapping(uint256 => struct TaskItem)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Ticket)9658_storage)": {
+            "label": "mapping(uint256 => struct Ticket)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(UserState)9670_storage)": {
+            "label": "mapping(uint256 => struct UserState)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Counter)4842_storage": {
+            "label": "struct Counters.Counter",
+            "members": [
+              {
+                "label": "_value",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ExclusiveToken)9609_storage": {
+            "label": "struct ExclusiveToken",
+            "members": [
+              {
+                "label": "token",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(TaskInfo)9665_storage": {
+            "label": "struct TaskInfo",
+            "members": [
+              {
+                "label": "lastTID",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "closeTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "finalNo",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
+          },
+          "t_struct(TaskItem)9644_storage": {
+            "label": "struct TaskItem",
+            "members": [
+              {
+                "label": "seller",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "nftChainId",
+                "type": "t_uint16",
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "nftContract",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "tokenIds",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "tokenAmounts",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "acceptToken",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "status",
+                "type": "t_enum(TaskStatus)9604",
+                "offset": 20,
+                "slot": "4"
+              },
+              {
+                "label": "startTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "endTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "targetAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "price",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "paymentStrategy",
+                "type": "t_uint16",
+                "offset": 0,
+                "slot": "9"
+              },
+              {
+                "label": "exclusiveToken",
+                "type": "t_struct(ExclusiveToken)9609_storage",
+                "offset": 0,
+                "slot": "10"
+              },
+              {
+                "label": "amountCollected",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "12"
+              },
+              {
+                "label": "depositId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "13"
+              }
+            ],
+            "numberOfBytes": "448"
+          },
+          "t_struct(Ticket)9658_storage": {
+            "label": "struct Ticket",
+            "members": [
+              {
+                "label": "number",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "count",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "owner",
+                "type": "t_address",
+                "offset": 4,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(UserState)9670_storage": {
+            "label": "struct UserState",
+            "members": [
+              {
+                "label": "num",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimed",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "9f15093bc974e4c2811e8eea07d5e4aa467a861fdda1e9532d0614fc8d58a496": {
+      "address": "0x30990f36fD74Ea398CCE8fbEa312309B13F5021b",
+      "txHash": "0x0ed1d80d041e93ca4f5feac3a97f1bf3168aa61df576e44bd41fd506b784adf7",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:74"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:87"
+          },
+          {
+            "label": "ids",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_struct(Counter)827_storage",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:28"
+          },
+          {
+            "label": "HELPER",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_contract(ILucksHelper)3695",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:31"
+          },
+          {
+            "label": "NFT",
+            "offset": 0,
+            "slot": "153",
+            "type": "t_contract(IProxyNFTStation)3858",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:32"
+          },
+          {
+            "label": "TOKEN",
+            "offset": 0,
+            "slot": "154",
+            "type": "t_contract(IProxyTokenStation)3899",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:33"
+          },
+          {
+            "label": "BRIDGE",
+            "offset": 0,
+            "slot": "155",
+            "type": "t_contract(ILucksBridge)3221",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:34"
+          },
+          {
+            "label": "lzChainId",
+            "offset": 20,
+            "slot": "155",
+            "type": "t_uint16",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:36"
+          },
+          {
+            "label": "isAllowTask",
+            "offset": 22,
+            "slot": "155",
+            "type": "t_bool",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:37"
+          },
+          {
+            "label": "tasks",
+            "offset": 0,
+            "slot": "156",
+            "type": "t_mapping(t_uint256,t_struct(TaskItem)3272_storage)",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:42"
+          },
+          {
+            "label": "infos",
+            "offset": 0,
+            "slot": "157",
+            "type": "t_mapping(t_uint256,t_struct(TaskInfo)3293_storage)",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:43"
+          },
+          {
+            "label": "tickets",
+            "offset": 0,
+            "slot": "158",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_struct(Ticket)3286_storage))",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:44"
+          },
+          {
+            "label": "ticketIds",
+            "offset": 0,
+            "slot": "159",
+            "type": "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:45"
+          },
+          {
+            "label": "userState",
+            "offset": 0,
+            "slot": "160",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_struct(UserState)3298_storage))",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:46"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(ILucksBridge)3221": {
+            "label": "contract ILucksBridge",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ILucksHelper)3695": {
+            "label": "contract ILucksHelper",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IProxyNFTStation)3858": {
+            "label": "contract IProxyNFTStation",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IProxyTokenStation)3899": {
+            "label": "contract IProxyTokenStation",
+            "numberOfBytes": "20"
+          },
+          "t_enum(TaskStatus)3232": {
+            "label": "enum TaskStatus",
+            "members": [
+              "Pending",
+              "Open",
+              "Close",
+              "Success",
+              "Fail",
+              "Cancel"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_struct(UserState)3298_storage))": {
+            "label": "mapping(address => mapping(uint256 => struct UserState))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(uint256 => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_struct(Ticket)3286_storage))": {
+            "label": "mapping(uint256 => mapping(uint256 => struct Ticket))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TaskInfo)3293_storage)": {
+            "label": "mapping(uint256 => struct TaskInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TaskItem)3272_storage)": {
+            "label": "mapping(uint256 => struct TaskItem)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Ticket)3286_storage)": {
+            "label": "mapping(uint256 => struct Ticket)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(UserState)3298_storage)": {
+            "label": "mapping(uint256 => struct UserState)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Counter)827_storage": {
+            "label": "struct Counters.Counter",
+            "members": [
+              {
+                "label": "_value",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ExclusiveToken)3237_storage": {
+            "label": "struct ExclusiveToken",
+            "members": [
+              {
+                "label": "token",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(TaskInfo)3293_storage": {
+            "label": "struct TaskInfo",
+            "members": [
+              {
+                "label": "lastTID",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "closeTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "finalNo",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
+          },
+          "t_struct(TaskItem)3272_storage": {
+            "label": "struct TaskItem",
+            "members": [
+              {
+                "label": "seller",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "nftChainId",
+                "type": "t_uint16",
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "nftContract",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "tokenIds",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "tokenAmounts",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "acceptToken",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "status",
+                "type": "t_enum(TaskStatus)3232",
+                "offset": 20,
+                "slot": "4"
+              },
+              {
+                "label": "startTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "endTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "targetAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "price",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "paymentStrategy",
+                "type": "t_uint16",
+                "offset": 0,
+                "slot": "9"
+              },
+              {
+                "label": "exclusiveToken",
+                "type": "t_struct(ExclusiveToken)3237_storage",
+                "offset": 0,
+                "slot": "10"
+              },
+              {
+                "label": "amountCollected",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "12"
+              },
+              {
+                "label": "depositId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "13"
+              }
+            ],
+            "numberOfBytes": "448"
+          },
+          "t_struct(Ticket)3286_storage": {
+            "label": "struct Ticket",
+            "members": [
+              {
+                "label": "number",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "count",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "owner",
+                "type": "t_address",
+                "offset": 4,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(UserState)3298_storage": {
+            "label": "struct UserState",
+            "members": [
+              {
+                "label": "num",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimed",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "3f5e3684ea0d77118c8cc088be7c5190c637e37a9351ef1ac3832485fcc94ecf": {
+      "address": "0x5b4E2520D974eB75A9aD0C6848E1558aA661974C",
+      "txHash": "0xda9e3d0a4344f2fd38f4719b405175f866c0dcc87ad656228d56afad7aadd7ef",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:74"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:87"
+          },
+          {
+            "label": "ids",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_struct(Counter)4842_storage",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:28"
+          },
+          {
+            "label": "HELPER",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_contract(ILucksHelper)10162",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:31"
+          },
+          {
+            "label": "NFT",
+            "offset": 0,
+            "slot": "153",
+            "type": "t_contract(IProxyNFTStation)10469",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:32"
+          },
+          {
+            "label": "TOKEN",
+            "offset": 0,
+            "slot": "154",
+            "type": "t_contract(IProxyTokenStation)10510",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:33"
+          },
+          {
+            "label": "BRIDGE",
+            "offset": 0,
+            "slot": "155",
+            "type": "t_contract(ILucksBridge)9658",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:34"
+          },
+          {
+            "label": "lzChainId",
+            "offset": 20,
+            "slot": "155",
+            "type": "t_uint16",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:36"
+          },
+          {
+            "label": "isAllowTask",
+            "offset": 22,
+            "slot": "155",
+            "type": "t_bool",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:37"
+          },
+          {
+            "label": "tasks",
+            "offset": 0,
+            "slot": "156",
+            "type": "t_mapping(t_uint256,t_struct(TaskItem)9709_storage)",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:42"
+          },
+          {
+            "label": "infos",
+            "offset": 0,
+            "slot": "157",
+            "type": "t_mapping(t_uint256,t_struct(TaskInfo)9730_storage)",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:43"
+          },
+          {
+            "label": "tickets",
+            "offset": 0,
+            "slot": "158",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_struct(Ticket)9723_storage))",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:44"
+          },
+          {
+            "label": "ticketIds",
+            "offset": 0,
+            "slot": "159",
+            "type": "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:45"
+          },
+          {
+            "label": "userState",
+            "offset": 0,
+            "slot": "160",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_struct(UserState)9735_storage))",
+            "contract": "LucksExecutor",
+            "src": "contracts\\LucksExecutor.sol:46"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(ILucksBridge)9658": {
+            "label": "contract ILucksBridge",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ILucksHelper)10162": {
+            "label": "contract ILucksHelper",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IProxyNFTStation)10469": {
+            "label": "contract IProxyNFTStation",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IProxyTokenStation)10510": {
+            "label": "contract IProxyTokenStation",
+            "numberOfBytes": "20"
+          },
+          "t_enum(TaskStatus)9669": {
+            "label": "enum TaskStatus",
+            "members": [
+              "Pending",
+              "Open",
+              "Close",
+              "Success",
+              "Fail",
+              "Cancel"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_struct(UserState)9735_storage))": {
+            "label": "mapping(address => mapping(uint256 => struct UserState))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(uint256 => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_struct(Ticket)9723_storage))": {
+            "label": "mapping(uint256 => mapping(uint256 => struct Ticket))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TaskInfo)9730_storage)": {
+            "label": "mapping(uint256 => struct TaskInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TaskItem)9709_storage)": {
+            "label": "mapping(uint256 => struct TaskItem)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Ticket)9723_storage)": {
+            "label": "mapping(uint256 => struct Ticket)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(UserState)9735_storage)": {
+            "label": "mapping(uint256 => struct UserState)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Counter)4842_storage": {
+            "label": "struct Counters.Counter",
+            "members": [
+              {
+                "label": "_value",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ExclusiveToken)9674_storage": {
+            "label": "struct ExclusiveToken",
+            "members": [
+              {
+                "label": "token",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(TaskInfo)9730_storage": {
+            "label": "struct TaskInfo",
+            "members": [
+              {
+                "label": "lastTID",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "closeTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "finalNo",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
+          },
+          "t_struct(TaskItem)9709_storage": {
+            "label": "struct TaskItem",
+            "members": [
+              {
+                "label": "seller",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "nftChainId",
+                "type": "t_uint16",
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "nftContract",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "tokenIds",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "tokenAmounts",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "acceptToken",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "status",
+                "type": "t_enum(TaskStatus)9669",
+                "offset": 20,
+                "slot": "4"
+              },
+              {
+                "label": "startTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "endTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "targetAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "price",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "paymentStrategy",
+                "type": "t_uint16",
+                "offset": 0,
+                "slot": "9"
+              },
+              {
+                "label": "exclusiveToken",
+                "type": "t_struct(ExclusiveToken)9674_storage",
+                "offset": 0,
+                "slot": "10"
+              },
+              {
+                "label": "amountCollected",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "12"
+              },
+              {
+                "label": "depositId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "13"
+              }
+            ],
+            "numberOfBytes": "448"
+          },
+          "t_struct(Ticket)9723_storage": {
+            "label": "struct Ticket",
+            "members": [
+              {
+                "label": "number",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "count",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "owner",
+                "type": "t_address",
+                "offset": 4,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(UserState)9735_storage": {
+            "label": "struct UserState",
+            "members": [
+              {
+                "label": "num",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimed",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    }
+  }
+}

@@ -20,7 +20,7 @@ task("lzEndpointMock", "connect the local openluck to a remote openluck by confi
             let targetNetworkAddrs = getDeploymentAddresses(targetNetwork)
 
             let targetBridgeAddr = ethers.utils.getAddress(targetNetworkAddrs["LucksBridge"]) // cast to standardized address
-            let targetEndpointAddr = ethers.utils.getAddress(targetNetworkAddrs["LZEndpointMock"]) 
+            let targetEndpointAddr = ethers.utils.getAddress(targetNetworkAddrs["LZEndpointMock"])
 
             const destLzEndpoint = await srcEndpint.lzEndpointLookup(targetBridgeAddr)
             if (destLzEndpoint === "0x0000000000000000000000000000000000000000") {

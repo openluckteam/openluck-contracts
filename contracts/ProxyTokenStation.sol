@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: BUSL-1.1
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 // imports
@@ -17,11 +17,16 @@ contract ProxyTokenStation is IProxyTokenStation, Ownable {
 
     // ============ Public  ============    
    
-    address public immutable executor;  // OpenLuck executor
-    address public immutable WETH;
+    // OpenLuck executors
+    mapping(address => bool) public executors;
+
+    // support multiple executors (executor-address => token address => amount)    
+    mapping(address => mapping(address => uint256)) public deposits;
+
+    address public WETH;
    
     modifier onlyExecutor() {
-        require(msg.sender == executor, "Lucks: caller must be LucksExecutor.");
+        require(executors[msg.sender] == true, "Lucks: caller must be LucksExecutor.");
         _;
     }
 
@@ -32,7 +37,7 @@ contract ProxyTokenStation is IProxyTokenStation, Ownable {
      * @param _executor executor address
      */
     constructor(address _executor, address _weth) {
-        executor = _executor;
+        executors[_executor] = true;
         WETH = _weth;
     }
 
@@ -40,21 +45,21 @@ contract ProxyTokenStation is IProxyTokenStation, Ownable {
 
     function deposit(address user, address token, uint256 amount) override external payable onlyExecutor {
         
-        _deposit(user, token, amount);
+        _deposit(msg.sender, user, token, amount);
         
-        emit Deposit(user, token, amount);        
+        emit Deposit(msg.sender, user, token, amount);        
     }
 
     function withdraw(address user, address token, uint256 amount) override external onlyExecutor {
 
-        _withdraw(user, token, amount);
+        _withdraw(msg.sender, user, token, amount);
 
-        emit Withdraw(user, token, amount);   
+        emit Withdraw(msg.sender, user, token, amount);   
     }
 
     // ============ Internal functions ============
 
-    function _deposit(address user, address token, uint256 amount) internal {
+    function _deposit(address executor, address user, address token, uint256 amount) internal {
         //zero address means Chain Navite Token, support ETH+WETH
          if (token == address(0)) { 
             // allow ETH+WETH
@@ -68,6 +73,7 @@ contract ProxyTokenStation is IProxyTokenStation, Ownable {
                 IERC20(WETH).transferFrom(user, address(this), wrapTokenAmount);
                 // transfer WETH to ETH
                 IWETH(WETH).withdraw(wrapTokenAmount);
+
             }
             
         } else {
@@ -76,12 +82,19 @@ contract ProxyTokenStation is IProxyTokenStation, Ownable {
             // Transfer tokens to this contract
             IERC20(token).transferFrom(user, address(this), amount);
         }
+
+        // update deposits balance
+        deposits[executor][token] = deposits[executor][token].add(amount);
     }
 
-    function _withdraw(address user, address token, uint256 amount) internal {
+    function _withdraw(address executor, address user, address token, uint256 amount) internal {
         
         require(user != address(0) && user != address(this), "Invalid address");
         require(amount > 0, "Invalid amount");
+        require(deposits[executor][token] >= amount, "Insufficient deposited balance for this executor");
+
+        // update deposits balance
+        deposits[executor][token] = deposits[executor][token].sub(amount);
 
         // transfer
         if (token == address(0)) {    
@@ -93,5 +106,20 @@ contract ProxyTokenStation is IProxyTokenStation, Ownable {
             // Transfer tokens                
             IERC20(token).transfer(user, amount);
         }
+    }
+
+    /**
+    @notice set operator
+     */
+    function setExecutor(address executor) external onlyOwner {
+        executors[executor] = true;
+    }
+
+
+    /**
+    @notice set IWETH
+     */
+    function setWETH(address _eth) external onlyOwner {
+        WETH = _eth;
     }
 } 

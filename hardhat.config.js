@@ -4,6 +4,7 @@ require("@nomiclabs/hardhat-ganache");
 require('@nomiclabs/hardhat-etherscan');
 require('@nomiclabs/hardhat-waffle');
 require('@nomiclabs/hardhat-ethers');
+require('@openzeppelin/hardhat-upgrades');
 require('hardhat-gas-reporter');
 require('hardhat-deploy');
 require('hardhat-deploy-ethers');
@@ -63,6 +64,7 @@ function privatekeys(network) {
 // custom helper tasks
 require("./tasks/lzEndpointMock");
 require("./tasks/wireBridges");
+require("./tasks/checkSettings");
 
 
 // You need to export an object to set up your config
@@ -79,7 +81,17 @@ module.exports = {
         settings: {
           optimizer: {
             enabled: true,
-            runs: 999999,
+            runs: 20000,
+            // runs: 999999,
+          },
+        },
+      },
+      {
+        version: '0.8.2',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 20000,
           },
         },
       },
@@ -136,61 +148,62 @@ module.exports = {
   },
   defaultNetwork,
   networks: {
-    // "localhost-eth": {
-    //   url: 'http://localhost:8545',
-    //   gasPrice: 500000000, // 5Gwei
-    //   network_id: '*'
-    // },
-    // "localhost-bsc": {
-    //   url: 'http://localhost:8545',
-    //   gasPrice: 500000000, // 5Gwei
-    //   network_id: '*'
-    // },
     "localhost-eth": {
-      url: 'http://47.241.199.236:8546',
-      accounts: privatekeys("dev"),     
+      url: 'http://127.0.0.1:8545',
       gasPrice: 500000000, // 5Gwei
-      network_id: '4337'
+      timeout: 600000,
+      network_id: '*'
     },
     "localhost-bsc": {
-      url: 'http://47.241.199.236:8546',
-      accounts: privatekeys("dev"),     
+      url: 'http://127.0.0.1:8545',
       gasPrice: 500000000, // 5Gwei
-      network_id: '4337'
+      timeout: 600000,
+      network_id: '*'
     },
-    dev: {
-      url: 'http://47.241.199.236:8546',
-      accounts: privatekeys("dev"),     
-      gasPrice: 500000000, // 5Gwei
-      network_id: '4337'
-    },
+    // "localhost-eth": {
+    //   url: 'http://47.241.199.236:8546',
+    //   accounts: privatekeys("dev"),     
+    //   gasPrice: 500000000, // 5Gwei
+    //   network_id: '4337'
+    // },
+    // "localhost-bsc": {
+    //   url: 'http://47.241.199.236:8546',
+    //   accounts: privatekeys("dev"),     
+    //   gasPrice: 500000000, // 5Gwei
+    //   network_id: '4337'
+    // },
     // eth network
     eth: {
       url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
       accounts: privatekeys("eth"),
       gasPrice: 30000000000, //30Gwei
-      network_id: 1
+      network_id: 1,
+      timeout: 600000,
     },
     "rinkeby-testnet": {
       url: `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`,
       accounts: privatekeys("rinkeby"),
       network_id: 4,
       gasPrice: 5000000000, //3Gwei
-      gas: 10000000
+      gas: 10000000,
+      timeout: 600000,
     },
     // bsc network
     bsc: {
       url: 'https://bsc-dataseed1.binance.org',
       accounts: privatekeys("bsc"),
       gasPrice: 5000000000, //5Gwei
-      network_id: 56
+      network_id: 56,
+      timeout: 600000,
     },
     "bsctestnet-testnet": {
-      url: 'https://data-seed-prebsc-1-s1.binance.org:8545',
+      // url: 'https://data-seed-prebsc-1-s1.binance.org:8545',
+      url: 'https://speedy-nodes-nyc.moralis.io/edf10fe6a4af44e7ad38d05d/bsc/testnet',
       accounts: privatekeys("bscTestnet"),
       network_id: 97,
       gasPrice: 11000000000, //11Gwei
-      gas: 8000000
+      gas: 8000000,
+      timeout: 600000,
     },
     // avalanche network
     avalanche: {
@@ -232,7 +245,7 @@ module.exports = {
   mocha: {
     bail: true,
     allowUncaught: true,
-    timeout: 600000
+    timeout: 43200000 // 12hours
   },
   gasReporter: {
     currency: 'BNB',

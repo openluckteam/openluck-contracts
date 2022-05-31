@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 // OpenZeppelin contracts
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 // Openluck interfaces
 import {ILucksGroup} from "../interfaces/ILucksGroup.sol";
@@ -12,13 +13,12 @@ import {ILucksExecutor, TaskItem, TaskStatus} from "../interfaces/ILucksExecutor
 /** @title Openluck LucksGroup
  * @notice It is the contract for LucksGroup
  */
-contract LucksGroup is ILucksGroup {
+contract LucksGroup is ILucksGroup, Ownable {
 
     using Counters for Counters.Counter;    
 
     ILucksExecutor public EXECUTOR;
 
-    address public OpenLuckToken;
     uint32 public MAX_SEAT = 10;
     
     mapping(uint256 => uint256) public groupIds;               // groupId counter (taskId => groupId)
@@ -26,9 +26,8 @@ contract LucksGroup is ILucksGroup {
     mapping(address => mapping(uint256 => uint256)) public userGroups;   // store user joined groups (user => taskId => groupId)
     mapping(uint256 => mapping(uint256 => uint16)) public groupSeat;     // store group setting(task=> groupId = > group seat)
 
-    constructor(address _executor, address _token, uint32 _maxSeat) {
+    constructor(address _executor, uint32 _maxSeat) {
         EXECUTOR =  ILucksExecutor(_executor);        
-        OpenLuckToken = _token;
         MAX_SEAT = _maxSeat;
     }
 
@@ -86,5 +85,13 @@ contract LucksGroup is ILucksGroup {
         userGroups[user][taskId] = groupId;
 
         emit CreateGroup(user, taskId, groupId, seat);
+    }
+
+    
+    /**
+    @notice set operator
+     */
+    function setExecutor(ILucksExecutor _executor) external onlyOwner {
+        EXECUTOR = _executor;
     }
 }

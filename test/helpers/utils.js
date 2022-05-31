@@ -59,12 +59,17 @@ async function approveToken(signer, token, approveToken, contracts, to, amount) 
         tokenContract = contracts.TokenUSDT;
     }
 
-    if ((await tokenContract.allowance(signer.address, to)) < amount) {
+    const allowance = (await tokenContract.allowance(signer.address, to));
+    const balance = (await tokenContract.balanceOf(signer.address));
+   
+    if (allowance < amount) {     
       const data = encodeData(tokenContract, 'approve', [to, amount]);
-      return signer.sendTransaction({
+      let tx = signer.sendTransaction({
         to: tokenContract.address,
         data,
       });
+      console.log(`balance: ${balance}, allowance:${allowance}, amount:${amount}`);
+      return tx;
     }
   }
 

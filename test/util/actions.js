@@ -414,9 +414,8 @@ removeLiquidityLocalSafe = async (srcPoolObj, dstPoolObj, user, endpoints, pools
         if (notEnoughLp && e.message.includes("Stargate: not enough lp to redeem")) {
             if (verbose) console.log(`        => cannot redeem 0 lp, failed as intended\n`)
         } else {
-            const logString = `redeemLiquidityLocal()  Pools: ${srcPoolObj.name} -> ${dstPoolObj.name} User: ${
-                user.name
-            } Amount: ${randomAmountLp.toString()}`
+            const logString = `redeemLiquidityLocal()  Pools: ${srcPoolObj.name} -> ${dstPoolObj.name} User: ${user.name
+                } Amount: ${randomAmountLp.toString()}`
             require("fs").writeSync(process.stdout.fd, `        ${logString} \n`)
             throw e
         }
@@ -477,9 +476,8 @@ removeLiquidityRemoteSafe = async (srcPoolObj, dstPoolObj, user) => {
             if (verbose) console.log("       fee > total swap amount. failed as intended")
             return
         } else {
-            const logString = `redeemLiquidityRemote() Pools: ${srcPoolObj.name} -> ${dstPoolObj.name} User: ${
-                user.name
-            }  Amount: ${randomAmountLp.toString()}`
+            const logString = `redeemLiquidityRemote() Pools: ${srcPoolObj.name} -> ${dstPoolObj.name} User: ${user.name
+                }  Amount: ${randomAmountLp.toString()}`
             require("fs").writeSync(process.stdout.fd, `        ${logString} \n`)
             throw e
         }

@@ -6,6 +6,7 @@ const { getDeploymentAddresses } = require("../../utils/readDeployments")
 const {
   getTaskNetworkNameForTest, isNetworkAllowTaskForTest, isLocalhost, isTestnet
 } = require("../../utils/network")
+const CONFIG = require("../../constants/config.json")
 
 this.getTimestamp = function (timestampms) {
   timestampms = timestampms || Date.now();
@@ -27,8 +28,9 @@ this.testArgs = async function () {
     SHIB: '0x2859e4544c4bb03966803b044a93563bd2d0dd4d' //unsupport
   }
 
-  const LucksBridge = await ethers.getContract("LucksBridge");
-  const LucksExecutor = await ethers.getContract("LucksExecutor");
+  const code = await ethers.getContractFactory("LucksExecutor");        
+  const LucksExecutor = code.attach(CONFIG.ProxyContract[hre.network.name]);
+  const LucksBridge = await ethers.getContract("LucksBridge");  
   const ProxyNFTStation = await ethers.getContract("ProxyNFTStation");
   const LucksHelper = await ethers.getContract("LucksHelper");
   const LucksHelperRemote = await (await ethers.getContractFactory("LucksHelper")).attach(
@@ -38,6 +40,9 @@ this.testArgs = async function () {
   const LucksVRF = isNetworkAllowTaskForTest() ? await ethers.getContract("LucksVRF") : ethers.constants.AddressZero;
   const LocalLucksVRF = isNetworkAllowTaskForTest() && isLocalhost() ? await ethers.getContract("LocalLucksVRF") : ethers.constants.AddressZero;
   const LucksGroup = isNetworkAllowTaskForTest() ? await ethers.getContract("LucksGroup") : ethers.constants.AddressZero;
+  const LucksAutoCloseTask = isNetworkAllowTaskForTest() ? await ethers.getContract("LucksAutoCloseTask") : ethers.constants.AddressZero;
+  const LucksAutoDrawTask = isNetworkAllowTaskForTest() ? await ethers.getContract("LucksAutoDrawTask") : ethers.constants.AddressZero;
+  // const TestTicket = isNetworkAllowTaskForTest() ? await ethers.getContract("TestTicket") : ethers.constants.AddressZero;
 
   const TokenBUSD = await (await ethers.getContractFactory("TokenBUSD")).attach(acceptToken.BUSD);
   const TokenUSDC = await (await ethers.getContractFactory("TokenUSDC")).attach(acceptToken.USDC);
@@ -78,6 +83,9 @@ this.testArgs = async function () {
       LucksHelper,
       LucksHelperRemote,
       LucksGroup,
+      LucksAutoCloseTask,
+      LucksAutoDrawTask,
+      // TestTicket,
       nfts: {
         DoodleApes,
         CyBlocPack,
@@ -223,7 +231,12 @@ this.tryBoolQuery = async (tx, revert) => {
 this.tryCall = async (tx, wait = 0) => {
   let error;
   try {
-    await (await tx).wait(wait);
+    if (wait==0) {
+      (await tx);
+    }else {
+      await (await tx).wait(wait);
+    }
+    
     return true;
   }
   catch (ex) {
@@ -236,8 +249,8 @@ this.tryCall = async (tx, wait = 0) => {
 this.tryEmitCall = async (tx, contract, event) => {
   let error;
   try {    
-    await (await tx).wait(1);
-    // expect(await tx).to.emit(contract, event);
+    // await (await tx).wait();
+    expect(await tx).to.emit(contract, event);
   }
   catch (ex) {
     error = ex;

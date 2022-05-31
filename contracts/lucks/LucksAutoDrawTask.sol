@@ -12,21 +12,22 @@ import "@chainlink/contracts/src/v0.8/KeeperCompatible.sol";
 import {ILucksExecutor, TaskItem} from "../interfaces/ILucksExecutor.sol";
 import {ILucksAuto,Task} from "../interfaces/ILucksAuto.sol";
 import {ILucksBridge, lzTxObj} from "../interfaces/ILucksBridge.sol";
+import "../libraries/SortedLinkMap.sol";
 
 contract LucksAutoDrawTask is ILucksAuto, Ownable, Pausable, KeeperCompatibleInterface {
 
-    uint256 public WAIT_PERIOD_SEC = 300; // set WAIT_PERIOD_SEC to avoid repeated execution, default 5min
+    using SortedLinkMap for SortedLinkMap.SortedMap;    
+
+    SortedLinkMap.SortedMap private taskList;
+    
     uint256 public BATCH_PERFORM_LIMIT = 10; // perform limist, default 10
-    uint256 public DST_GAS_AMOUNT = 200000; // layer zero dstGasAmount
+    uint256 public DST_GAS_AMOUNT = 550000; // layer zero dstGasAmount
 
     uint16 public immutable lzChainId;
 
     address public KEEPER; // chainLink keeper Registry Address
-    ILucksExecutor public executor;    
-    ILucksBridge public bridge;
-
-    uint256[] public taskIds;
-    mapping(uint256 => Task) public taskQuene; // (taskId=>Task)
+    ILucksExecutor public EXECUTOR;    
+    ILucksBridge public BRIDGE;
 
     /**
     * @param _keeperRegAddr The address of the keeper registry contract
@@ -35,8 +36,8 @@ contract LucksAutoDrawTask is ILucksAuto, Ownable, Pausable, KeeperCompatibleInt
     */
     constructor(address _keeperRegAddr, ILucksExecutor _executor, ILucksBridge _bridge, uint16 _lzChainId) {        
         KEEPER = _keeperRegAddr;
-        executor = _executor;
-        bridge = _bridge;
+        EXECUTOR = _executor;
+        BRIDGE = _bridge;
         lzChainId = _lzChainId;
     }
 
@@ -47,7 +48,7 @@ contract LucksAutoDrawTask is ILucksAuto, Ownable, Pausable, KeeperCompatibleInt
     }
 
     modifier onlyExecutor() {
-        require(msg.sender == address(executor) || msg.sender == owner(), "onlyExecutor");
+        require(msg.sender == address(EXECUTOR) || msg.sender == owner(), "onlyExecutor");
         _;
     }
 
@@ -60,9 +61,26 @@ contract LucksAutoDrawTask is ILucksAuto, Ownable, Pausable, KeeperCompatibleInt
 
     //  ============ Public  functions  ============
 
-    function addTask(uint256 taskId, uint endTime) external override onlyExecutor {        
-        taskQuene[taskId] = Task(endTime, 0);
-        taskIds.push(taskId);
+     function size() external view returns(uint256) {
+        return taskList.count;
+    }
+
+    function first() external view returns(uint256) {
+        return taskList.first();
+    }
+
+    function next(uint256 taskId) external view returns(uint256) {
+        return taskList.next(taskId);
+    }    
+
+    function get(uint256 taskId) external view returns(uint256) {
+        return taskList.nodes[taskId].value;
+    }
+
+    function addTask(uint256 taskId, uint endTime) external override onlyExecutor {    
+        if (taskId > 0 && endTime > 0) {            
+            taskList.add(taskId, endTime);
+        }
     }
 
     function removeTask(uint256 taskId) external override onlyExecutor {        
@@ -74,16 +92,17 @@ contract LucksAutoDrawTask is ILucksAuto, Ownable, Pausable, KeeperCompatibleInt
         uint256[] memory ids = new uint256[](BATCH_PERFORM_LIMIT);
 
         uint256 count = 0;
-        for (uint256 i = 0; i < taskIds.length; i++) {
-            uint256 taskId = taskIds[i];
-            if (count < BATCH_PERFORM_LIMIT) {
-                if (taskQuene[taskId].endTime <= block.timestamp && 
-                    (taskQuene[taskId].lastTimestamp == 0 || (taskQuene[taskId].lastTimestamp + WAIT_PERIOD_SEC) <= block.timestamp)) {
-
-                    ids[count] = taskId;
-                    count++;
-                }
+        uint taskId = taskList.first();
+       
+        while (taskId > 0 && count < BATCH_PERFORM_LIMIT) {
+                  
+            if (taskList.nodes[taskId].value <= block.timestamp) {                
+                ids[count] = taskId;    
+                count++;                   
+            }else {
+                break;
             }
+            taskId = taskList.next(taskId);           
         }
        
         if (count != BATCH_PERFORM_LIMIT) {
@@ -96,54 +115,38 @@ contract LucksAutoDrawTask is ILucksAuto, Ownable, Pausable, KeeperCompatibleInt
 
     //  ============ internal  functions  ============
 
-    function splice(uint256 k) internal {
-        for(; (k+1) < taskIds.length; k++){
-            taskIds[k] = taskIds[k+1];
-        }
-        taskIds.pop();
-    }
-
-    function _deleteTaskId(uint256 taskId) internal returns (bool){
-        for(uint256 i=0; i< taskIds.length; i++){
-            if(taskIds[i] == taskId){
-                splice(i);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    function _removeTask(uint256 taskId) internal {        
-        delete taskQuene[taskId];
-        _deleteTaskId(taskId);
+    function _removeTask(uint256 taskId) internal {                
+        taskList.remove(taskId);
     }
 
     function invokeTasks(uint256[] memory _taskIds) internal {
 
-        lzTxObj memory _lzTxObj = lzTxObj(DST_GAS_AMOUNT, 0, bytes('0x'));
+        lzTxObj memory _lzTxObj = lzTxObj(DST_GAS_AMOUNT, 0, bytes("0x"), bytes("0x"));
               
         for (uint256 i = 0; i < _taskIds.length; i++) {
 
             uint256 taskId = _taskIds[i];
-            taskQuene[taskId].lastTimestamp = block.timestamp;
+            _removeTask(taskId);
 
             uint256 quoteLayerZeroFee = 0;
-            TaskItem memory item = executor.getTask(taskId);
+            TaskItem memory item = EXECUTOR.getTask(taskId);
             if (item.nftChainId != lzChainId) {
-                if (address(bridge) != address(0)) {
-                    (quoteLayerZeroFee,) = bridge.quoteLayerZeroFee(item.nftChainId, 2, "", _lzTxObj);
+                if (address(BRIDGE) != address(0)) {
+                    (quoteLayerZeroFee,) = BRIDGE.quoteLayerZeroFee(item.nftChainId, 2, "", _lzTxObj);
                 }
             }
 
-            require(address(this).balance >= quoteLayerZeroFee, "AutoDraw: not enough fees");
-            
-            try executor.pickWinner{value: quoteLayerZeroFee}(taskId, _lzTxObj){
+            if (address(this).balance < quoteLayerZeroFee) {
+                emit RevertInvoke(taskId, "AutoDraw: not enough fees");
+            }            
+            else {             
 
-            } catch(bytes memory reason) {
-                emit RevertInvoke(taskId, reason);
+                try EXECUTOR.pickWinner{value: quoteLayerZeroFee}(taskId, _lzTxObj){
+
+                } catch(bytes memory reason) {
+                    emit RevertInvoke(taskId, reason);
+                }
             }
-
-            _removeTask(taskId);
         }
     }
 
@@ -197,10 +200,6 @@ contract LucksAutoDrawTask is ILucksAuto, Ownable, Pausable, KeeperCompatibleInt
         KEEPER = _keeperRegAddr;
     }
 
-    function setWaitPeriod(uint256 second) public onlyOwner {      
-        WAIT_PERIOD_SEC = second;
-    }
-
     function setBatchPerformLimist(uint256 num) public onlyOwner {      
         require(num > 0, "Invalid limit num");
         BATCH_PERFORM_LIMIT = num;
@@ -208,6 +207,20 @@ contract LucksAutoDrawTask is ILucksAuto, Ownable, Pausable, KeeperCompatibleInt
 
     function setDstGasAmount(uint256 amount) public onlyOwner {      
         DST_GAS_AMOUNT = amount;
+    }
+
+    /**
+    @notice set operator
+     */
+    function setExecutor(ILucksExecutor _executor) external onlyOwner {
+        EXECUTOR = _executor;
+    }
+
+    /**
+    @notice set BRIDGE
+     */
+    function setBridge(ILucksBridge _bridge) external onlyOwner {
+        BRIDGE = _bridge;
     }
 }
 

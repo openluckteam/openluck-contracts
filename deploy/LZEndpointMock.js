@@ -1,12 +1,12 @@
-const { getEndpointId,isLocalhost } = require("../utils/network")
+const { getEndpointId, isLocalhost } = require("../utils/network")
 
 module.exports = async ({ getNamedAccounts, deployments }) => {
     const { deploy } = deployments
     const { deployer } = await getNamedAccounts()
-    
+
     await deploy("LZEndpointMock", {
         from: deployer,
-        args: [await getEndpointId()], 
+        args: [await getEndpointId()],
         log: true,
         waitConfirmations: 1,
     });

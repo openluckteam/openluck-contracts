@@ -7,9 +7,10 @@
   "license": "MIT",
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-etherscan": "^2.1.4",
     "@nomiclabs/hardhat-ganache": "^2.0.1",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
-    "@nomiclabs/hardhat-etherscan": "^2.1.4",
+    "@openzeppelin/hardhat-upgrades": "^1.17.0",
     "@rarible/royalties": "^0.7.4",
     "axios": "^0.24.0",
     "chai": "^4.3.4",
@@ -20,18 +21,21 @@
     "hardhat-deploy": "^0.9.1",
     "hardhat-deploy-ethers": "^0.3.0-beta.13",
     "hardhat-gas-reporter": "^1.0.4",
+    "http-proxy-agent": "^5.0.0",
     "solidity-coverage": "^0.7.18",
-    "http-proxy-agent": "^5.0.0"
+    "solint": "^0.0.1"
   },
   "dependencies": {
     "@chainlink/contracts": "^0.4.0",
     "@openzeppelin/contracts": "^4.5.0",
+    "@openzeppelin/contracts-upgradeable": "^4.6.0",
     "@paulrberg/contracts": "3.4.0",
     "dotenv": "^10.0.0",
     "esm": "^3.2.25",
     "glob": "^7.2.0",
     "hardhat-deploy-ethers": "^0.3.0-beta.10",
     "hardhat-tracer": "^1.0.0-alpha.6",
+    "layerzero-contracts": "^0.0.1",
     "prettier": "^2.4.0"
   },
   "homepage": "https://github.com/openluckteam",
@@ -56,57 +60,48 @@
     "clean": "rimraf ./cache && rimraf ./artifacts",
     "compile": "yarn clean && hardhat compile",
     "pretty": "prettier --write \"./**/*.{js,jsx,json}\"",
-
+    "code:check": "yarn solint contracts/**/*.sol",
     "comment-mainnet": "//=============== for mainnet ===============================",
-
     "deploy:eth": "npx hardhat deploy --network eth",
     "deploy:bsc": "npx hardhat deploy --network bsc",
     "verify:bsc": "npx hardhat --network bsc etherscan-verify",
     "wireBridges:eth": "npx hardhat --network eth wireBridges --target-networks bsc",
     "wireBridges:bsc": "npx hardhat --network bsc wireBridges --target-networks eth",
-
-
     "comment-testnet": "//=============== for testnet ===============================",
-
     "deploy:test-eth": "npx hardhat deploy --network rinkeby-testnet",
     "deploy:test-bsc": "npx hardhat deploy --network bsctestnet-testnet",
     "deploy:test-avax": "npx hardhat deploy --network fuji-testnet",
-
     "wireBridges:test-eth-bsc": "npx hardhat --network rinkeby-testnet wireBridges --target-networks bsctestnet-testnet",
     "wireBridges:test-bsc-eth": "npx hardhat --network bsctestnet-testnet wireBridges --target-networks rinkeby-testnet",
-    
     "wireBridges:test-eth-avax": "npx hardhat --network rinkeby-testnet wireBridges --target-networks fuji-testnet",
     "wireBridges:test-avax-eth": "npx hardhat --network fuji-testnet wireBridges --target-networks rinkeby-testnet",
-
     "wireBridges:test-bsc-avax": "npx hardhat --network bsctestnet-testnet wireBridges --target-networks fuji-testnet",
     "wireBridges:test-avax-bsc": "npx hardhat --network fuji-testnet wireBridges --target-networks bsctestnet-testnet",
-
+    "checkSettings:test-bsc": "npx hardhat --network bsctestnet-testnet checkSettings --auto-fix true",
+    "checkSettings:test-eth": "npx hardhat --network rinkeby-testnet checkSettings --auto-fix true",
     "test:test-eth": "npx hardhat test test/index.js --network rinkeby-testnet",
     "test:test-bsc": "npx hardhat test test/index.js --network bsctestnet-testnet",
     "test:test-avax": "npx hardhat test test/index.js --network fuji-testnet",
-
     "verify:test-eth": "npx hardhat --network rinkeby-testnet etherscan-verify",
-    "verify:test-bsc": "npx hardhat --network bsctestnet-testnet etherscan-verify",
-
-    "verify:test-bsc-LucksAutoCloseTask": "npx hardhat verify --network bsctestnet-testnet --constructor-args ./scripts/verify/LucksAutoCloseTask-testnet.js 0x9DE8332C133d56BEDf6723824eE4Dee05819d54c",
-    "verify:test-bsc-LucksAutoDrawTask": "npx hardhat verify --network bsctestnet-testnet --constructor-args ./scripts/verify/LucksAutoDrawTask-testnet.js 0x621a1Ae37E5c9a825979b822E6E758230B709751",    
-
+    "verify:test-bsc": "npx hardhat --network bsctestnet-testnet etherscan-verify",    
+    "verify:test-bsc-LucksAutoCloseTask": "npx hardhat verify --network bsctestnet-testnet --constructor-args ./scripts/verify/LucksAutoCloseTask-testnet.js 0x8585D133cE31092cBbD8966e382346b3F5a72da3",
+    "verify:test-bsc-LucksAutoDrawTask": "npx hardhat verify --network bsctestnet-testnet --constructor-args ./scripts/verify/LucksAutoDrawTask-testnet.js 0x8991F440759f176eCeA029196c4Cf776af85Ad50",
+    "verify:test-bsc-LucksHelper": "npx hardhat verify --network bsctestnet-testnet --constructor-args ./scripts/verify/LucksHelper-testnet.js 0x41933a13Fb756A8382115c065782f4362002945d",
+    "verify:test-bsc-LucksVRF":   "npx hardhat verify --network bsctestnet-testnet --constructor-args ./scripts/verify/LucksVRF-testnet.js 0xA39D630eFE179f65676129b8eEcf605B7b8e909b",    
+    "verify:test-bsc-LucksExecutor":   "npx hardhat verify --network bsctestnet-testnet 0x5b4e2520d974eb75a9ad0c6848e1558aa661974c",    
+    "verify:test-eth-LucksExecutor":   "npx hardhat verify --network rinkeby-testnet 0x406b3326c90f310c96eb911240d96538e69258f2",
+    
     "bind:test": "yarn wireBridges:test-eth-bsc && yarn wireBridges:test-bsc-eth",
     
     "comment-localhost": "//=============== for localhost ===============================",
-
     "deploy:localhost-eth": "npx hardhat deploy --network localhost-eth",
     "deploy:localhost-bsc": "npx hardhat deploy --network localhost-bsc",
-    
     "wireBridges:localhost-eth": "npx hardhat --network localhost-eth wireBridges --target-networks localhost-bsc",
     "wireBridges:localhost-bsc": "npx hardhat --network localhost-bsc wireBridges --target-networks localhost-eth",
-
     "mock:localhost-eth": "npx hardhat --network localhost-eth lzEndpointMock --target-networks localhost-bsc",
     "mock:localhost-bsc": "npx hardhat --network localhost-bsc lzEndpointMock --target-networks localhost-eth",
-
     "test:localhost-eth": "npx hardhat test test/index.js --network localhost-eth",
     "test:localhost-bsc": "npx hardhat test test/index.js --network localhost-bsc",
-
     "run:local": "yarn wireBridges:localhost-eth && yarn wireBridges:localhost-bsc && yarn mock:localhost-eth && yarn mock:localhost-bsc && yarn test:localhost-eth"
   }
 }

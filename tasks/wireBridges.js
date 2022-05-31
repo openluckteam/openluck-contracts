@@ -17,7 +17,8 @@ task("wireBridges", "connect the local openluck to a remote openluck by configur
 
         let targetNetworks = taskArgs.targetNetworks.split(",")
 
-        console.log(`${hre.network.name}: setting local functionType gas and remote bridge...`)
+        console.log(`${hre.network.name}: setting local functionType gas and remote bridge...`);
+        
         for (let targetNetwork of targetNetworks) {
             let targetNetworkAddrs = getDeploymentAddresses(targetNetwork)
             // console.log(targetNetworkAddrs);
@@ -39,15 +40,15 @@ task("wireBridges", "connect the local openluck to a remote openluck by configur
                 }
             }
 
-            let currBridge = await bridge.bridgeLookup(chainId)
+            let currBridge = await bridge.trustedRemoteLookup(chainId)
             let targetBridgeAddr = ethers.utils.getAddress(targetNetworkAddrs["LucksBridge"]) // cast to standardized address
             if (currBridge !== "0x" && ethers.utils.getAddress(currBridge) == targetBridgeAddr) {
                 // its nto a bridge
-                console.log(`✅ ${hre.network.name} > setBridge(${chainId}, ${targetBridgeAddr}) | *already set*`)
+                console.log(`✅ ${hre.network.name} > setTrustedRemote(${chainId}, ${targetBridgeAddr}) | *already set*`)
             } else {
-                // setBridge , 1-time only call. better do it right!
-                let tx = await (await bridge.setBridge(chainId, targetBridgeAddr)).wait()
-                console.log(` ✅ ${hre.network.name} > setBridge(${chainId}, ${targetBridgeAddr}) | tx: ${tx.transactionHash}`)
+                // setTrustedRemote , 1-time only call. better do it right!
+                let tx = await (await bridge.setTrustedRemote(chainId, targetBridgeAddr)).wait()
+                console.log(` ✅ ${hre.network.name} > setTrustedRemote(${chainId}, ${targetBridgeAddr}) | tx: ${tx.transactionHash}`)
             }
         }
     })

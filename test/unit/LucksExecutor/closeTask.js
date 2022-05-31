@@ -1,13 +1,8 @@
 const { expect } = require("chai");
 const { BigNumber, utils } = require("ethers");
 const { testArgs, tryRevert, tryCall } = require('./../../helpers');
-const { approveToken } = require('./../../helpers/utils');5
-const {
-  isLocalhost,
-  isTestnet,
-  getNftChainIdForTest,
-  getTaskChainIdForTest
-} = require("../../../utils/network");
+const { approveToken } = require('./../../helpers/utils'); 5
+const { isLocalhost } = require("../../../utils/network");
 
 
 module.exports = function () {
@@ -20,8 +15,8 @@ module.exports = function () {
     });
 
     async function beforeTest(deployer, joiner, arg_item, contracts, acceptToken) {
-      if (arg_item.taskId < 7) {        
-        arg_item.num = 103;      
+      if (arg_item.taskId < 7) {
+        arg_item.num = 103;
       }
 
       console.log("            >> " + utils.formatEther((await contracts.LucksExecutor.getTask(arg_item.taskId)).amountCollected));
@@ -35,13 +30,11 @@ module.exports = function () {
       }
 
       // submit
-      if (!await tryCall(tx)){
+      if (!await tryCall(tx)) {
         return false;
-      }     
+      }
 
-      // await contracts.LucksVRF.connect(deployer).setAutoPickWinner(false);
-
-      if ( isLocalhost() && (await contracts.LucksHelper.getVRF()) != contracts.LocalLucksVRF.address) {
+      if (isLocalhost() && (await contracts.LucksHelper.getVRF()) != contracts.LocalLucksVRF.address) {
         await contracts.LucksHelper.connect(deployer).setVRF(contracts.LocalLucksVRF.address);
         console.log("          > reset LocalLucksVRF");
       }
@@ -56,18 +49,18 @@ module.exports = function () {
         const {
           arg_item
         } = succesTest.fn({ caller, acceptToken });
-        const lzTxParams = { dstGasForCall: 0, dstNativeAmount: 0, dstNativeAddr: "0x" }
-        
+        const lzTxParams = { dstGasForCall: 0, dstNativeAmount: 0, dstNativeAddr: "0x", zroPaymentAddr: "0x" }
+
         // await beforeTest(deployer, joiner, arg_item, contracts, acceptToken);
 
         console.log(`           VRF: ${await contracts.LucksHelper.getVRF()}`)
 
-        let tx = contracts.LucksExecutor.connect(caller).closeTask(arg_item.taskId, lzTxParams,{value:0});
-       
+        let tx = contracts.LucksExecutor.connect(caller).closeTask(arg_item.taskId, lzTxParams, { value: 0 });
+
         // submit
-        if (!await tryCall(tx)){
+        if (!await tryCall(tx)) {
           return false;
-        }    
+        }
 
         let item = await contracts.LucksExecutor.getTask(arg_item.taskId);
         let status = item.status;
@@ -93,9 +86,9 @@ module.exports = function () {
           arg_item,
           revert,
         } = failureTest.fn({ caller, acceptToken });
-        const lzTxParams = { dstGasForCall: 0, dstNativeAmount: 0, dstNativeAddr: "0x" }
-        let tx = contracts.LucksExecutor.connect(caller).closeTask(arg_item.taskId,lzTxParams);
-       
+        const lzTxParams = { dstGasForCall: 0, dstNativeAmount: 0, dstNativeAddr: "0x", zroPaymentAddr: "0x" }
+        let tx = contracts.LucksExecutor.connect(caller).closeTask(arg_item.taskId, lzTxParams);
+
         // submit
         await tryRevert(tx, revert);
 
@@ -104,69 +97,69 @@ module.exports = function () {
   });
 }
 
-const testTaskId = 1;
+const testTaskId = 799;
 const tests = {
   succes: [
     {
       description: 'closeTask - task-1 erc721 tokenId-1 accept-BNB ',
-      fn: ({ caller, acceptToken } ) => ({
-          arg_item: {
-              taskId: testTaskId,
-              acceptToken: acceptToken.BNB,
-              price: utils.parseEther("0.01")
-            },   
+      fn: ({ caller, acceptToken }) => ({
+        arg_item: {
+          taskId: testTaskId,
+          acceptToken: acceptToken.BNB,
+          price: utils.parseEther("0.01")
+        },
       }),
     },
     {
       description: 'closeTask - task-2 erc721 tokenId-2 accept-USDC ',
-      fn: ({ caller, acceptToken } ) => ({
-          arg_item: {
-              taskId: 2,
-              acceptToken: acceptToken.USDC,
-              price: utils.parseEther("0.1"),
-            },   
+      fn: ({ caller, acceptToken }) => ({
+        arg_item: {
+          taskId: 2,
+          acceptToken: acceptToken.USDC,
+          price: utils.parseEther("0.1"),
+        },
       }),
-    },   
+    },
     {
       description: 'closeTask - task-3 erc721 tokenId-3 accept-USDT ',
-      fn: ({ caller, acceptToken } ) => ({
-          arg_item: {
-              taskId: 3,
-              acceptToken: acceptToken.USDT,
-              price: utils.parseEther("0.1"),
-            },   
+      fn: ({ caller, acceptToken }) => ({
+        arg_item: {
+          taskId: 3,
+          acceptToken: acceptToken.USDT,
+          price: utils.parseEther("0.1"),
+        },
       }),
-    },   
+    },
     {
       description: 'closeTask - task-4 erc721 tokenId-4 accept-USDT',
-      fn: ({ caller, acceptToken } ) => ({
-          arg_item: {
-              taskId: 4,
-              acceptToken: acceptToken.USDT,
-              price: utils.parseEther("0.1"),
-            },   
+      fn: ({ caller, acceptToken }) => ({
+        arg_item: {
+          taskId: 4,
+          acceptToken: acceptToken.USDT,
+          price: utils.parseEther("0.1"),
+        },
       }),
-    },   
+    },
     {
       description: 'closeTask - task-5 erc1155 tokenId-1 accept-BNB',
-      fn: ({ caller, acceptToken } ) => ({
-          arg_item: {
-              taskId: 5,
-              acceptToken: acceptToken.BNB,
-              price: utils.parseEther("0.001"),
-            },   
+      fn: ({ caller, acceptToken }) => ({
+        arg_item: {
+          taskId: 5,
+          acceptToken: acceptToken.BNB,
+          price: utils.parseEther("0.001"),
+        },
       }),
-    },   
+    },
     {
       description: 'closeTask - task-6 erc1155 tokenId-2 accept-USDC',
-      fn: ({ caller, acceptToken } ) => ({
-          arg_item: {
-              taskId: 6,
-              acceptToken: acceptToken.USDC,
-              price: utils.parseEther("0.1"),
-            },   
+      fn: ({ caller, acceptToken }) => ({
+        arg_item: {
+          taskId: 6,
+          acceptToken: acceptToken.USDC,
+          price: utils.parseEther("0.1"),
+        },
       }),
-    },   
+    },
   ],
   failure: [
     {

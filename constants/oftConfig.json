@@ -1,0 +1,10 @@
+{
+  "mainnet": {
+    "baseChain": "bsc",
+    "globalSupply" : "1000000000"
+  },
+  "testnet": {
+    "baseChain": "bsctestnet-testnet",
+    "globalSupply" : "1000000000"
+  }
+}

@@ -1,13 +1,7 @@
 const { expect } = require("chai");
-const { BigNumber, utils } = require("ethers");
+const { BigNumber } = require("ethers");
 const { testArgs, tryRevert, tryCall } = require('../../helpers');
-const { approveToken } = require('../../helpers/utils'); 5
-const {
-  isLocalhost,
-  isTestnet,
-  getNftChainIdForTest,
-  getTaskChainIdForTest
-} = require("../../../utils/network");
+const { getTaskChainIdForTest } = require("../../../utils/network");
 
 
 module.exports = function () {
@@ -23,14 +17,14 @@ module.exports = function () {
     tests.succes.forEach(function (succesTest) {
 
       it(succesTest.description, async function () {
-       
+
         let { deployer, caller, joiner, contracts, acceptToken } = args;
         const {
           arg_item
         } = succesTest.fn({ caller, acceptToken });
-        const lzTxParams = { dstGasForCall: 0, dstNativeAmount: 0, dstNativeAddr: "0x" }
+        const lzTxParams = { dstGasForCall: 0, dstNativeAmount: 0, dstNativeAddr: "0x", zroPaymentAddr: "0x" }
         let ext_item = { chainId: getTaskChainIdForTest(), title: "", note: "" };
-       
+
         // cross chain fee
         let quoteLayerZeroFee = 0;// (await contracts.LucksBridge.quoteLayerZeroFee(ext_item.chainId, 1, ext_item.note, lzTxParams))[0];
         if (ext_item.chainId == arg_item.nftChainId) {
@@ -65,7 +59,7 @@ module.exports = function () {
           arg_item,
           revert,
         } = failureTest.fn({ caller, acceptToken });
-        const lzTxParams = { dstGasForCall: 0, dstNativeAmount: 0, dstNativeAddr: "0x" }
+        const lzTxParams = { dstGasForCall: 0, dstNativeAmount: 0, dstNativeAddr: "0x", zroPaymentAddr: "0x" }
 
         let tx = contracts.LucksExecutor.connect(caller).claimNFTs(arg_item.taskId, lzTxParams);
 

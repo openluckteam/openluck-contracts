@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: BUSL-1.1
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 import { lzTxObj } from "./ILucksBridge.sol";
@@ -58,11 +58,21 @@ struct TaskExt {
 }
 
 struct Ticket {
-    uint32 number;  // the ticket's id, equal to the end number (last ticket id)
+    uint256 number;  // the ticket's id, equal to the end number (last ticket id)
     uint32 count;   // how many QTY the ticket joins, (number-count+1) equal to the start number of this ticket.
     address owner;  // ticket owner
 }
 
+struct TaskInfo {
+    uint256 lastTID;
+    uint256 closeTime;
+    uint256 finalNo;
+}
+ 
+struct UserState {
+    uint256 num; // user buyed tickets count
+    bool claimed;  // user claimed
+}
 interface ILucksExecutor {
 
     // ============= events ====================
@@ -70,18 +80,23 @@ interface ILucksExecutor {
     event CreateTask(uint256 taskId, TaskItem item, TaskExt ext);
     event CancelTask(uint256 taskId, address seller);
     event CloseTask(uint256 taskId, address caller, TaskStatus status);
-    event JoinTask(uint256 taskId, address buyer, uint256 amount, uint256 count, uint32 number,string note);
-    event PickWinner(uint256 taskId, address winner, uint32 number);
+    event JoinTask(uint256 taskId, address buyer, uint256 amount, uint256 count, uint256 number,string note);
+    event PickWinner(uint256 taskId, address winner, uint256 number);
     event ClaimToken(uint256 taskId, address caller, uint256 amount, address acceptToken);
-    event ClaimNFT(uint256 taskId, address seller, address nftContract, uint256[] tokenIds);
-    
-    event CreateTickets(uint256 taskId, address buyer, uint32 num, uint32 start, uint32 end);
+    event ClaimNFT(uint256 taskId, address seller, address nftContract, uint256[] tokenIds);    
+    event CreateTickets(uint256 taskId, address buyer, uint256 num, uint256 start, uint256 end);
+
+    event TransferFee(uint256 taskId, address to, address token, uint256 amount); // for protocol
+    event TransferShareAmount(uint256 taskId, address to, address token, uint256 amount); // for winners
+    event TransferPayment(uint256 taskId, address to, address token, uint256 amount); // for seller
 
     // ============= functions ====================
 
     function count() external view returns (uint256);
     function exists(uint256 taskId) external view returns (bool);
     function getTask(uint256 taskId) external view returns (TaskItem memory);
+    function getInfo(uint256 taskId) external view returns (TaskInfo memory);
+    function isFail(uint256 taskId) external view returns(bool);
     function getChainId() external view returns (uint16);
 
     function createTask(TaskItem memory item, TaskExt memory ext, lzTxObj memory _param) external payable;

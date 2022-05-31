@@ -10,9 +10,7 @@ import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 
 // Openluck interfaces
-import {ILucksExecutor} from "../interfaces/ILucksExecutor.sol";
 import {ILucksVRF} from "../interfaces/ILucksVRF.sol";
-import {lzTxObj} from "../interfaces/ILucksBridge.sol";
 
 
 /** @title Openluck VRF
@@ -49,8 +47,7 @@ contract LucksVRF is VRFConsumerBaseV2, ILucksVRF, Ownable {
     // The default is 3, but you can set this higher.
     uint16 requestConfirmations = 3;
 
-    ILucksExecutor public executor;
-    bool public autoPickWinner = false;
+    address public EXECUTOR;
 
     mapping(uint256 => uint32) public randomResults;      // taskId => ticket FinalNumber
     mapping(uint256 => uint256) public requestToTaskId;    // requestId => taskId
@@ -62,7 +59,7 @@ contract LucksVRF is VRFConsumerBaseV2, ILucksVRF, Ownable {
         address _vrfCoordinator,
         address _link,
         bytes32 _keyHash,
-        ILucksExecutor _executor
+        address _executor
     ) VRFConsumerBaseV2(_vrfCoordinator) {
         s_subscriptionId = _subscriptionId;
         vrfCoordinator = _vrfCoordinator;
@@ -71,7 +68,7 @@ contract LucksVRF is VRFConsumerBaseV2, ILucksVRF, Ownable {
 
         COORDINATOR = VRFCoordinatorV2Interface(vrfCoordinator);
         LINKTOKEN = LinkTokenInterface(link);
-        executor = _executor;
+        EXECUTOR = _executor;
     }
 
     /**
@@ -79,7 +76,7 @@ contract LucksVRF is VRFConsumerBaseV2, ILucksVRF, Ownable {
      * @param max: max provided by the LucksExecutor (lastTicketId)
      */
     function reqRandomNumber(uint256 taskId, uint256 max) external override {
-        require(msg.sender == address(executor), "Only Lucks can reqRandomNumber");
+        require(msg.sender == EXECUTOR, "Only Lucks can reqRandomNumber");
         require(max > 0, "Invalid max input");
         
         if (taskToRequestId[taskId] > 0) {
@@ -126,21 +123,11 @@ contract LucksVRF is VRFConsumerBaseV2, ILucksVRF, Ownable {
         // Between 1 and max:
         randomResults[taskId] = uint32((randomWords[0] % requestToMaxNum[requestId]) + 1);
 
-        if (autoPickWinner && address(executor) != address(0)) {
-            //auto picker winner, make sure this contract got enough gas
-            try executor.pickWinner(taskId, lzTxObj(0, 0, bytes('0x'))) {
-                emit RspToPickWinner(taskId, true, "");
-            } catch(bytes memory reason) {
-                emit RspToPickWinner(taskId, false, reason);
-            }            
-        }
-
         emit RspRandomNumber(
             taskId,
             requestId,
             randomWords[0],
-            randomResults[taskId],
-            autoPickWinner
+            randomResults[taskId]
         );
     }
 
@@ -169,21 +156,11 @@ contract LucksVRF is VRFConsumerBaseV2, ILucksVRF, Ownable {
         // Between 1 and max:
         randomResults[taskId] = uint32((random % requestToMaxNum[requestId]) + 1);
 
-        if (autoPickWinner && address(executor) != address(0)) {
-            //auto picker winner, make sure this contract got enough gas
-            try executor.pickWinner(taskId, lzTxObj(0, 0, bytes('0x'))) {
-                emit RspToPickWinner(taskId, true, "");
-            } catch(bytes memory reason) {
-                emit RspToPickWinner(taskId, false, reason);
-            }     
-        }
-
         emit RspRandomNumber(
             taskId,
             requestToTaskId[taskId],
             random,
-            randomResults[taskId],
-            autoPickWinner
+            randomResults[taskId]
         );
     }
 
@@ -204,18 +181,10 @@ contract LucksVRF is VRFConsumerBaseV2, ILucksVRF, Ownable {
     }
 
     /**
-     * @notice Change AutoPickWinner
-     * @param _enable: true or false
-     */
-    function setAutoPickWinner(bool _enable) external onlyOwner {
-        autoPickWinner = _enable;
-    }
-
-    /**
      * @notice Set the address for the Lucks
      * @param _executor: address of the PancakeSwap crowdluck
      */
-    function setExecutorAddress(ILucksExecutor _executor) external onlyOwner {
-        executor = _executor;
+    function setExecutor(address _executor) external onlyOwner {
+        EXECUTOR = _executor;
     }
 }

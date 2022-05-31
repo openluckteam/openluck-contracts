@@ -1,12 +1,8 @@
 const { expect } = require("chai");
 const { BigNumber, utils } = require("ethers");
 const { ethers } = require('hardhat');
-const { testArgs, getTimestamp, getTestTitle, approvalForAllNFT,
-  tryRevert, tryEmitCall, tryBoolQuery } = require('../../helpers');
-const {
-  getNftChainIdForTest,
-  getTaskChainIdForTest
-} = require("../../../utils/network")
+const { testArgs, getTimestamp, getTestTitle, approvalForAllNFT, tryRevert, tryEmitCall, tryBoolQuery } = require('../../helpers');
+const { getNftChainIdForTest, getTaskChainIdForTest } = require("../../../utils/network")
 
 let testTokenId = 1;
 
@@ -16,7 +12,7 @@ module.exports = function () {
     let args;
     before(async function () {
 
-      args = await testArgs();    
+      args = await testArgs();
     });
 
     // run all success test
@@ -28,7 +24,7 @@ module.exports = function () {
 
         let { deployer, caller, contracts, acceptToken } = args;
         const { arg_item } = succesTest.fn({ deployer, caller, contracts, acceptToken });
-        const lzTxParams = { dstGasForCall: 400000, dstNativeAmount: 0, dstNativeAddr: "0x" }
+        const lzTxParams = { dstGasForCall: 450000, dstNativeAmount: 0, dstNativeAddr: "0x", zroPaymentAddr: "0x" }
 
         // approve nft first to proxy
         await approvalForAllNFT(contracts, caller, arg_item.nftContract, contracts.ProxyNFTStation.address);
@@ -42,8 +38,8 @@ module.exports = function () {
         if (ext_item.chainId == arg_item.nftChainId) {
           quoteLayerZeroFee = 0;
         }
-        console.log("quoteLayerZeroFee: " + BigNumber.from(quoteLayerZeroFee));
-        console.log("lzChainId: " + await contracts.LucksExecutor.lzChainId());
+        console.log("       quoteLayerZeroFee: " + ethers.utils.formatEther(BigNumber.from(quoteLayerZeroFee)));
+        console.log("       lzChainId: " + await contracts.LucksExecutor.lzChainId());
 
         // pre check
         if (!(await tryBoolQuery(contracts.LucksHelper.checkNewTask(caller.address, arg_item)))) {
@@ -75,12 +71,12 @@ module.exports = function () {
           arg_item,
           revert,
         } = failureTest.fn({ caller, contracts, acceptToken });
-        const lzTxParams = { dstGasForCall: 0, dstNativeAmount: 0, dstNativeAddr: "0x" }
+        const lzTxParams = { dstGasForCall: 0, dstNativeAmount: 0, dstNativeAddr: "0x", zroPaymentAddr: "0x" }
 
         let ext_item = { chainId: getTaskChainIdForTest(), title: await getTestTitle(contracts, arg_item.nftContract, arg_item.tokenIds), note: "" };
 
         // pre check
-        if (!await tryBoolQuery(contracts.LucksHelperRemote.checkNewTaskRemote(arg_item), revert)){
+        if (!await tryBoolQuery(contracts.LucksHelperRemote.checkNewTaskRemote(arg_item), revert)) {
           return false;
         }
 
@@ -118,30 +114,30 @@ const tests = {
         }
       }),
     },
-    // {
-    //   description: 'createTask erc721 tokenId-2 accept-USDC',
-    //   fn: ({ caller, contracts, acceptToken }) => ({
-    //     arg_item: {
-    //       nftChainId: getNftChainIdForTest(),
-    //       seller: caller.address,
-    //       nftContract: contracts.nfts.EthAzuki.address,
-    //       tokenIds: [2],
-    //       tokenAmounts: [1],
-    //       acceptToken: acceptToken.USDC,
-    //       status: 1,
-    //       startTime: getTimestamp(new Date().getTime() + 20 * 1000),
-    //       endTime: getTimestamp(new Date().getTime() +  1 * 20 * 60 * 1000),
-    //       targetAmount: utils.parseEther("10"),
-    //       price: utils.parseEther("0.1"),
+    {
+      description: 'createTask erc721 tokenId-2 accept-USDC',
+      fn: ({ caller, contracts, acceptToken }) => ({
+        arg_item: {
+          nftChainId: getNftChainIdForTest(),
+          seller: caller.address,
+          nftContract: contracts.nfts.EthAzuki.address,
+          tokenIds: [2],
+          tokenAmounts: [1],
+          acceptToken: acceptToken.USDC,
+          status: 1,
+          startTime: getTimestamp(new Date().getTime() + 20 * 1000),
+          endTime: getTimestamp(new Date().getTime() + 36 * 60 * 60 * 1000),
+          targetAmount: utils.parseEther("10"),
+          price: utils.parseEther("0.1"),
 
-    //       amountCollected: 0,
-    //       exclusiveToken: { token: ethers.constants.AddressZero, amount: 0 },
-    //       depositId: 0,
+          amountCollected: 0,
+          exclusiveToken: { token: ethers.constants.AddressZero, amount: 0 },
+          depositId: 0,
 
-    //       paymentStrategy: 1
-    //     },
-    //   }),
-    // },
+          paymentStrategy: 1
+        },
+      }),
+    },
     {
       description: 'createTask erc721 tokenId-1 accept-USDT',
       fn: ({ caller, contracts, acceptToken }) => ({

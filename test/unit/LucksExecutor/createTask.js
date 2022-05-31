@@ -1,12 +1,8 @@
 const { expect } = require("chai");
 const { BigNumber, utils } = require("ethers");
 const { ethers } = require('hardhat');
-const { testArgs, getTimestamp, getTestTitle, approvalForAllNFT,
-  tryRevert, tryEmitCall, tryBoolQuery } = require('../../helpers');
-const {
-  getNftChainIdForTest,
-  getTaskChainIdForTest
-} = require("../../../utils/network")
+const { testArgs, getTimestamp, getTestTitle, approvalForAllNFT, tryRevert, tryEmitCall, tryBoolQuery } = require('../../helpers');
+const { getNftChainIdForTest, getTaskChainIdForTest } = require("../../../utils/network")
 
 let testTokenId = 1;
 
@@ -29,15 +25,13 @@ module.exports = function () {
     });
 
     // run all success test
-    let ii = 0;
     tests.succes.forEach(function (succesTest) {
-      // if (ii > 0)
-      //   return false;
+
       it(succesTest.description, async function () {
 
         let { deployer, caller, contracts, acceptToken } = args;
         const { arg_item } = succesTest.fn({ deployer, caller, contracts, acceptToken });
-        const lzTxParams = { dstGasForCall: 400000, dstNativeAmount: 0, dstNativeAddr: "0x" }
+        const lzTxParams = { dstGasForCall: 550000, dstNativeAmount: 0, dstNativeAddr: "0x", zroPaymentAddr: "0x" }
 
         // approve nft first to proxy
         await approvalForAllNFT(contracts, caller, arg_item.nftContract, contracts.ProxyNFTStation.address);
@@ -51,28 +45,39 @@ module.exports = function () {
         if (ext_item.chainId == arg_item.nftChainId) {
           quoteLayerZeroFee = 0;
         }
-        console.log("quoteLayerZeroFee: " + BigNumber.from(quoteLayerZeroFee));
+        console.log("           quoteLayerZeroFee: " + BigNumber.from(quoteLayerZeroFee));
         // console.log("layerZeroEndpoint: " + await contracts.LucksBridge.layerZeroEndpoint());
-        console.log("lzChainId: " + await contracts.LucksExecutor.lzChainId());
+        console.log("           lzChainId: " + await contracts.LucksExecutor.lzChainId());
 
         // await contracts.ProxyNFTStation.connect(caller).redeem(1, caller.address);
         // arg_item.exclusiveToken.token = "0x793E92A30fdaD0AD4F6Bbc191729957Ae5aBb880"; // test Invalid exclusiveToken
         // arg_item.exclusiveToken.amount = 1;
 
-        // pre check
-        if (!(await tryBoolQuery(contracts.LucksHelperRemote.checkNewTaskRemote(arg_item)))) {
-          return false;
-        }
+        // //pre check
+        // if (!(await tryBoolQuery(contracts.LucksHelperRemote.checkNewTaskRemote(arg_item)))) {
+        //   return false;
+        // }
+        // else {
+        //   console.log("           checkNewTaskRemote passed！");
+        // }
+        // if (!(await tryBoolQuery(contracts.LucksHelperRemote.checkNewTask(arg_item.seller, arg_item)))) {
+        //   return false;
+        // }
+        // else {
+        //   console.log("           checkNewTask passed！");
+        // }
+        
 
         // submit
         let tx = contracts.LucksExecutor.connect(caller).createTask(arg_item, ext_item, lzTxParams, { value: quoteLayerZeroFee });
-        await tryEmitCall(tx, contracts.ProxyNFTStation, "Deposit");
+        await tx;
+        // await tryEmitCall(tx, contracts.ProxyNFTStation, "Deposit");
 
         let result = await contracts.LucksExecutor.connect(caller).count();
 
         // expect(BigNumber.from(result)).to.equal(BigNumber.from(count).add(1));
       });
-      ii++;
+
     });
   });
 
@@ -90,12 +95,12 @@ module.exports = function () {
           arg_item,
           revert,
         } = failureTest.fn({ caller, contracts, acceptToken });
-        const lzTxParams = { dstGasForCall: 0, dstNativeAmount: 0, dstNativeAddr: "0x" }
+        const lzTxParams = { dstGasForCall: 0, dstNativeAmount: 0, dstNativeAddr: "0x", zroPaymentAddr: "0x" }
 
         let ext_item = { chainId: getTaskChainIdForTest(), title: await getTestTitle(contracts, arg_item.nftContract, arg_item.tokenIds), note: "" };
 
         // pre check
-        if (!await tryBoolQuery(contracts.LucksHelperRemote.checkNewTaskRemote(arg_item), revert)){
+        if (!await tryBoolQuery(contracts.LucksHelperRemote.checkNewTaskRemote(arg_item), revert)) {
           return false;
         }
 
