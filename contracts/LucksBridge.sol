@@ -209,4 +209,12 @@ contract LucksBridge is NonblockingLzApp, ILucksBridge {
     function setExecutor(ILucksExecutor _executor) external onlyOwner {
         EXECUTOR = _executor;
     }
+
+    /**
+    @notice set useLayerZeroToken
+     */
+    function setUseLayerZeroToken(bool enable) external onlyOwner {
+        useLayerZeroToken = enable;
+    }
+
 }

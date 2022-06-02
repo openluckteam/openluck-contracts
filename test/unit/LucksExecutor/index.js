@@ -29,8 +29,8 @@ module.exports = function () {
   if (isNetworkAllowTaskForTest()) {
     // describe('createTask(...)', createTask);
     // describe('joinTask(...)', joinTask);
-    describe('joinTaskLarge(...)', joinTaskLarge);
-    // describe('joinTaskLarge2(...)', joinTaskLarge2);
+    // describe('joinTaskLarge(...)', joinTaskLarge);
+    describe('joinTaskLarge2(...)', joinTaskLarge2);
     // describe('createGroup(...)', createGroup);
     // describe('joinGroup(...)', joinGroup);
     // describe('cancelTask(...)', cancelTask);
