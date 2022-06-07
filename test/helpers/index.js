@@ -42,7 +42,7 @@ this.testArgs = async function () {
   const LucksGroup = isNetworkAllowTaskForTest() ? await ethers.getContract("LucksGroup") : ethers.constants.AddressZero;
   const LucksAutoCloseTask = isNetworkAllowTaskForTest() ? await ethers.getContract("LucksAutoCloseTask") : ethers.constants.AddressZero;
   const LucksAutoDrawTask = isNetworkAllowTaskForTest() ? await ethers.getContract("LucksAutoDrawTask") : ethers.constants.AddressZero;
-  // const TestTicket = isNetworkAllowTaskForTest() ? await ethers.getContract("TestTicket") : ethers.constants.AddressZero;
+  const TokenPrices = isNetworkAllowTaskForTest() ? await ethers.getContract("TokenPrices") : ethers.constants.AddressZero;
 
   const TokenBUSD = await (await ethers.getContractFactory("TokenBUSD")).attach(acceptToken.BUSD);
   const TokenUSDC = await (await ethers.getContractFactory("TokenUSDC")).attach(acceptToken.USDC);
@@ -85,7 +85,7 @@ this.testArgs = async function () {
       LucksGroup,
       LucksAutoCloseTask,
       LucksAutoDrawTask,
-      // TestTicket,
+      TokenPrices,
       nfts: {
         DoodleApes,
         CyBlocPack,

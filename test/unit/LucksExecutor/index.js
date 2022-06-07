@@ -13,6 +13,7 @@ const autoCloseTask = require("./autoCloseTask.js")
 const testTicket = require("./testTicket.js")
 const joinTaskLarge = require("./joinTaskLarge.js")
 const joinTaskLarge2 = require("./joinTaskLarge2.js")
+const tokenPrices = require("./tokenPrices.js")
 
 const { isNetworkAllowTaskForTest } = require("../../../utils/network")
 
@@ -30,7 +31,7 @@ module.exports = function () {
     // describe('createTask(...)', createTask);
     // describe('joinTask(...)', joinTask);
     // describe('joinTaskLarge(...)', joinTaskLarge);
-    describe('joinTaskLarge2(...)', joinTaskLarge2);
+    // describe('joinTaskLarge2(...)', joinTaskLarge2);
     // describe('createGroup(...)', createGroup);
     // describe('joinGroup(...)', joinGroup);
     // describe('cancelTask(...)', cancelTask);
@@ -41,7 +42,7 @@ module.exports = function () {
     // describe('claimNFTs(...)', claimNFTs); 
     // describe('autoCloseTask(...)', autoCloseTask);
     // describe('testTicket(...)', testTicket);
-    
+    describe('tokenPrices(...)', tokenPrices);
   }
   else {
     describe('createTaskETH(...)', createTaskETH);

@@ -30,5 +30,63 @@
         "bsctestnet-testnet": "0x5b4e2520d974eb75a9ad0c6848e1558aa661974c",
         "localhost-eth": "",
         "localhost-bsc": ""
+    },
+    "PriceFeeds": {
+        "eth": "",
+        "bsc": [
+            {
+                "name": "BNB/USD",                
+                "value": "0x0567F2323251f0Aab15c8dFb1967E4e8A7D42aeE",
+                "decimals": 18
+            },
+            {
+                "name": "ETH/USD",                
+                "value": "0x9ef1B8c0E4F7dc8bF5719Ea496883DC6401d5b2e",
+                "decimals": 18
+            },
+            {
+                "name": "USDC/USD",                
+                "value": "0x51597f405303C4377E36123cBc172b13269EA163",
+                "decimals": 18
+            },
+            {
+                "name": "USDT/USD",                
+                "value": "0xB97Ad0E74fa7d920791E90258A6E2085088b4320",
+                "decimals": 18
+            },
+            {
+                "name": "BUSD/USD",                
+                "value": "0xcBb98864Ef56E9042e7d2efef76141f15731B82f",
+                "decimals": 18
+            }
+        ],      
+        "rinkeby-testnet": "",
+        "bsctestnet-testnet": [
+            {
+                "name": "BNB/USD",                
+                "value": "0x2514895c72f50D8bd4B4F9b1110F0D6bD2c97526",
+                "decimals": 18
+            },
+            {
+                "name": "ETH/USD",                
+                "value": "0x143db3CEEfbdfe5631aDD3E50f7614B6ba708BA7",
+                "decimals": 18
+            },
+            {
+                "name": "USDC/USD",                
+                "value": "0x90c069C4538adAc136E051052E14c1cD799C41B7",
+                "decimals": 18
+            },
+            {
+                "name": "USDT/USD",                
+                "value": "0xEca2605f0BCF2BA5966372C99837b1F182d3D620",
+                "decimals": 18
+            },
+            {
+                "name": "BUSD/USD",                
+                "value": "0x9331b55D9830EF609A2aBCfAc0FBCE050A52fdEa",
+                "decimals": 18
+            }
+        ]
     }
 }

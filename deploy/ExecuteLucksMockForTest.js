@@ -61,15 +61,30 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         const WatcherMinter = await deploy('WatcherMinter', { from: deployer, args: [], log: true });
     }
     else { //ETH Chain
-        // ERC721: BoredApeYachtClub
-        const EthBoredApeYachtClub = await deploy('EthBoredApeYachtClub', { from: deployer, args: [caller, 6], log: true });
-        // ERC721: Azuki
-        const EthAzuki = await deploy('EthAzuki', { from: deployer, args: [caller, 6], log: true });
-        // ERC721: Moonbirds
-        const EthMoonbirds = await deploy('EthMoonbirds', { from: deployer, args: [caller, 6], log: true });
-        // ERC721: EthOtherdeed
-        const EthOtherdeed = await deploy('EthOtherdeed', { from: deployer, args: [caller, 6], log: true });
+        // // ERC721: BoredApeYachtClub
+        // const EthBoredApeYachtClub = await deploy('EthBoredApeYachtClub', { from: deployer, args: [caller, 6], log: true });
+        // // ERC721: Azuki
+        // const EthAzuki = await deploy('EthAzuki', { from: deployer, args: [caller, 6], log: true });
+        // // ERC721: Moonbirds
+        // const EthMoonbirds = await deploy('EthMoonbirds', { from: deployer, args: [caller, 6], log: true });
+        // // ERC721: EthOtherdeed
+        // const EthOtherdeed = await deploy('EthOtherdeed', { from: deployer, args: [caller, 6], log: true });
 
+        // ERC721: EthGoblintownNFT
+        const EthGoblintownNFT = await deploy('EthGoblintownNFT', { from: deployer, args: [caller, 3], log: true });
+
+        // ERC721: EthMurakamiFlowers
+        const EthMurakamiFlowers = await deploy('EthMurakamiFlowers', { from: deployer, args: [caller, 3], log: true });
+
+        // ERC721: EthShitBeast
+        const EthShitBeast = await deploy('EthShitBeast', { from: deployer, args: [caller, 3], log: true });
+        
+        // ERC721: EthMeebits
+        const EthMeebits = await deploy('EthMeebits', { from: deployer, args: [caller, 3], log: true });
+        
+        // ERC721: EthMfers
+        const EthMfers = await deploy('EthMfers', { from: deployer, args: [caller, 3], log: true });
+               
     }
 
     console.log('DEPLOY >> done Deploy NFTS');
