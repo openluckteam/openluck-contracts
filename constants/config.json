@@ -21,7 +21,7 @@
         "rinkeby-testnet": "0xF2A09f37aA6FEd4018922Cc9f3ac8f77c8Fb1Cbd",
         "bsctestnet-testnet": "0x51f57486F8b09Df7b37Ee78821E19d566B8dEd3d",
         "localhost-eth": "",
-        "localhost-bsc": "0x0C2Ee72fb44036039fEF429Dd067cA46483B66dD"
+        "localhost-bsc": "0x686746214BCc37b7D4935B098C4899031C288fFd"
     },
     "ProxyUpgradeContract": {
         "eth": "",
@@ -29,7 +29,7 @@
         "rinkeby-testnet": "0x406b3326c90f310c96eb911240d96538e69258f2",
         "bsctestnet-testnet": "0x5b4e2520d974eb75a9ad0c6848e1558aa661974c",
         "localhost-eth": "",
-        "localhost-bsc": ""
+        "localhost-bsc": "0xe79C5EA92E89B6fb06C36853720A6a31a95269E9"
     },
     "PriceFeeds": {
         "eth": "",

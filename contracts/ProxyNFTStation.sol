@@ -32,7 +32,7 @@ contract ProxyNFTStation is IProxyNFTStation, ERC721Holder, ERC1155Holder, Ownab
 
 
     modifier onlyExecutor() {
-        require(executors[msg.sender] == true, "Lucks: caller must be LucksExecutor.");
+        require(executors[msg.sender] == true, "Lucks: onlyExecutor");
         _;
     }
 

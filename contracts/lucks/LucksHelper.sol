@@ -35,7 +35,7 @@ contract LucksHelper is ILucksHelper, Ownable {
     address public feeRecipient;    // protocol fee recipient
 
     uint32 public MAX_PER_JOIN_NUM = 10000;    // limit user per jointask num (default 10000), to avoid block fail and huge gas fee
-    uint32 public DRAW_DELAY_SEC = 30;    // picker winner need a delay time from task close. (default 30sec)
+    uint32 public DRAW_DELAY_SEC = 120;    // picker winner need a delay time from task close. (default 120sec)
     uint256 public protocolFee = 200;     // acceptToken (200 = 2%, 1,000 = 10%)
 
     mapping(address => bool) public operators;     // protocol income balance (address => bool)

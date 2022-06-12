@@ -14,7 +14,7 @@ library SortedLinkMap {
 
     struct SortedMap {
         uint count;
-        Item max;
+        uint maxId;
         mapping(uint => uint) keys; // id => id , linked list
         mapping(uint => Item) nodes; // id => value item
     }
@@ -40,9 +40,7 @@ library SortedLinkMap {
 
         // update max item
         if (rightId == None) {
-            self.max.id = id;
-            self.max.leftId = leftId;
-            self.max.value = value;
+            self.maxId = id;
         }        
         else {
             // upate next item link
@@ -57,9 +55,7 @@ library SortedLinkMap {
 
         if (exists(self, id)) {
 
-            delete self.nodes[id]; // remove value
-            delete self.keys[id]; // remove key
-
+            // get left and right
             uint leftId = prev(self, id);
             uint rightId = next(self, id);
 
@@ -68,6 +64,14 @@ library SortedLinkMap {
             if (rightId > 0) {
                 self.nodes[rightId].leftId = leftId;
             }
+
+            // update max item
+            if (rightId == None) {
+                self.maxId = leftId;
+            }   
+
+            delete self.nodes[id]; // remove value
+            delete self.keys[id]; // remove key
 
             self.count --;
         }
@@ -83,7 +87,7 @@ library SortedLinkMap {
     }
        
     function last(SortedMap storage self) internal view returns(uint) {
-        return self.max.id;
+        return self.maxId;
     }
 
     function size(SortedMap storage self) internal view returns(uint) {
@@ -97,8 +101,8 @@ library SortedLinkMap {
         if (self.count == 0) return None;
         
         // try to match last item
-        uint lastId = self.max.id;
-        uint lastValue = self.max.value;
+        uint lastId = self.maxId;        
+        uint lastValue = self.nodes[lastId].value;
         if (target >= lastValue) {            
             return lastId; // return max
         }
@@ -151,4 +155,25 @@ library SortedLinkMap {
     function get(SortedMap storage self, uint id) internal view returns(Item memory) {
         return self.nodes[id];
     }  
+
+    function top(SortedMap storage self, uint num) internal view returns(uint[] memory){        
+        if(num > self.count) {
+            num = self.count;
+        }
+        if (num < 1) {
+            return new uint[](0);
+        }
+
+        uint[] memory items = new uint[](num);
+
+        uint curentId = first(self);
+        for(uint i=0; i < num; i++) {            
+            if (curentId > 0) {
+                items[i] = curentId;
+            }   
+            curentId = next(self, curentId);
+        }
+        
+        return items;
+    }
 }

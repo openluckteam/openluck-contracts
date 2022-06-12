@@ -40,9 +40,9 @@ module.exports = function () {
     // describe('pickWinner(...)', pickWinner);
     // describe('claimTokens(...)', claimTokens); 
     // describe('claimNFTs(...)', claimNFTs); 
-    // describe('autoCloseTask(...)', autoCloseTask);
+    describe('autoCloseTask(...)', autoCloseTask);
     // describe('testTicket(...)', testTicket);
-    describe('tokenPrices(...)', tokenPrices);
+    // describe('tokenPrices(...)', tokenPrices);
   }
   else {
     describe('createTaskETH(...)', createTaskETH);

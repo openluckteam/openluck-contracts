@@ -26,7 +26,7 @@ contract ProxyTokenStation is IProxyTokenStation, Ownable {
     address public WETH;
    
     modifier onlyExecutor() {
-        require(executors[msg.sender] == true, "Lucks: caller must be LucksExecutor.");
+        require(executors[msg.sender] == true, "Lucks: onlyExecutor");
         _;
     }
 
