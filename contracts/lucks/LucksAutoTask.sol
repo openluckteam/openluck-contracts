@@ -91,7 +91,29 @@ abstract contract LucksAutoTask is ILucksAuto, Ownable, Pausable {
     }
 
     function getQueueTasks() public override view virtual returns (uint256[] memory) {
-        return taskList.top(BATCH_PERFORM_LIMIT);       
+        
+        uint256[] memory ids = new uint256[](BATCH_PERFORM_LIMIT);
+
+        uint256 count = 0;
+        uint taskId = taskList.first();
+       
+        while (taskId > 0 && count < BATCH_PERFORM_LIMIT) {
+                  
+            if (taskList.nodes[taskId].value <= block.timestamp) {                
+                ids[count] = taskId;    
+                count++;                   
+            }else {
+                break;
+            }
+            taskId = taskList.next(taskId);           
+        }
+       
+        if (count != BATCH_PERFORM_LIMIT) {
+            assembly {
+                mstore(ids, count)
+            }
+        }
+        return ids;   
     }
 
     //  ============ internal  functions  ============
