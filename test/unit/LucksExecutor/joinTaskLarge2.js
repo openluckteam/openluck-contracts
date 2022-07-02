@@ -26,22 +26,22 @@ module.exports = function () {
       // let task = await contracts.LucksExecutor.getTask(2);
     });
 
-    let start = 71;
-    let end = start + 500;
-    let taskId = 21;
+    let start = 525;
+    let end = start + 3000;
+    let taskId = 1210;
     let instance1;
     let instance2;
 
     for(let i=start;i<end;i++) {
-      let num = getRandomInt(10);
-      it(`joinTask tokenId-21 accept-USDT joiner ${i}, num:${num}`, async function(){
+      let num = getRandomInt(5);
+      it(`joinTask tokenId-1210 accept-USDC joiner ${i}, num:${num}`, async function(){
 
         let { deployer, caller,joiner, joiner2, contracts} = args;   
 
         if (!instance1) {
           instance1 = contracts.LucksExecutor.connect(joiner);
         }
-        if (!instance2) {
+        if (!instance2) { 
           instance2 = contracts.LucksExecutor.connect(joiner2);
         }
          
@@ -54,7 +54,7 @@ module.exports = function () {
            console.log(`joinTask fail: ${i}`)
         }
 
-        sleep(2000);
+        await sleep(3000);
       });
     }  
 

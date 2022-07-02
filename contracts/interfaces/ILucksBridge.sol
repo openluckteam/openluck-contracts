@@ -29,6 +29,7 @@ interface ILucksBridge {
         uint16 _dstChainId,
         address payable _refundAddress,
         address payable _user,
+        address nftContract,
         uint256 depositId,
         lzTxObj memory _lzTxParams
     ) external payable;
@@ -52,6 +53,7 @@ interface ILucksBridge {
     function estimateWithdrawNFTsFee(
         uint16 _dstChainId,
         address payable _user,
+        address nftContract,
         uint256 depositId,
         lzTxObj memory _lzTxParams
     ) external view returns (uint256 nativeFee, uint256 zroFee);

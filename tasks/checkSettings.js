@@ -1,5 +1,7 @@
 const getContracts = require('../utils/getContracts');
 const { isNetworkAllowTaskForTest } = require("../utils/network")
+const { getDeploymentAddresses } = require("../utils/readDeployments")
+const CONFIG = require("../constants/config.json")
 
 task("checkSettings", "cheking the smartcontracts interfaces and variables settings")
     .addParam("autoFix", "the remote Stargate instance named by network")
@@ -19,6 +21,10 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
             }
             else {
                 console.log(` ✘ ${hre.network.name} > LucksExecutor.HELPER ==> Wrong set`);
+                if (autoFix) {
+                    await contracts.LucksExecutor.connect(deployer).setLucksHelper(contracts.LucksHelper.address);
+                    console.log(` ✅ ${hre.network.name} > LucksExecutor.HELPER | *already Fixed*`);
+                }
             }
 
             if (await contracts.LucksExecutor.NFT() == contracts.ProxyNFTStation.address) {
@@ -26,6 +32,11 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
             }
             else {
                 console.log(` ✘ ${hre.network.name} > LucksExecutor.NFT ==> Wrong set`);
+                if (autoFix) {
+                    await contracts.LucksExecutor.connect(deployer).setBridgeAndProxy(contracts.LucksBridge.address,
+                        contracts.ProxyTokenStation.address, contracts.ProxyNFTStation.address);
+                    console.log(` ✅ ${hre.network.name} > LucksExecutor.setBridgeAndProxy | *already Fixed*`);
+                }
             }
 
             if (contracts.ProxyTokenStation) {
@@ -46,7 +57,7 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
         }
 
         //LucksBridge
-        {
+        {           
             if (await contracts.LucksBridge.EXECUTOR() == contracts.LucksExecutor.address) {
                 console.log(` ✅ ${hre.network.name} > LucksBridge.EXECUTOR | *already set*`);
             }
@@ -273,5 +284,28 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
             else {
                 console.log(` ✘ ${hre.network.name} > LucksPaymentStrategy.GROUPS ==> Wrong set`);
             }
+        }
+
+        // CryptoPunks
+        if (contracts.ProxyCryptoPunks) {
+
+            let punkAddress = CONFIG.CryptoPunk;
+
+            if (!isNetworkAllowTaskForTest()) {
+                let taskNetworkAddrs = getDeploymentAddresses(hre.network.name);
+                punkAddress = ethers.utils.getAddress(taskNetworkAddrs["CryptoPunksMarket"]);
+            }
+
+            if (await contracts.LucksHelper.PUNKS() == punkAddress) {
+                console.log(` ✅ ${hre.network.name} > LucksHelper.PUNKS | *already set*`);
+            }
+            else {
+                console.log(` ✘ ${hre.network.name} > LucksHelper.PUNKS ==> Wrong set`);
+                if (autoFix) {
+                    await contracts.LucksHelper.connect(deployer).setPunks(punkAddress, contracts.ProxyCryptoPunks.address);
+                    console.log(` ✅ ${hre.network.name} > LucksHelper.PUNKS | *already Fixed*`);
+                }
+            }
+            
         }
     })

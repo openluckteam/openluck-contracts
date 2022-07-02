@@ -35,6 +35,7 @@ module.exports = async ({ ethers, getNamedAccounts, deployments, getChainId }) =
     let LucksPaymentStrategy;
     let LucksAutoCloseTask;
     let LucksAutoDrawTask;
+    let ProxyCryptoPunks;
     
     // Deploy Proxy 
     {
@@ -68,7 +69,6 @@ module.exports = async ({ ethers, getNamedAccounts, deployments, getChainId }) =
             console.log(`UPGRADE >> Proxy LucksExecutor upgraded! ${LucksExecutor.address}`);
         }
     }
-
 
     const ProxyNFTStation = await deploy('ProxyNFTStation', {
         from: deployer,
@@ -187,9 +187,43 @@ module.exports = async ({ ethers, getNamedAccounts, deployments, getChainId }) =
             log: true,
         });
 
+        ProxyCryptoPunks = await deploy('ProxyCryptoPunks', {
+            from: deployer,
+            args: [LucksExecutor.address, LucksHelper.address],
+            skipIfAlreadyDeployed: true,
+            log: true,
+        });
     }
 
     console.log("DEPLOY >> Core Contracts deployed!");
+
+    // ---------------
+    // tenderly
+    {
+        console.log("tenderly >> starting");
+
+        await hre.tenderly.persistArtifacts({
+            name: "LucksExecutor",
+            address: LucksExecutor.address
+        });
+
+        await hre.tenderly.persistArtifacts({
+            name: "LucksBridge",
+            address: LucksBridge.address
+        });
+
+        await hre.tenderly.persistArtifacts({
+            name: "LucksHelper",
+            address: LucksHelper.address
+        });
+
+        await hre.tenderly.persistArtifacts({
+            name: "ProxyNFTStation",
+            address: ProxyNFTStation.address
+        });
+    
+        console.log("tenderly >> done!");
+    }
 
     // ----------------------------------------------
     //  Update Contracts params
@@ -257,6 +291,14 @@ module.exports = async ({ ethers, getNamedAccounts, deployments, getChainId }) =
             if (LucksAutoCloseTask && await autoCloseTask.EXECUTOR() != LucksExecutor.address) {
                 await autoCloseTask.setExecutor(LucksExecutor.address);
                 console.log("UPDATE >> LucksAutoCloseTask > LucksExecutor!")
+            }
+        }
+
+        if (LucksAutoDrawTask && LucksAutoDrawTask.address != setting.AddressZero) {
+            let autoDrawTask = await ethers.getContract("LucksAutoDrawTask");
+            if (LucksAutoDrawTask && await autoDrawTask.EXECUTOR() != LucksExecutor.address) {
+                // await autoDrawTask.setExecutor(LucksExecutor.address);
+                // console.log("UPDATE >> LucksAutoDrawTask > LucksExecutor!")
             }
         }
 

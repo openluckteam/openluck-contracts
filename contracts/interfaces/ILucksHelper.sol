@@ -10,6 +10,8 @@ import {ILucksVRF} from "./ILucksVRF.sol";
 import {ILucksGroup} from "./ILucksGroup.sol";
 import {ILucksPaymentStrategy} from "./ILucksPaymentStrategy.sol";
 import {ILucksAuto} from "./ILucksAuto.sol";
+import {IPunks} from "./IPunks.sol";
+import {IProxyNFTStation} from "./IProxyNFTStation.sol";
 
 interface ILucksHelper {
 
@@ -22,6 +24,7 @@ interface ILucksHelper {
     function checkJoinTask(address user, uint256 taskId, uint32 num, string memory note) external view returns (bool);
     function checkTokenListing(address addr, address seller, uint256[] memory tokenIds, uint256[] memory amounts) external view returns (bool,string memory);    
     function checkExclusive(address account, address token, uint256 amount) external view returns (bool);
+    function isPunks(address nftContract) external view returns(bool);
 
     function getProtocolFeeRecipient() external view returns (address);
     function getProtocolFee() external view returns (uint256);
@@ -30,8 +33,11 @@ interface ILucksHelper {
 
     function getVRF() external view returns (ILucksVRF);
     function getGROUPS() external view returns (ILucksGroup);
-    // function getREWARDS() external view returns (ILucksRewards);
     function getSTRATEGY() external view returns (ILucksPaymentStrategy);
     function getAutoClose() external view returns (ILucksAuto);
     function getAutoDraw() external view returns (ILucksAuto);
+
+    function getPunks() external view returns (IPunks);
+    function getProxyPunks() external view returns (IProxyNFTStation);
+
 }

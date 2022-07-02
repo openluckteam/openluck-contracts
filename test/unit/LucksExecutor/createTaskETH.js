@@ -1,10 +1,10 @@
 const { expect } = require("chai");
 const { BigNumber, utils } = require("ethers");
 const { ethers } = require('hardhat');
-const { testArgs, getTimestamp, getTestTitle, approvalForAllNFT, tryRevert, tryEmitCall, tryBoolQuery } = require('../../helpers');
+const { testArgs, getTimestamp, getTestTitle, approvalForAllNFT, tryRevert, tryEmitCall, tryBoolQuery, tryCall } = require('../../helpers');
 const { getNftChainIdForTest, getTaskChainIdForTest } = require("../../../utils/network")
 
-let testTokenId = 1;
+let testTokenId = 2;
 
 module.exports = function () {
 
@@ -14,6 +14,16 @@ module.exports = function () {
 
       args = await testArgs();
     });
+
+    async function mintPunk(deployer, targetUser) {
+      let CryptoPunksMarket = await (await ethers.getContract("CryptoPunksMarket")).connect(deployer);
+      // await CryptoPunksMarket.allInitialOwnersAssigned();  
+      if (await CryptoPunksMarket.punkIndexToAddress(testTokenId) == ethers.constants.AddressZero) {
+        await CryptoPunksMarket.getPunk(testTokenId);
+        await CryptoPunksMarket.transferPunk(targetUser, testTokenId);
+        console.log(`UPDATE >> mint CryptoPunks for ${targetUser} finished`);
+      }
+    }
 
     // run all success test
     let ii = 0;
@@ -29,6 +39,8 @@ module.exports = function () {
         // approve nft first to proxy
         await approvalForAllNFT(contracts, caller, arg_item.nftContract, contracts.ProxyNFTStation.address);
 
+        await mintPunk(deployer, caller.address);
+
         let count = await contracts.LucksExecutor.connect(caller).count();
 
         let ext_item = { chainId: getTaskChainIdForTest(), title: await getTestTitle(contracts, arg_item.nftContract, arg_item.tokenIds), note: "" };
@@ -41,17 +53,21 @@ module.exports = function () {
         console.log("       quoteLayerZeroFee: " + ethers.utils.formatEther(BigNumber.from(quoteLayerZeroFee)));
         console.log("       lzChainId: " + await contracts.LucksExecutor.lzChainId());
 
-        // pre check
-        if (!(await tryBoolQuery(contracts.LucksHelper.checkNewTask(caller.address, arg_item)))) {
-          return false;
-        }
+        let punkOwner = await contracts.nfts.CryptoPunks.connect(caller).punkIndexToAddress(testTokenId);
+        console.log(`punkOwner:${punkOwner} caller:${caller.address}`)
 
-        // console.log(JSON.stringify(arg_item))
-        // console.log(JSON.stringify(ext_item))
-        // console.log(JSON.stringify(lzTxParams))
+        // pre check
+        // if (!(await tryBoolQuery(contracts.LucksHelper.checkNewTask(caller.address, arg_item)))) {
+        //   return false;
+        // }
+
+        
+        await tryCall((await contracts.nfts.CryptoPunks.connect(caller)).offerPunkForSaleToAddress(testTokenId, "0", contracts.ProxyCryptoPunks.address), 1);
+
         // submit
         let tx = contracts.LucksExecutor.connect(caller).createTask(arg_item, ext_item, lzTxParams, { value: quoteLayerZeroFee });
-        await tryEmitCall(tx, contracts.ProxyNFTStation, "Deposit");
+        await tryCall(tx);
+        // await tryEmitCall(tx, contracts.ProxyNFTStation, "Deposit");
       });
       ii++;
     });
@@ -97,7 +113,7 @@ const tests = {
         arg_item: {
           nftChainId: getNftChainIdForTest(),
           seller: caller.address,
-          nftContract: contracts.nfts.EthBoredApeYachtClub.address,
+          nftContract: contracts.nfts.CryptoPunks.address,
           tokenIds: [testTokenId],
           tokenAmounts: [1],
           acceptToken: acceptToken.BNB,

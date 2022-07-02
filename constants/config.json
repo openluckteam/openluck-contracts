@@ -20,7 +20,7 @@
         "bsc": "",      
         "rinkeby-testnet": "0xF2A09f37aA6FEd4018922Cc9f3ac8f77c8Fb1Cbd",
         "bsctestnet-testnet": "0x51f57486F8b09Df7b37Ee78821E19d566B8dEd3d",
-        "localhost-eth": "",
+        "localhost-eth": "0x4Ae4CCEFFa9790c7BF455e34951C513417Bc4D6D",
         "localhost-bsc": "0x686746214BCc37b7D4935B098C4899031C288fFd"
     },
     "ProxyUpgradeContract": {
@@ -28,8 +28,8 @@
         "bsc": "",      
         "rinkeby-testnet": "0x406b3326c90f310c96eb911240d96538e69258f2",
         "bsctestnet-testnet": "0x5b4e2520d974eb75a9ad0c6848e1558aa661974c",
-        "localhost-eth": "",
-        "localhost-bsc": "0xe79C5EA92E89B6fb06C36853720A6a31a95269E9"
+        "localhost-eth": "0xc6F5d17426D42C0fd6A5E12bE6df23C68D177914",
+        "localhost-bsc": "0x2945D9Ea3BBeE8E42ee5988E49dc49E66BBA3baD"
     },
     "PriceFeeds": {
         "eth": "",
@@ -88,5 +88,6 @@
                 "decimals": 18
             }
         ]
-    }
+    },
+    "CryptoPunk": "0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb"
 }

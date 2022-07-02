@@ -16,6 +16,8 @@ import {ILucksVRF} from "../interfaces/ILucksVRF.sol";
 import {ILucksGroup} from "../interfaces/ILucksGroup.sol";
 import {ILucksPaymentStrategy} from "../interfaces/ILucksPaymentStrategy.sol";
 import {ILucksAuto} from "../interfaces/ILucksAuto.sol";
+import {IPunks} from "../interfaces/IPunks.sol";
+import {IProxyNFTStation} from "../interfaces/IProxyNFTStation.sol";
 
 /** @title Openluck LucksHelper.
  * @notice It is the contract for protocol settings
@@ -31,6 +33,9 @@ contract LucksHelper is ILucksHelper, Ownable {
 
     ILucksAuto public AUTO_CLOSE;  
     ILucksAuto public AUTO_DRAW;  
+    
+    IPunks public PUNKS;
+    IProxyNFTStation public PROXY_PUNKS; 
 
     address public feeRecipient;    // protocol fee recipient
 
@@ -51,7 +56,7 @@ contract LucksHelper is ILucksHelper, Ownable {
         ILucksGroup _groups,
         ILucksPaymentStrategy _strategy,
         ILucksAuto _auto_close,
-        ILucksAuto _auto_draw
+        ILucksAuto _auto_draw        
     ) {
         feeRecipient = _recipient;
         protocolFee = _fee;
@@ -96,13 +101,15 @@ contract LucksHelper is ILucksHelper, Ownable {
      */
     function checkNFTContract(address addr) public view override returns (bool) {
         require(addr != address(0) && Address.isContract(addr), "Invalid nftContract");
-        require(
+        require(            
+            isPunks(addr) || 
             IERC165(addr).supportsInterface(0x80ac58cd) ||  // ERC721 interfaceID
             IERC165(addr).supportsInterface(0xd9b67a26), // ERC1155 interfaceID
             "Invalid contract"
         );
         return true;
     }
+
 
     /**
      * @notice check the new task inputs
@@ -182,7 +189,15 @@ contract LucksHelper is ILucksHelper, Ownable {
      */
     function checkTokenListing(address addr, address seller, uint256[] memory tokenIds, uint256[] memory amounts) public view override returns (bool, string memory)
     {
-        if (IERC165(addr).supportsInterface(0x80ac58cd)) {         // ERC721 interfaceID
+        if(isPunks(addr)){
+             for (uint256 i = 0; i < tokenIds.length; i++) {
+                address holder = PUNKS.punkIndexToAddress(tokenIds[i]);
+                if (holder != seller) {
+                    return (false, "Token listed or not owner");
+                }               
+            }           
+        }
+        else if (IERC165(addr).supportsInterface(0x80ac58cd)) {         // ERC721 interfaceID
             for (uint256 i = 0; i < tokenIds.length; i++) {
                 if (IERC721(addr).ownerOf(tokenIds[i]) != seller) {
                     return (false, "Token listed or not owner");
@@ -208,6 +223,13 @@ contract LucksHelper is ILucksHelper, Ownable {
         }
 
         return true;
+    }
+
+    function isPunks(address nftContract) public override view returns(bool) {
+        if (address(PUNKS) == nftContract && address(PUNKS) != address(0)) {
+            return true;
+        }
+        return false;
     }
 
     function getProtocolFeeRecipient()
@@ -261,6 +283,14 @@ contract LucksHelper is ILucksHelper, Ownable {
 
     function getAutoDraw() external view override returns (ILucksAuto) {
         return AUTO_DRAW;
+    }
+
+    function getPunks() external view override returns (IPunks) {
+        return PUNKS;
+    }
+
+    function getProxyPunks() external view override returns (IProxyNFTStation) {
+        return PROXY_PUNKS;
     }
 
     //  ============ onlyOwner  functions  ============
@@ -356,5 +386,10 @@ contract LucksHelper is ILucksHelper, Ownable {
     function setLucksAuto(ILucksAuto _auto_close, ILucksAuto _auto_draw) external onlyOperator {
         AUTO_CLOSE = _auto_close;
         AUTO_DRAW = _auto_draw;
+    }
+
+    function setPunks(IPunks punks, IProxyNFTStation proxyPunks) external onlyOperator {
+        PUNKS = punks;
+        PROXY_PUNKS = proxyPunks; 
     }
 }

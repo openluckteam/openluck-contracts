@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 // Openluck interfaces
 import {ILucksExecutor, TaskItem, TaskExt, TaskStatus, Ticket, TaskInfo, UserState } from "./interfaces/ILucksExecutor.sol";
-import {IProxyNFTStation} from "./interfaces/IProxyNFTStation.sol";
+import {IProxyNFTStation, DepositNFT} from "./interfaces/IProxyNFTStation.sol";
 import {IProxyTokenStation} from "./interfaces/IProxyTokenStation.sol";
 import {ILucksHelper} from "./interfaces/ILucksHelper.sol";
 import {ILucksBridge, lzTxObj} from "./interfaces/ILucksBridge.sol";
@@ -44,7 +44,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
     mapping(uint256 => mapping(uint256 => Ticket)) public tickets; // store tickets (taskId => ticketId => ticket)    
     mapping(uint256 => uint256[]) public ticketIds; // store ticket ids (taskId => lastTicketIds)             
     mapping(address => mapping(uint256 => UserState)) public userState; // Keep track of user ticket ids for a given taskId (user => taskId => userstate)        
-
+    
     // ======== Constructor =========
 
     /**
@@ -101,12 +101,19 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
 
         // inputs validation
         HELPER.checkNewTask(msg.sender, item);
-        HELPER.checkNewTaskExt(ext);
+        HELPER.checkNewTaskExt(ext);        
 
-        // Transfer nfts to proxy station (NFTChain) 
-        // in case of dst chain transection fail, enable user redeem nft back, after endTime
-        uint256 depositId = NFT.deposit(msg.sender, item.nftContract, item.tokenIds, item.tokenAmounts, item.endTime);
-        item.depositId = depositId;
+        // adapt to CryptoPunks
+        if (HELPER.isPunks(item.nftContract)) {
+
+            item.depositId = HELPER.getProxyPunks().deposit(msg.sender, item.nftContract, item.tokenIds, item.tokenAmounts, item.endTime);
+        }
+        else {
+
+            // Transfer nfts to proxy station (NFTChain) 
+            // in case of dst chain transection fail, enable user redeem nft back, after endTime            
+            item.depositId = NFT.deposit(msg.sender, item.nftContract, item.tokenIds, item.tokenAmounts, item.endTime);
+        }
              
         // Create Task Item           
         if (ext.chainId == item.nftChainId) { // same chain creation    
@@ -117,6 +124,14 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
             require(address(BRIDGE) != address(0), "Bridge unset");
             BRIDGE.sendCreateTask{value: msg.value}(ext.chainId, payable(msg.sender), item, ext, _param);
         }
+    }
+
+    function updateTaskNote(uint256 taskId, string memory note) external override isExists(taskId) {
+
+        require(tasks[taskId].seller == msg.sender, "onlySeller");
+        require(bytes(note).length >=0 && bytes(note).length <= 256, "Invalid note len");
+
+        emit UpdateTaskNote(taskId, note);
     }
 
     /**
@@ -273,8 +288,8 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
              _createTask(item, ext);
                     
         } else if (functionType == 2) { //TYPE_WITHDRAW_NFT
-            (, address user, uint256 depositId) = abi.decode(_payload, (uint8, address, uint256));                        
-            NFT.withdraw(depositId, user); 
+            (, address user, address nftContract, uint256 depositId) = abi.decode(_payload, (uint8, address, address, uint256));                        
+            _doWithdrawNFTs(depositId, nftContract, user);
         }
     }    
 
@@ -387,11 +402,24 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
 
     function _withdrawNFTs(uint256 taskId, address payable user, bool enableCrossChain, lzTxObj memory _param) internal
     {
-        if (lzChainId == tasks[taskId].nftChainId) { // same chain
-            NFT.withdraw(tasks[taskId].depositId, user);
+        if (lzChainId == tasks[taskId].nftChainId) { // same chain    
+
+           _doWithdrawNFTs(tasks[taskId].depositId, tasks[taskId].nftContract, user);
+            
         }
         else if (enableCrossChain){ // cross chain            
-            BRIDGE.sendWithdrawNFTs{value: msg.value}(tasks[taskId].nftChainId, payable(msg.sender), user, tasks[taskId].depositId, _param);
+            BRIDGE.sendWithdrawNFTs{value: msg.value}(tasks[taskId].nftChainId, payable(msg.sender), user,tasks[taskId].nftContract, tasks[taskId].depositId, _param);
+        }
+    }
+
+    function _doWithdrawNFTs(uint256 depositId, address nftContract, address user) internal {
+       
+        // adapt to CryptoPunks
+        if (HELPER.isPunks(nftContract)) {
+             HELPER.getProxyPunks().withdraw(depositId, user);
+        }
+        else {
+            NFT.withdraw(depositId, user);
         }
     }
 
@@ -473,7 +501,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
 
     function _transferOut(address token, address to, uint256 amount) internal {        
         TOKEN.withdraw(to, token, amount);
-    }
+    }    
 
     //  ============ onlyOwner  functions  ============
 
@@ -497,4 +525,5 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
         TOKEN = _token;
         NFT = _nft;
     }
+
 }

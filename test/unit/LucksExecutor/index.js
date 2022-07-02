@@ -31,7 +31,7 @@ module.exports = function () {
     // describe('createTask(...)', createTask);
     // describe('joinTask(...)', joinTask);
     // describe('joinTaskLarge(...)', joinTaskLarge);
-    // describe('joinTaskLarge2(...)', joinTaskLarge2);
+    describe('joinTaskLarge2(...)', joinTaskLarge2);
     // describe('createGroup(...)', createGroup);
     // describe('joinGroup(...)', joinGroup);
     // describe('cancelTask(...)', cancelTask);
@@ -40,7 +40,7 @@ module.exports = function () {
     // describe('pickWinner(...)', pickWinner);
     // describe('claimTokens(...)', claimTokens); 
     // describe('claimNFTs(...)', claimNFTs); 
-    describe('autoCloseTask(...)', autoCloseTask);
+    // describe('autoCloseTask(...)', autoCloseTask);
     // describe('testTicket(...)', testTicket);
     // describe('tokenPrices(...)', tokenPrices);
   }

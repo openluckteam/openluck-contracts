@@ -62,6 +62,7 @@ function getTaskChainIdForTest() {
     return getEndpointIdByName(getTaskNetworkNameForTest());
 }
 
+
 module.exports = {
     LzChainId: lzChainIds,
     getEndpointId,

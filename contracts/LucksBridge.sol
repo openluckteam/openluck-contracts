@@ -26,7 +26,7 @@ contract LucksBridge is NonblockingLzApp, ILucksBridge {
     //---------------------------------------------------------------------------
     // MODIFIERS
     modifier onlyExecutor() {
-        require(msg.sender == address(EXECUTOR), "Lucks: caller must be LucksExecutor.");
+        require(msg.sender == address(EXECUTOR), "Lucks: caller must be LucksExecutor");
         _;
     }
 
@@ -102,9 +102,9 @@ contract LucksBridge is NonblockingLzApp, ILucksBridge {
         return lzEndpoint.estimateFees(_dstChainId, address(this), payload, useLayerZeroToken, lzTxParamBuilt);
     }
 
-    function estimateWithdrawNFTsFee(uint16 _dstChainId, address payable _user, uint256 depositId, lzTxObj memory _lzTxParams) 
+    function estimateWithdrawNFTsFee(uint16 _dstChainId, address payable _user, address nftContract, uint256 depositId, lzTxObj memory _lzTxParams) 
         external view override returns (uint256 nativeFee, uint256 zroFee) {
-        bytes memory payload = abi.encode(TYPE_WITHDRAW_NFT, _user, depositId);
+        bytes memory payload = abi.encode(TYPE_WITHDRAW_NFT, _user, nftContract, depositId);
         bytes memory lzTxParamBuilt = _txParamBuilder(_dstChainId, TYPE_WITHDRAW_NFT, _lzTxParams);
         return lzEndpoint.estimateFees(_dstChainId, address(this), payload, useLayerZeroToken,lzTxParamBuilt);
     }
@@ -128,10 +128,11 @@ contract LucksBridge is NonblockingLzApp, ILucksBridge {
         uint16 _dstChainId,        
         address payable _refundAddress,
         address payable _user,
+        address nftContract,
         uint256 depositId,
         lzTxObj memory _lzTxParams
     ) external payable override onlyExecutor {
-        bytes memory payload = abi.encode(TYPE_WITHDRAW_NFT, _user, depositId);
+        bytes memory payload = abi.encode(TYPE_WITHDRAW_NFT, _user, nftContract, depositId);
         _call(_dstChainId, TYPE_WITHDRAW_NFT, _refundAddress, _lzTxParams, payload);
     }
 
@@ -202,17 +203,10 @@ contract LucksBridge is NonblockingLzApp, ILucksBridge {
         emit SendMsg(_type, nextNonce);
     }
 
-    
-    /**
-    @notice set operator
-     */
     function setExecutor(ILucksExecutor _executor) external onlyOwner {
         EXECUTOR = _executor;
     }
 
-    /**
-    @notice set useLayerZeroToken
-     */
     function setUseLayerZeroToken(bool enable) external onlyOwner {
         useLayerZeroToken = enable;
     }

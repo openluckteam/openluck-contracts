@@ -1,0 +1,21 @@
+account_id: c582c55e-2568-46b1-a067-07fb5d97e8ab
+exports:
+  rinkeby-testnet:
+    chain_config:
+      berlin_block: 0
+      byzantium_block: 0
+      constantinople_block: 0
+      eip150_block: 0
+      eip150_hash: "0x0000000000000000000000000000000000000000000000000000000000000000"
+      eip155_block: 0
+      eip158_block: 0
+      homestead_block: 0
+      istanbul_block: 0
+      london_block: 0
+      petersburg_block: 0
+    forked_network: Rinkeby
+    project_slug: ToniDoge/openluckv2
+    protocol: ""
+    rpc_address: rinkeby
+project_slug: openluckv2
+provider: Hardhat

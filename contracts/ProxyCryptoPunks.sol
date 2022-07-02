@@ -3,16 +3,14 @@ pragma solidity ^0.8.0;
 
 // imports
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
-import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
-import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 // interfaces
 import {IProxyNFTStation, DepositNFT} from "./interfaces/IProxyNFTStation.sol";
+import {ILucksHelper} from "./interfaces/ILucksHelper.sol";
+import "./interfaces/IPunks.sol";
 
-contract ProxyNFTStation is IProxyNFTStation, ERC721Holder, ERC1155Holder, Ownable {
+contract ProxyCryptoPunks is IProxyNFTStation, Ownable {
 
     using Counters for Counters.Counter;
 
@@ -20,9 +18,7 @@ contract ProxyNFTStation is IProxyNFTStation, ERC721Holder, ERC1155Holder, Ownab
 
     // ============ Public  ============    
 
-    // interfaceID
-    bytes4 public constant ID_ERC721 = 0x80ac58cd;  // ERC721    
-    bytes4 public constant ID_ERC1155 = 0xd9b67a26; // ERC1155    
+    ILucksHelper public HELPER;
 
     // OpenLuck executors
     mapping(address => bool) public executors;
@@ -42,8 +38,9 @@ contract ProxyNFTStation is IProxyNFTStation, ERC721Holder, ERC1155Holder, Ownab
      * @notice Constructor
      * @param _executor address
      */
-    constructor(address _executor) {
+    constructor(address _executor, ILucksHelper _helper) {       
        executors[_executor]= true;
+       HELPER = _helper;
     }
 
     // ============ Public functions ============
@@ -55,8 +52,19 @@ contract ProxyNFTStation is IProxyNFTStation, ERC721Holder, ERC1155Holder, Ownab
     function deposit(address user, address nft, uint256[] memory tokenIds, uint256[] memory amounts, uint256 endTime) override external payable onlyExecutor 
         returns(uint256 depositId) { 
 
-        // transfer nft to this contract
-        _transferNFTs(nft, user, address(this), tokenIds, amounts);    
+        require(HELPER.isPunks(nft), "Punks: not Punks");
+
+        // transfer punks to this contract
+        // user need to offerPunkForSaleToAddress before createTask
+        IPunks punks = HELPER.getPunks();
+        
+        for (uint256 i = 0; i < tokenIds.length; i++) {
+
+            address holder = punks.punkIndexToAddress(tokenIds[i]);
+            require(holder == user, "Punks: not owner of punkIndex");
+
+            punks.buyPunk(tokenIds[i]);    
+        }     
 
         // store deposit record
         _depositIds.increment();
@@ -79,39 +87,16 @@ contract ProxyNFTStation is IProxyNFTStation, ERC721Holder, ERC1155Holder, Ownab
         delete deposits[msg.sender][depositId];
 
         // transfer out nft
-        _transferNFTs(nft, address(this), to, tokenIds, amounts);
+        IPunks punks = HELPER.getPunks();
+      
+        for (uint256 i = 0; i < tokenIds.length; i++) {
+            address holder = punks.punkIndexToAddress(tokenIds[i]);
+            require(holder == address(this), "Punks: proxy is not owner");
+
+            punks.transferPunk(to, tokenIds[i]);
+        }
 
         emit Withdraw(msg.sender, depositId, to, nft, tokenIds, amounts);   
-    }
-
-
-    // ============ Internal functions ============
-
-    /**
-     * @notice batch transfer NFTs (seller/winner <-> protocol)
-     * @param nft NFT contract address
-     * @param from sender
-     * @param to reciever
-     * @param tokenIds tokenId array
-     * @param amounts amounts array (ERC721 can be null)
-     */
-    function _transferNFTs(address nft, address from, address to, uint256[] memory tokenIds, uint256[] memory amounts) internal
-    {
-        require(nft != from && from != to, "Invalid address");
-
-        if (IERC165(nft).supportsInterface(ID_ERC721)) {
-            // transfer ERC721
-            for (uint256 i = 0; i < tokenIds.length; i++) {
-                IERC721(nft).transferFrom(from, to, tokenIds[i]);
-            }
-        } else if (IERC165(nft).supportsInterface(ID_ERC1155)) {
-            // transfer ERC1155
-            require(tokenIds.length == amounts.length, "Invalid ids & amounts");
-            IERC1155(nft).safeBatchTransferFrom(from, to, tokenIds, amounts, "");
-        } 
-        else {
-            revert("Unsupport NFT");
-        }
     }
 
     
@@ -136,7 +121,14 @@ contract ProxyNFTStation is IProxyNFTStation, ERC721Holder, ERC1155Holder, Ownab
         delete deposits[executor][depositId];
 
         // transfer back nft to user
-        _transferNFTs(nft, address(this), to, tokenIds, amounts);
+        IPunks punks = HELPER.getPunks();
+      
+        for (uint256 i = 0; i < tokenIds.length; i++) {
+            address holder = punks.punkIndexToAddress(tokenIds[i]);
+            require(holder == address(this), "Punks: proxy is not owner");
+
+            punks.transferPunk(to, tokenIds[i]);
+        }
 
         emit Redeem(msg.sender, depositId, to, nft, tokenIds, amounts);   
     }
@@ -144,9 +136,6 @@ contract ProxyNFTStation is IProxyNFTStation, ERC721Holder, ERC1155Holder, Ownab
 
     //  ============ onlyOwner  functions  ============
 
-    /**
-    @notice set operator
-     */
     function setExecutor(address executor) external onlyOwner {
         executors[executor] = true;
     }

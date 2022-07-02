@@ -25,6 +25,7 @@ module.exports = async function(hre) {
     let LucksPaymentStrategy;
     let LucksAutoCloseTask;
     let LucksAutoDrawTask;
+    let ProxyCryptoPunks;
     if (isNetworkAllowTaskForTest()) {
         const token = await ethers.getContractFactory("ProxyTokenStation");
         const tokenAddr = (await hre.deployments.get("ProxyTokenStation")).address;
@@ -48,7 +49,13 @@ module.exports = async function(hre) {
 
         const autoDraw = await ethers.getContractFactory("LucksAutoDrawTask");
         const autoDrawAddr = (await hre.deployments.get("LucksAutoDrawTask")).address;
-        LucksAutoDrawTask = await autoDraw.attach(autoDrawAddr);
+        LucksAutoDrawTask = await autoDraw.attach(autoDrawAddr);     
+    }
+    else {
+        
+        const proxyCryptoPunks = await ethers.getContractFactory("ProxyCryptoPunks");
+        const ProxyCryptoPunksAddr = (await hre.deployments.get("ProxyCryptoPunks")).address;
+        ProxyCryptoPunks = await proxyCryptoPunks.attach(ProxyCryptoPunksAddr);   
     }
 
     let taskNetworkAddrs = getDeploymentAddresses(getTaskNetworkNameForTest());
@@ -70,7 +77,8 @@ module.exports = async function(hre) {
             LucksGroup,
             LucksPaymentStrategy,
             LucksAutoCloseTask,
-            LucksAutoDrawTask
+            LucksAutoDrawTask,
+            ProxyCryptoPunks
         },
         acceptToken
     }

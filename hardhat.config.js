@@ -1,5 +1,5 @@
 const dotenv = require('dotenv');
-
+require("@tenderly/hardhat-tenderly");
 require("@nomiclabs/hardhat-ganache");
 require('@nomiclabs/hardhat-etherscan');
 require('@nomiclabs/hardhat-waffle');
@@ -11,6 +11,7 @@ require('hardhat-deploy-ethers');
 require('solidity-coverage');
 require("hardhat-tracer");
 require('hardhat-contract-sizer');
+
 
 dotenv.config();
 
@@ -143,6 +144,15 @@ module.exports = {
             runs: 999999,
           },
         },
+      },
+      {
+        version: '0.4.8',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        },
       }
     ],   
   },
@@ -197,8 +207,7 @@ module.exports = {
       timeout: 600000,
     },
     "bsctestnet-testnet": {
-      // url: 'https://data-seed-prebsc-1-s1.binance.org:8545',
-      url: 'https://speedy-nodes-nyc.moralis.io/edf10fe6a4af44e7ad38d05d/bsc/testnet',
+      url: 'https://data-seed-prebsc-1-s1.binance.org:8545',
       accounts: privatekeys("bscTestnet"),
       network_id: 97,
       gasPrice: 11000000000, //11Gwei
@@ -264,5 +273,9 @@ module.exports = {
     alphaSort: true,
     runOnCompile: true,
     disambiguatePaths: false,
+  },
+  tenderly: {
+    username: "ToniDoge",
+    project: "openluck"
   }
 };

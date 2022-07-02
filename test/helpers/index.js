@@ -61,6 +61,8 @@ this.testArgs = async function () {
   const EthBoredApeYachtClub = isNetworkAllowTaskForTest() ? ethers.constants.AddressZero : await ethers.getContract("EthBoredApeYachtClub");
   const EthMoonbirds = isNetworkAllowTaskForTest() ? ethers.constants.AddressZero : await ethers.getContract("EthMoonbirds");
   const EthAzuki = isNetworkAllowTaskForTest() ? ethers.constants.AddressZero : await ethers.getContract("EthAzuki");
+  const CryptoPunks = isNetworkAllowTaskForTest() ? ethers.constants.AddressZero : await ethers.getContract("CryptoPunksMarket");
+  const ProxyCryptoPunks = isNetworkAllowTaskForTest() ? ethers.constants.AddressZero : await ethers.getContract("ProxyCryptoPunks");
 
   const CyBlocPack = isNetworkAllowTaskForTest() ? await ethers.getContract("CyBlocPack") : ethers.constants.AddressZero;
   const PandaNFT = isNetworkAllowTaskForTest() ? await ethers.getContract("PandaNFT") : ethers.constants.AddressZero;
@@ -78,6 +80,7 @@ this.testArgs = async function () {
       LucksExecutor,
       ProxyNFTStation,
       ProxyTokenStation,
+      ProxyCryptoPunks,
       LucksVRF,
       LocalLucksVRF,
       LucksHelper,
@@ -94,7 +97,8 @@ this.testArgs = async function () {
         WatcherMinter,
         EthAzuki,
         EthBoredApeYachtClub,
-        EthMoonbirds
+        EthMoonbirds,
+        CryptoPunks
       },
       TokenBUSD,
       TokenUSDC,
@@ -132,6 +136,12 @@ function getNftContract(contracts, address) {
     case contracts.nfts.EthMoonbirds.address:
       contract = contracts.nfts.EthMoonbirds;
       break;
+    case contracts.nfts.CryptoPunks.address:
+        contract = contracts.nfts.CryptoPunks;
+        break;
+      case contracts.nfts.EthCryptoPunks.address:
+        contract = contracts.nfts.EthCryptoPunks;
+        break;
   }
 
   return contract;
@@ -139,6 +149,9 @@ function getNftContract(contracts, address) {
 
 this.approvalForAllNFT = async function (contracts, caller, nftContract, to) {
 
+  if (nftContract == contracts.nfts.CryptoPunks.address) {
+    return;
+  }
   let contract = await getNftContract(contracts, nftContract).connect(caller);
 
   if (!await contract.isApprovedForAll(caller.address, to)) {
@@ -150,6 +163,7 @@ this.approvalForAllNFT = async function (contracts, caller, nftContract, to) {
 
 this.getTestTitle = async function (contracts, nftContract, tokenIds) {
 
+  return "";
   let contract = getNftContract(contracts, nftContract);
 
   if (contract) {
@@ -254,6 +268,7 @@ this.tryEmitCall = async (tx, contract, event) => {
   }
   catch (ex) {
     error = ex;
+    console.log(`tx: ${tx}`)
   }
   printError(error);
 }

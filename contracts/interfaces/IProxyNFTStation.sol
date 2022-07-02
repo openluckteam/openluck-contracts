@@ -15,6 +15,7 @@ interface IProxyNFTStation {
     event Withdraw(address indexed executor, uint256 depositId, address indexed to, address nft, uint256[] tokenIds, uint256[] amounts);
     event Redeem(address indexed executor, uint256 depositId, address indexed to, address nft, uint256[] tokenIds, uint256[] amounts);
 
+    // function getNFT(address executor, uint256 depositId) external view returns(DepositNFT memory);
     function deposit(address user, address nft, uint256[] memory tokenIds, uint256[] memory amounts, uint256 endTime) external payable returns (uint256 depositId);    
     function withdraw(uint256 depositId, address to) external;    
     function redeem(address executor, uint256 depositId, address to) external;    
