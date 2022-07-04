@@ -128,7 +128,7 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
                     console.log(` ✅ ${hre.network.name} > LucksHelper.acceptTokens - BUSD | *already set*`);
                 }
                 else {
-                    console.log(` ✘ ${hre.network.name} > LucksHelper.acceptTokens - BUSD ==> Wrong set`);
+                    console.log(` ✘ ${hre.network.name} > LucksHelper.acceptTokens - BUSD ==> Wrong set`);                   
                 }
 
                 if (await contracts.LucksHelper.acceptTokens(acceptToken.USDC) == true) {
@@ -143,6 +143,18 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
                 }
                 else {
                     console.log(` ✘ ${hre.network.name} > LucksHelper.acceptTokens - USDT ==> Wrong set`);
+                    if(autoFix){
+                        await contracts.LucksHelper.connect(deployer).setAcceptTokens(
+                            [
+                                acceptToken.BNB,
+                                acceptToken.WBNB,
+                                acceptToken.BUSD,
+                                acceptToken.USDC,
+                                acceptToken.USDT
+                            ], true
+                        );
+                        console.log(` ✘ ${hre.network.name} > LucksHelper.acceptTokens ==> Fixed`);
+                    }
                 }
 
             }
@@ -293,7 +305,7 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
 
             if (!isNetworkAllowTaskForTest()) {
                 let taskNetworkAddrs = getDeploymentAddresses(hre.network.name);
-                punkAddress = ethers.utils.getAddress(taskNetworkAddrs["CryptoPunksMarket"]);
+                punkAddress = ethers.utils.getAddress(taskNetworkAddrs["EthCryptoPunksMarket"]);
             }
 
             if (await contracts.LucksHelper.PUNKS() == punkAddress) {

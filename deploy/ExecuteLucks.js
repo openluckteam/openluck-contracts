@@ -198,32 +198,32 @@ module.exports = async ({ ethers, getNamedAccounts, deployments, getChainId }) =
     console.log("DEPLOY >> Core Contracts deployed!");
 
     // ---------------
-    // tenderly
-    {
-        console.log("tenderly >> starting");
+    // // tenderly
+    // {
+    //     console.log("tenderly >> starting");
 
-        await hre.tenderly.persistArtifacts({
-            name: "LucksExecutor",
-            address: LucksExecutor.address
-        });
+    //     await hre.tenderly.persistArtifacts({
+    //         name: "LucksExecutor",
+    //         address: LucksExecutor.address
+    //     });
 
-        await hre.tenderly.persistArtifacts({
-            name: "LucksBridge",
-            address: LucksBridge.address
-        });
+    //     await hre.tenderly.persistArtifacts({
+    //         name: "LucksBridge",
+    //         address: LucksBridge.address
+    //     });
 
-        await hre.tenderly.persistArtifacts({
-            name: "LucksHelper",
-            address: LucksHelper.address
-        });
+    //     await hre.tenderly.persistArtifacts({
+    //         name: "LucksHelper",
+    //         address: LucksHelper.address
+    //     });
 
-        await hre.tenderly.persistArtifacts({
-            name: "ProxyNFTStation",
-            address: ProxyNFTStation.address
-        });
+    //     await hre.tenderly.persistArtifacts({
+    //         name: "ProxyNFTStation",
+    //         address: ProxyNFTStation.address
+    //     });
     
-        console.log("tenderly >> done!");
-    }
+    //     console.log("tenderly >> done!");
+    // }
 
     // ----------------------------------------------
     //  Update Contracts params

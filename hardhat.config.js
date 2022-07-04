@@ -1,5 +1,5 @@
 const dotenv = require('dotenv');
-require("@tenderly/hardhat-tenderly");
+// require("@tenderly/hardhat-tenderly");
 require("@nomiclabs/hardhat-ganache");
 require('@nomiclabs/hardhat-etherscan');
 require('@nomiclabs/hardhat-waffle');
@@ -142,15 +142,6 @@ module.exports = {
           optimizer: {
             enabled: true,
             runs: 999999,
-          },
-        },
-      },
-      {
-        version: '0.4.8',
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 200,
           },
         },
       }

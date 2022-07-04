@@ -61,6 +61,7 @@ module.exports = async function(hre) {
     let taskNetworkAddrs = getDeploymentAddresses(getTaskNetworkNameForTest());
     const acceptToken = {
         BNB: '0x0000000000000000000000000000000000000000',
+        WBNB: ethers.utils.getAddress(taskNetworkAddrs["TokenWBNB"]),
         BUSD: ethers.utils.getAddress(taskNetworkAddrs["TokenBUSD"]),
         USDC: ethers.utils.getAddress(taskNetworkAddrs["TokenUSDC"]),
         USDT: ethers.utils.getAddress(taskNetworkAddrs["TokenUSDT"]),        

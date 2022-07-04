@@ -26,8 +26,8 @@
     "ProxyUpgradeContract": {
         "eth": "",
         "bsc": "",      
-        "rinkeby-testnet": "0x406b3326c90f310c96eb911240d96538e69258f2",
-        "bsctestnet-testnet": "0x5b4e2520d974eb75a9ad0c6848e1558aa661974c",
+        "rinkeby-testnet": "0xF14A9109E78a00324397714b8A783B345926fBE1",
+        "bsctestnet-testnet": "0x45d6DE813a762f78A16c87a0679eA7d7a3dC3cB7",
         "localhost-eth": "0xc6F5d17426D42C0fd6A5E12bE6df23C68D177914",
         "localhost-bsc": "0x2945D9Ea3BBeE8E42ee5988E49dc49E66BBA3baD"
     },
