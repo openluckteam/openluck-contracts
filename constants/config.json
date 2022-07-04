@@ -89,5 +89,11 @@
             }
         ]
     },
-    "CryptoPunk": "0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb"
+    "CryptoPunk": "0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb",
+    "MultiSig": {
+        "eth": "0x4353BB08b032BC2a93A7AEd78AC1DA5d325E55EC",
+        "bsc": "0x083b9f29f874730bcb36298721bc5b59c5F4c853",      
+        "rinkeby-testnet": "0xF792E6552D22243457ea0916aeD7ab9f2F710299",
+        "bsctestnet-testnet": ""
+    }
 }
