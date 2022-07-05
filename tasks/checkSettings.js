@@ -159,7 +159,8 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
 
             }
 
-            if (await contracts.LucksHelper.feeRecipient() == deployer.address) {
+            const multiSigAddress = CONFIG.MultiSig[hre.network.name];
+            if (await contracts.LucksHelper.feeRecipient() == multiSigAddress) {
                 console.log(` ✅ ${hre.network.name} > LucksHelper.feeRecipient | *already set*`);
             }
             else {

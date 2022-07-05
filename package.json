@@ -84,7 +84,7 @@
     "wireBridges:test-bsc-avax": "npx hardhat --network bsctestnet-testnet wireBridges --target-networks fuji-testnet",
     "wireBridges:test-avax-bsc": "npx hardhat --network fuji-testnet wireBridges --target-networks bsctestnet-testnet",
     "checkSettings:test-bsc": "npx hardhat --network bsctestnet-testnet checkSettings --auto-fix true",
-    "checkSettings:test-eth": "npx hardhat --network rinkeby-testnet checkSettings --auto-fix true",
+    "checkSettings:test-eth": "npx hardhat --network rinkeby-testnet checkSettings --auto-fix false",
     "multiSig:test-eth": "npx hardhat --network rinkeby-testnet multiSig --auto-fix true",
     "multiSig:test-bsc": "npx hardhat --network bsctestnet-testnet multiSig --auto-fix true",
     "multiSig:test": "yarn multiSig:test-eth && multiSig:test-bsc",

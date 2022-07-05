@@ -1,14 +1,17 @@
 const { randomBytes } = require("ethers/lib/utils");
 const { getEndpointId, isNetworkAllowTaskForTest } = require("./network")
+const CONFIG = require("../constants/config.json")
 
 function getSettings(chainId, deployer, ethers) {
 
     let AddressZero = ethers.constants.AddressZero;
 
+    const multiSigAddress = CONFIG.MultiSig[hre.network.name];
+
     let setting = {
 
         testing: true,
-        multisigAddress: deployer,
+        multisigAddress: multiSigAddress,
 
         chainLink_vrfId: 1,
         chainLink_linkToken: AddressZero,

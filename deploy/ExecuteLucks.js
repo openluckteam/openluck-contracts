@@ -156,7 +156,7 @@ module.exports = async ({ ethers, getNamedAccounts, deployments, getChainId }) =
             from: deployer,
             args: [
                 setting.acceptTokens,
-                deployer,  //protocolFee recipient
+                setting.multisigAddress,  //protocolFee recipient
                 200, // protocolFee 2%
                 LucksExecutor.address, // LucksExecutor
                 LucksVRF.address, //LucksVRF
@@ -174,7 +174,7 @@ module.exports = async ({ ethers, getNamedAccounts, deployments, getChainId }) =
             from: deployer,
             args: [
                 setting.acceptTokens,
-                deployer,  //protocolFee recipient
+                setting.multisigAddress,  //protocolFee recipient
                 200, // protocolFee 2%
                 LucksExecutor.address,
                 setting.AddressZero,  //LucksVRF
