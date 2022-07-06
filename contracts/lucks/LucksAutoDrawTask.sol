@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 // Chainlink contracts
 import "@chainlink/contracts/src/v0.8/KeeperCompatible.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 // Openluck interfaces
 import {ILucksBridge, lzTxObj} from "../interfaces/ILucksBridge.sol";
@@ -10,9 +11,14 @@ import "./LucksAutoTask.sol";
 
 contract LucksAutoDrawTask is LucksAutoTask, KeeperCompatibleInterface {
 
+    using SafeMath for uint256;
+
     uint16 public immutable lzChainId;
 
     ILucksBridge public BRIDGE;
+
+    // add a little more quote fee 0.000001
+    uint256 public QUOTE_FEE_ADD = 1000000000000;
 
     /**
     * @param _keeperRegAddr The address of the keeper registry contract
@@ -41,6 +47,7 @@ contract LucksAutoDrawTask is LucksAutoTask, KeeperCompatibleInterface {
             if (item.nftChainId != lzChainId) {
                 if (address(BRIDGE) != address(0)) {
                     (quoteLayerZeroFee,) = BRIDGE.quoteLayerZeroFee(item.nftChainId, 2, "", _lzTxObj);
+                    quoteLayerZeroFee = quoteLayerZeroFee.add(QUOTE_FEE_ADD);
                 }
             }
 
@@ -80,5 +87,10 @@ contract LucksAutoDrawTask is LucksAutoTask, KeeperCompatibleInterface {
     function setBridge(ILucksBridge _bridge) external onlyOwner {
         BRIDGE = _bridge;
     }
+
+    function setQuoteFeeAdd(uint256 amount) external onlyOwner {
+        QUOTE_FEE_ADD = amount;
+    }
+
 }
 

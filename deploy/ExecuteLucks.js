@@ -1,11 +1,15 @@
 const { BigNumber, utils, Contract } = require('ethers');
 const { ethers, upgrades } = require('hardhat');
 let { getSettings } = require('../utils/deploySetting');
-const { isLocalhost, isNetworkAllowTaskForTest } = require("../utils/network")
+const { isLocalhost, isTestnet, isNetworkAllowTaskForTest } = require("../utils/network")
 const { getLayerZeroAddress } = require("../utils/layerzero")
 const CONFIG = require("../constants/config.json")
 
 function getDependencies() {
+    
+    if (!isTestnet()) {
+        return [];
+    }
     let token = hre.network.name.indexOf("bsc") >= 0 ? "OpenLuckToken" : "OpenLuckOFT";
     if (isLocalhost()) {
         return ["LZEndpointMock", token]

@@ -16,6 +16,7 @@ interface ILucksAuto {
     event RevertInvoke(uint256 taskId, string reason);
 
     function addTask(uint256 taskId, uint endTime) external;
+    function addTasks(uint256[] memory taskIds, uint[] memory endTime) external;
     function removeTask(uint256 taskId) external;
     function getQueueTasks() external view returns (uint256[] memory);
 

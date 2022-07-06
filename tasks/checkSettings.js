@@ -1,15 +1,15 @@
 const getContracts = require('../utils/getContracts');
 const { isNetworkAllowTaskForTest } = require("../utils/network")
 const { getDeploymentAddresses } = require("../utils/readDeployments")
+
+
 const CONFIG = require("../constants/config.json")
 
 task("checkSettings", "cheking the smartcontracts interfaces and variables settings")
     .addParam("autoFix", "the remote Stargate instance named by network")
     .setAction(async (taskArgs, hre) => {
 
-        let autoFix = taskArgs.autoFix == "true";
-
-        // let accounts = await ethers.getSigners()       
+        let autoFix = taskArgs.autoFix == "true";    
         let [deployer] = await ethers.getSigners();
 
         let { contracts, acceptToken } = await getContracts(hre);
@@ -121,6 +121,10 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
                 }
                 else {
                     console.log(` ✘ ${hre.network.name} > LucksHelper.AUTO_DRAW ==> Wrong set`);
+                    if (autoFix) {
+                        await contracts.LucksHelper.connect(deployer).setLucksAuto(contracts.LucksAutoCloseTask.address, contracts.LucksAutoDrawTask.address);
+                        console.log(` ✅ ${hre.network.name} > LucksHelper.AUTO_DRAW | *already Fixed*`);
+                    }
                 }
 
                 // tokens
@@ -135,7 +139,7 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
                     console.log(` ✅ ${hre.network.name} > LucksHelper.acceptTokens - USDC | *already set*`);
                 }
                 else {
-                    console.log(` ✘ ${hre.network.name} > LucksHelper.acceptTokens - USDC ==> Wrong set`);
+                    console.log(` ✘ ${hre.network.name} > LucksHelper.acceptTokens - USDC ==> Wrong set`);                   
                 }
 
                 if (await contracts.LucksHelper.acceptTokens(acceptToken.USDT) == true) {
@@ -153,47 +157,54 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
                                 acceptToken.USDT
                             ], true
                         );
-                        console.log(` ✘ ${hre.network.name} > LucksHelper.acceptTokens ==> Fixed`);
+                        console.log(` ✅ ${hre.network.name} > LucksHelper.acceptTokens ==> Fixed`);
+                    }
+                }
+
+                // minTargetAmount
+                {
+                    if (await contracts.LucksHelper.getMinTargetLimit(acceptToken.BNB) == 0) {
+                        console.log(` ✅ ${hre.network.name} > LucksHelper.getMinTargetLimit - BNB | *already set*`);
+                    }
+                    else {
+                        console.log(` ✘ ${hre.network.name} > LucksHelper.getMinTargetLimit - BNB ==> Wrong set`);
+                    }
+
+                    if (await contracts.LucksHelper.getMinTargetLimit(acceptToken.BUSD) == 0) {
+                        console.log(` ✅ ${hre.network.name} > LucksHelper.getMinTargetLimit - BUSD | *already set*`);
+                    }
+                    else {
+                        console.log(` ✘ ${hre.network.name} > LucksHelper.getMinTargetLimit - BUSD ==> Wrong set`);
+                    }
+
+                    if (await contracts.LucksHelper.getMinTargetLimit(acceptToken.USDC) == 0) {
+                        console.log(` ✅ ${hre.network.name} > LucksHelper.getMinTargetLimit - USDC | *already set*`);
+                    }
+                    else {
+                        console.log(` ✘ ${hre.network.name} > LucksHelper.getMinTargetLimit - USDC ==> Wrong set`);
+                    }
+
+                    if (await contracts.LucksHelper.getMinTargetLimit(acceptToken.USDT) == 0) {
+                        console.log(` ✅ ${hre.network.name} > LucksHelper.getMinTargetLimit - USDT | *already set*`);
+                    }
+                    else {
+                        console.log(` ✘ ${hre.network.name} > LucksHelper.getMinTargetLimit - USDT ==> Wrong set`);
                     }
                 }
 
             }
 
+  
             const multiSigAddress = CONFIG.MultiSig[hre.network.name];
             if (await contracts.LucksHelper.feeRecipient() == multiSigAddress) {
                 console.log(` ✅ ${hre.network.name} > LucksHelper.feeRecipient | *already set*`);
             }
             else {
                 console.log(` ✘ ${hre.network.name} > LucksHelper.feeRecipient ==> Wrong set`);
-            }
-
-            // minTargetAmount
-            if (await contracts.LucksHelper.getMinTargetLimit(acceptToken.BNB) == 0) {
-                console.log(` ✅ ${hre.network.name} > LucksHelper.getMinTargetLimit - BNB | *already set*`);
-            }
-            else {
-                console.log(` ✘ ${hre.network.name} > LucksHelper.getMinTargetLimit - BNB ==> Wrong set`);
-            }
-
-            if (await contracts.LucksHelper.getMinTargetLimit(acceptToken.BUSD) == 0) {
-                console.log(` ✅ ${hre.network.name} > LucksHelper.getMinTargetLimit - BUSD | *already set*`);
-            }
-            else {
-                console.log(` ✘ ${hre.network.name} > LucksHelper.getMinTargetLimit - BUSD ==> Wrong set`);
-            }
-
-            if (await contracts.LucksHelper.getMinTargetLimit(acceptToken.USDC) == 0) {
-                console.log(` ✅ ${hre.network.name} > LucksHelper.getMinTargetLimit - USDC | *already set*`);
-            }
-            else {
-                console.log(` ✘ ${hre.network.name} > LucksHelper.getMinTargetLimit - USDC ==> Wrong set`);
-            }
-
-            if (await contracts.LucksHelper.getMinTargetLimit(acceptToken.USDT) == 0) {
-                console.log(` ✅ ${hre.network.name} > LucksHelper.getMinTargetLimit - USDT | *already set*`);
-            }
-            else {
-                console.log(` ✘ ${hre.network.name} > LucksHelper.getMinTargetLimit - USDT ==> Wrong set`);
+                if (autoFix && multiSigAddress != "") {
+                    await contracts.LucksHelper.connect(deployer).setProtocolFeeRecipient(multiSigAddress);
+                    console.log(` ✅ ${hre.network.name} > LucksHelper.feeRecipient | *already Fixed*`);
+                }
             }
 
         }

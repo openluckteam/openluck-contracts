@@ -36,10 +36,10 @@ function privatekeys(network) {
     process.env.LOCAL_JOINER2_PRIVATE_KEY
   ];
   switch (network) {
+    case "eth":
     case "bsc":
     case "avalanche":
     case "aurora":
-    case "mainnet":
       accounts = [
         process.env.DEPLOYER_PRIVATE_KEY, 
         process.env.CALLER_PRIVATE_KEY, 
@@ -174,10 +174,10 @@ module.exports = {
     //   network_id: '4337'
     // },
     // eth network
-    eth: {
+    "eth": {
       url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
       accounts: privatekeys("eth"),
-      gasPrice: 30000000000, //30Gwei
+      gasPrice: 20000000000, //30Gwei
       network_id: 1,
       timeout: 600000,
     },
@@ -190,7 +190,7 @@ module.exports = {
       timeout: 600000,
     },
     // bsc network
-    bsc: {
+    "bsc": {
       url: 'https://bsc-dataseed1.binance.org',
       accounts: privatekeys("bsc"),
       gasPrice: 5000000000, //5Gwei

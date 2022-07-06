@@ -66,6 +66,10 @@
     "deploy:eth": "npx hardhat deploy --network eth",
     "deploy:bsc": "npx hardhat deploy --network bsc",
     "verify:bsc": "npx hardhat --network bsc etherscan-verify",
+    "verify:eth": "npx hardhat --network eth etherscan-verify",
+    "verify:bsc-LucksExecutor": "npx hardhat verify --network bsc 0x7B3a23f69f5548E7eEFb57F613027c4252f52366",
+    "verify:eth-LucksExecutor": "npx hardhat verify --network eth 0xB9a01e8f0D3d730614B54D7e4b3bEE521E350E9e",
+
     "wireBridges:eth": "npx hardhat --network eth wireBridges --target-networks bsc",
     "wireBridges:bsc": "npx hardhat --network bsc wireBridges --target-networks eth",
     "checkSettings:bsc": "npx hardhat --network bsc checkSettings --auto-fix true",
@@ -73,6 +77,7 @@
     "multiSig:eth": "npx hardhat --network rinkeby-testnet multiSig --auto-fix true",
     "multiSig:bsc": "npx hardhat --network bsctestnet-testnet multiSig --auto-fix true",
     "multiSig": "yarn multiSig:eth && multiSig:bsc",
+    
     "comment-testnet": "//=============== for testnet ===============================",
     "deploy:test-eth": "npx hardhat deploy --network rinkeby-testnet",
     "deploy:test-bsc": "npx hardhat deploy --network bsctestnet-testnet",
@@ -97,7 +102,7 @@
     "verify:test-bsc-LucksAutoDrawTask": "npx hardhat verify --network bsctestnet-testnet --constructor-args ./scripts/verify/LucksAutoDrawTask-testnet.js 0x04cd20a41465C74a1e88c706812430C0adBFd1DF",
     "verify:test-bsc-LucksHelper": "npx hardhat verify --network bsctestnet-testnet --constructor-args ./scripts/verify/LucksHelper-testnet.js 0x071700178d82a838D6AB1639d97d5DFa2098f76E",
     "verify:test-bsc-LucksVRF": "npx hardhat verify --network bsctestnet-testnet --constructor-args ./scripts/verify/LucksVRF-testnet.js 0xA39D630eFE179f65676129b8eEcf605B7b8e909b",
-    "verify:test-bsc-LucksExecutor": "npx hardhat verify --network bsctestnet-testnet 0x45d6DE813a762f78A16c87a0679eA7d7a3dC3cB7",
+    "verify:test-bsc-LucksExecutor": "npx hardhat verify --network bsctestnet-testnet 0x11c0e6275AaCb964068f8505861696D06Db03f54",
     "verify:test-eth-LucksExecutor": "npx hardhat verify --network rinkeby-testnet 0xF14A9109E78a00324397714b8A783B345926fBE1",
     "bind:test": "yarn wireBridges:test-eth-bsc && yarn wireBridges:test-bsc-eth",
     "comment-localhost": "//=============== for localhost ===============================",

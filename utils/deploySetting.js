@@ -59,10 +59,10 @@ function getSettings(chainId, deployer, ethers) {
                 "0x0000000000000000000000000000000000000000", //BNB
                 "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c", //WBNB
                 "0xe9e7cea3dedca5984780bafc599bd69add087d56", //BUSD
-                "0x64544969ed7EBf5f083679233325356EbE738930", //USDC
+                "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d", //USDC
                 "0x55d398326f99059fF775485246999027B3197955" //USDT
             ],
-                setting.priceOracle = '0x0567f2323251f0aab15c8dfb1967e4e8a7d42aee';
+            setting.priceOracle = '0x0567f2323251f0aab15c8dfb1967e4e8a7d42aee';
             setting.WETH = '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c';
 
             setting.chainLink_keeper = "0x7b3EC232b08BD7b4b3305BE0C044D907B2DF960B";

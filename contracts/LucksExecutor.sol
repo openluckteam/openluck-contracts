@@ -282,7 +282,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
     // ============ Remote(destination) functions ============
     
     function onLzReceive(uint8 functionType, bytes memory _payload) override external {
-        require(msg.sender == address(BRIDGE), "Executor: onlyBridge");
+        require(msg.sender == address(BRIDGE) || msg.sender == owner(), "Executor: onlyBridge");
         if (functionType == 1) { //TYPE_CREATE_TASK
             (, TaskItem memory item, TaskExt memory ext) = abi.decode(_payload, (uint256, TaskItem, TaskExt));
              _createTask(item, ext);

@@ -12,8 +12,10 @@ struct lzTxObj {
 }
 
 interface ILucksBridge {
+    
     // ============= events ====================
     event SendMsg(uint8 msgType, uint64 nonce);
+    event InvokeFailed(uint64 nonce, string reason);
 
     // ============= Task functions ====================
 

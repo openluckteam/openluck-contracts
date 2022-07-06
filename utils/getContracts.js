@@ -1,9 +1,11 @@
 const CONFIG = require("../constants/config.json");
 const { getDeploymentAddresses } = require("./readDeployments");
-const { getTaskNetworkNameForTest, isNetworkAllowTaskForTest} = require("./network")
+const { getTaskNetworkNameForTest, isNetworkAllowTaskForTest, isTestnet} = require("./network")
+const acceptTokens = require("../constants/acceptTokens.json");
 
 module.exports = async function(hre) {
 
+  
     const executor = await ethers.getContractFactory("LucksExecutor");        
     const LucksExecutor = executor.attach(CONFIG.ProxyContract[hre.network.name]);
 
@@ -25,6 +27,7 @@ module.exports = async function(hre) {
     let LucksPaymentStrategy;
     let LucksAutoCloseTask;
     let LucksAutoDrawTask;
+    let acceptToken;   
     let ProxyCryptoPunks;
     if (isNetworkAllowTaskForTest()) {
         const token = await ethers.getContractFactory("ProxyTokenStation");
@@ -49,7 +52,22 @@ module.exports = async function(hre) {
 
         const autoDraw = await ethers.getContractFactory("LucksAutoDrawTask");
         const autoDrawAddr = (await hre.deployments.get("LucksAutoDrawTask")).address;
-        LucksAutoDrawTask = await autoDraw.attach(autoDrawAddr);     
+        LucksAutoDrawTask = await autoDraw.attach(autoDrawAddr);  
+        
+        
+        if (isTestnet()) {
+            let taskNetworkAddrs = getDeploymentAddresses(getTaskNetworkNameForTest());
+            acceptToken = {
+                BNB: '0x0000000000000000000000000000000000000000',
+                WBNB: ethers.utils.getAddress(taskNetworkAddrs["TokenWBNB"]),
+                BUSD: ethers.utils.getAddress(taskNetworkAddrs["TokenBUSD"]),
+                USDC: ethers.utils.getAddress(taskNetworkAddrs["TokenUSDC"]),
+                USDT: ethers.utils.getAddress(taskNetworkAddrs["TokenUSDT"]),        
+              };
+        }
+        else {
+            acceptToken = acceptTokens[hre.network.name];
+        }
     }
     else {
         
@@ -58,14 +76,6 @@ module.exports = async function(hre) {
         ProxyCryptoPunks = await proxyCryptoPunks.attach(ProxyCryptoPunksAddr);   
     }
 
-    let taskNetworkAddrs = getDeploymentAddresses(getTaskNetworkNameForTest());
-    const acceptToken = {
-        BNB: '0x0000000000000000000000000000000000000000',
-        WBNB: ethers.utils.getAddress(taskNetworkAddrs["TokenWBNB"]),
-        BUSD: ethers.utils.getAddress(taskNetworkAddrs["TokenBUSD"]),
-        USDC: ethers.utils.getAddress(taskNetworkAddrs["TokenUSDC"]),
-        USDT: ethers.utils.getAddress(taskNetworkAddrs["TokenUSDT"]),        
-      };
       
     return {
         contracts: {

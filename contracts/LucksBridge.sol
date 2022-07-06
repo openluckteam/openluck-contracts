@@ -23,6 +23,9 @@ contract LucksBridge is NonblockingLzApp, ILucksBridge {
     ILucksExecutor public EXECUTOR;
     bool public useLayerZeroToken;
 
+    // add a little more quote fee 0.000001
+    uint256 public QUOTE_FEE_ADD = 1000000000000;
+
     //---------------------------------------------------------------------------
     // MODIFIERS
     modifier onlyExecutor() {
@@ -41,14 +44,9 @@ contract LucksBridge is NonblockingLzApp, ILucksBridge {
         assembly {
             functionType := mload(add(_payload, 32))
         }
-        // try-catch all errors/exceptions
-        try EXECUTOR.onLzReceive(functionType, _payload) {
-            // do nothing
-        } catch {
-            // error / exception
-            failedMessages[_srcChainId][_srcAddress][_nonce] = keccak256(_payload);
-            emit MessageFailed(_srcChainId, _srcAddress, _nonce, _payload);
-        }
+
+        // invoke executor
+        EXECUTOR.onLzReceive(functionType, _payload);
     }
 
     // ============ EXTERNAL functions ============
@@ -92,21 +90,24 @@ contract LucksBridge is NonblockingLzApp, ILucksBridge {
         }
 
         bytes memory lzTxParamBuilt = _txParamBuilder( _dstChainId, _functionType, _lzTxParams);
-        return lzEndpoint.estimateFees(_dstChainId, address(this), payload, useLayerZeroToken, lzTxParamBuilt);
+        (nativeFee,zroFee) = lzEndpoint.estimateFees(_dstChainId, address(this), payload, useLayerZeroToken, lzTxParamBuilt);
+        nativeFee = nativeFee.add(QUOTE_FEE_ADD);
     }
 
     function estimateCreateTaskFee(uint16 _dstChainId, TaskItem memory item, TaskExt memory ext, lzTxObj memory _lzTxParams) 
         external view override returns (uint256 nativeFee, uint256 zroFee) {
         bytes memory payload = abi.encode(TYPE_CREATE_TASK, item, ext);
         bytes memory lzTxParamBuilt = _txParamBuilder(_dstChainId, TYPE_CREATE_TASK, _lzTxParams);
-        return lzEndpoint.estimateFees(_dstChainId, address(this), payload, useLayerZeroToken, lzTxParamBuilt);
+        (nativeFee,zroFee) = lzEndpoint.estimateFees(_dstChainId, address(this), payload, useLayerZeroToken, lzTxParamBuilt);
+        nativeFee = nativeFee.add(QUOTE_FEE_ADD);
     }
 
     function estimateWithdrawNFTsFee(uint16 _dstChainId, address payable _user, address nftContract, uint256 depositId, lzTxObj memory _lzTxParams) 
         external view override returns (uint256 nativeFee, uint256 zroFee) {
         bytes memory payload = abi.encode(TYPE_WITHDRAW_NFT, _user, nftContract, depositId);
         bytes memory lzTxParamBuilt = _txParamBuilder(_dstChainId, TYPE_WITHDRAW_NFT, _lzTxParams);
-        return lzEndpoint.estimateFees(_dstChainId, address(this), payload, useLayerZeroToken,lzTxParamBuilt);
+        (nativeFee,zroFee) = lzEndpoint.estimateFees(_dstChainId, address(this), payload, useLayerZeroToken,lzTxParamBuilt);
+        nativeFee = nativeFee.add(QUOTE_FEE_ADD);
     }
 
     function renounceOwnership() public override onlyOwner {}
@@ -203,12 +204,18 @@ contract LucksBridge is NonblockingLzApp, ILucksBridge {
         emit SendMsg(_type, nextNonce);
     }
 
+    // ============ onlyOwner ============
+
     function setExecutor(ILucksExecutor _executor) external onlyOwner {
         EXECUTOR = _executor;
     }
 
     function setUseLayerZeroToken(bool enable) external onlyOwner {
         useLayerZeroToken = enable;
+    }
+
+    function setQuoteFeeAdd(uint256 amount) external onlyOwner {
+        QUOTE_FEE_ADD = amount;
     }
 
 }

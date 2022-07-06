@@ -45,9 +45,9 @@ contract ProxyCryptoPunks is IProxyNFTStation, Ownable {
 
     // ============ Public functions ============
 
-    // function getNFT(address executor, uint256 depositId) public view override returns(DepositNFT memory){
-    //     return deposits[executor][depositId];
-    // }
+    function getNFT(address executor, uint256 depositId) public view override returns(DepositNFT memory){
+        return deposits[executor][depositId];
+    }
 
     function deposit(address user, address nft, uint256[] memory tokenIds, uint256[] memory amounts, uint256 endTime) override external payable onlyExecutor 
         returns(uint256 depositId) { 

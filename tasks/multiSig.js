@@ -87,77 +87,6 @@ task("multiSig", "checking and transfer ownership to multiSig accounts")
             }
         }
 
-
-        // LucksGroup
-        if (contracts.LucksGroup) {
-            if (await contracts.LucksGroup.owner() == multiSigAddress) {
-                console.log(` ✅ ${hre.network.name} > LucksGroup | *already set*`);
-            }
-            else {
-                console.log(` ✘ ${hre.network.name} > LucksGroup ==> Wrong set`);
-                if (autoFix) {
-                    await contracts.LucksGroup.connect(deployer).transferOwnership(multiSigAddress);
-                    console.log(` ✅ ${hre.network.name} > LucksGroup | *already Fixed*`);
-                }
-            }
-        }
-
-        // LucksVRF
-        if (contracts.LucksVRF) {
-            if (await contracts.LucksVRF.owner() == multiSigAddress) {
-                console.log(` ✅ ${hre.network.name} > LucksVRF | *already set*`);
-            }
-            else {
-                console.log(` ✘ ${hre.network.name} > LucksVRF ==> Wrong set`);
-                if (autoFix) {
-                    await contracts.LucksVRF.connect(deployer).transferOwnership(multiSigAddress);
-                    console.log(` ✅ ${hre.network.name} > LucksVRF | *already Fixed*`);
-                }
-            }
-        }
-
-        // LucksAutoCloseTask
-        if (contracts.LucksAutoCloseTask) {
-            if (await contracts.LucksAutoCloseTask.owner() == multiSigAddress) {
-                console.log(` ✅ ${hre.network.name} > LucksAutoCloseTask | *already set*`);
-            }
-            else {
-                console.log(` ✘ ${hre.network.name} > LucksAutoCloseTask ==> Wrong set`);
-                if (autoFix) {
-                    await contracts.LucksAutoCloseTask.connect(deployer).transferOwnership(multiSigAddress);
-                    console.log(` ✅ ${hre.network.name} > LucksAutoCloseTask | *already Fixed*`);
-                }
-            }
-        }
-
-        // LucksAutoDrawTask
-        if (contracts.LucksAutoDrawTask) {
-            if (await contracts.LucksAutoDrawTask.owner() == multiSigAddress) {
-                console.log(` ✅ ${hre.network.name} > LucksAutoDrawTask | *already set*`);
-            }
-            else {
-                console.log(` ✘ ${hre.network.name} > LucksAutoDrawTask ==> Wrong set`);
-                if (autoFix) {
-                    await contracts.LucksAutoDrawTask.connect(deployer).transferOwnership(multiSigAddress);
-                    console.log(` ✅ ${hre.network.name} > LucksAutoDrawTask | *already Fixed*`);
-                }
-            }
-        }
-
-        // LucksPaymentStrategy
-        if (contracts.LucksPaymentStrategy) {
-            if (await contracts.LucksPaymentStrategy.owner() == multiSigAddress) {
-                console.log(` ✅ ${hre.network.name} > LucksPaymentStrategy | *already set*`);
-            }
-            else {
-                console.log(` ✘ ${hre.network.name} > LucksPaymentStrategy ==> Wrong set`);
-                if (autoFix) {
-                    await contracts.LucksPaymentStrategy.connect(deployer).transferOwnership(multiSigAddress);
-                    console.log(` ✅ ${hre.network.name} > LucksPaymentStrategy | *already Fixed*`);
-                }
-            }
-        }
-
         // ProxyCryptoPunks
         if (contracts.ProxyCryptoPunks) {
 
@@ -172,5 +101,80 @@ task("multiSig", "checking and transfer ownership to multiSig accounts")
                 }
             }
             
+        }
+
+       
+        let needMultiSig = false;   // No sensitive logic or asset security involved
+        if(needMultiSig)
+        {
+            // LucksGroup
+            if (contracts.LucksGroup) {
+                if (await contracts.LucksGroup.owner() == multiSigAddress) {
+                    console.log(` ✅ ${hre.network.name} > LucksGroup | *already set*`);
+                }
+                else {
+                    console.log(` ✘ ${hre.network.name} > LucksGroup ==> Wrong set`);
+                    if (autoFix) {
+                        await contracts.LucksGroup.connect(deployer).transferOwnership(multiSigAddress);
+                        console.log(` ✅ ${hre.network.name} > LucksGroup | *already Fixed*`);
+                    }
+                }
+            }
+
+            // LucksVRF
+            if (contracts.LucksVRF) {
+                if (await contracts.LucksVRF.owner() == multiSigAddress) {
+                    console.log(` ✅ ${hre.network.name} > LucksVRF | *already set*`);
+                }
+                else {
+                    console.log(` ✘ ${hre.network.name} > LucksVRF ==> Wrong set`);
+                    if (autoFix) {
+                        await contracts.LucksVRF.connect(deployer).transferOwnership(multiSigAddress);
+                        console.log(` ✅ ${hre.network.name} > LucksVRF | *already Fixed*`);
+                    }
+                }
+            }
+
+            // LucksAutoCloseTask
+            if (contracts.LucksAutoCloseTask) {
+                if (await contracts.LucksAutoCloseTask.owner() == multiSigAddress) {
+                    console.log(` ✅ ${hre.network.name} > LucksAutoCloseTask | *already set*`);
+                }
+                else {
+                    console.log(` ✘ ${hre.network.name} > LucksAutoCloseTask ==> Wrong set`);
+                    if (autoFix) {
+                        await contracts.LucksAutoCloseTask.connect(deployer).transferOwnership(multiSigAddress);
+                        console.log(` ✅ ${hre.network.name} > LucksAutoCloseTask | *already Fixed*`);
+                    }
+                }
+            }
+
+            // LucksAutoDrawTask
+            if (contracts.LucksAutoDrawTask) {
+                if (await contracts.LucksAutoDrawTask.owner() == multiSigAddress) {
+                    console.log(` ✅ ${hre.network.name} > LucksAutoDrawTask | *already set*`);
+                }
+                else {
+                    console.log(` ✘ ${hre.network.name} > LucksAutoDrawTask ==> Wrong set`);
+                    if (autoFix) {
+                        await contracts.LucksAutoDrawTask.connect(deployer).transferOwnership(multiSigAddress);
+                        console.log(` ✅ ${hre.network.name} > LucksAutoDrawTask | *already Fixed*`);
+                    }
+                }
+            }
+
+            // LucksPaymentStrategy
+            if (contracts.LucksPaymentStrategy) {
+                if (await contracts.LucksPaymentStrategy.owner() == multiSigAddress) {
+                    console.log(` ✅ ${hre.network.name} > LucksPaymentStrategy | *already set*`);
+                }
+                else {
+                    console.log(` ✘ ${hre.network.name} > LucksPaymentStrategy ==> Wrong set`);
+                    if (autoFix) {
+                        await contracts.LucksPaymentStrategy.connect(deployer).transferOwnership(multiSigAddress);
+                        console.log(` ✅ ${hre.network.name} > LucksPaymentStrategy | *already Fixed*`);
+                    }
+                }
+            }
         }
     })

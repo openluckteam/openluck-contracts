@@ -17,7 +17,7 @@ abstract contract LucksAutoTask is ILucksAuto, Ownable, Pausable {
 
     SortedLinkMap.SortedMap internal taskList;
     
-    uint256 public BATCH_PERFORM_LIMIT = 10; // perform limist, default 10
+    uint256 public BATCH_PERFORM_LIMIT = 5; // perform limist, default 5
     uint256 public DST_GAS_AMOUNT = 0; // layer zero dstGasAmount
 
     address public KEEPER; // chainLink keeper Registry Address
@@ -83,6 +83,15 @@ abstract contract LucksAutoTask is ILucksAuto, Ownable, Pausable {
     function addTask(uint256 taskId, uint endTime) external override onlyExecutor {    
         if (taskId > 0 && endTime > 0) {            
             taskList.add(taskId, endTime);
+        }
+    }
+
+    function addTasks(uint256[] memory taskIds, uint[] memory endTimes) external override onlyExecutor {    
+        require(taskIds.length > 0 && taskIds.length == endTimes.length, "Invalid len");
+        for(uint i=0; i < taskIds.length; i++) {
+            if (taskIds[i] > 0 && endTimes[i] > 0) {            
+                taskList.add(taskIds[i], endTimes[i]);
+            }
         }
     }
 
