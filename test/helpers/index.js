@@ -7,6 +7,7 @@ const {
   getTaskNetworkNameForTest, isNetworkAllowTaskForTest, isLocalhost, isTestnet
 } = require("../../utils/network")
 const CONFIG = require("../../constants/config.json")
+const upgradeContracts = require("../../constants/upgradeContracts.json")
 
 this.getTimestamp = function (timestampms) {
   timestampms = timestampms || Date.now();
@@ -29,7 +30,7 @@ this.testArgs = async function () {
   }
 
   const code = await ethers.getContractFactory("LucksExecutor");        
-  const LucksExecutor = code.attach(CONFIG.ProxyContract[hre.network.name]);
+  const LucksExecutor = code.attach(upgradeContracts["LucksExecutor"][hre.network.name]);
   const LucksBridge = await ethers.getContract("LucksBridge");  
   const ProxyNFTStation = await ethers.getContract("ProxyNFTStation");
   const LucksHelper = await ethers.getContract("LucksHelper");
@@ -39,7 +40,10 @@ this.testArgs = async function () {
   const ProxyTokenStation = isNetworkAllowTaskForTest() ? await ethers.getContract("ProxyTokenStation") : ethers.constants.AddressZero;
   const LucksVRF = isNetworkAllowTaskForTest() ? await ethers.getContract("LucksVRF") : ethers.constants.AddressZero;
   const LocalLucksVRF = isNetworkAllowTaskForTest() && isLocalhost() ? await ethers.getContract("LocalLucksVRF") : ethers.constants.AddressZero;
-  const LucksGroup = isNetworkAllowTaskForTest() ? await ethers.getContract("LucksGroup") : ethers.constants.AddressZero;
+
+  const codeLucksGroup = await ethers.getContractFactory("LucksGroup"); 
+  const LucksGroup = isNetworkAllowTaskForTest() ? codeLucksGroup.attach(upgradeContracts["LucksGroup"][hre.network.name]) : ethers.constants.AddressZero;
+  
   const LucksAutoCloseTask = isNetworkAllowTaskForTest() ? await ethers.getContract("LucksAutoCloseTask") : ethers.constants.AddressZero;
   const LucksAutoDrawTask = isNetworkAllowTaskForTest() ? await ethers.getContract("LucksAutoDrawTask") : ethers.constants.AddressZero;
   const TokenPrices = isNetworkAllowTaskForTest() ? await ethers.getContract("TokenPrices") : ethers.constants.AddressZero;

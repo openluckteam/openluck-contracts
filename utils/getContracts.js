@@ -2,12 +2,13 @@ const CONFIG = require("../constants/config.json");
 const { getDeploymentAddresses } = require("./readDeployments");
 const { getTaskNetworkNameForTest, isNetworkAllowTaskForTest, isTestnet} = require("./network")
 const acceptTokens = require("../constants/acceptTokens.json");
+const upgradeContracts = require("../constants/upgradeContracts.json")
 
 module.exports = async function(hre) {
 
   
     const executor = await ethers.getContractFactory("LucksExecutor");        
-    const LucksExecutor = executor.attach(CONFIG.ProxyContract[hre.network.name]);
+    const LucksExecutor = executor.attach(upgradeContracts["LucksExecutor"][hre.network.name]);
 
     const bridge = await ethers.getContractFactory("LucksBridge");
     const bridgeAddr = (await hre.deployments.get("LucksBridge")).address;
@@ -38,9 +39,12 @@ module.exports = async function(hre) {
         const vrfAddr = (await hre.deployments.get("LucksVRF")).address;
         LucksVRF = await vrf.attach(vrfAddr);
 
-        const group = await ethers.getContractFactory("LucksGroup");
-        const groupAddr = (await hre.deployments.get("LucksGroup")).address;
-        LucksGroup = await group.attach(groupAddr);
+        // const group = await ethers.getContractFactory("LucksGroup");
+        // const groupAddr = (await hre.deployments.get("LucksGroup")).address;
+        // LucksGroup = await group.attach(groupAddr);
+
+        const group = await ethers.getContractFactory("LucksGroup");        
+        LucksGroup = group.attach(upgradeContracts["LucksGroup"][hre.network.name]);
 
         const strategy = await ethers.getContractFactory("LucksPaymentStrategy");
         const strategyAddr = (await hre.deployments.get("LucksPaymentStrategy")).address;

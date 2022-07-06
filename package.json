@@ -69,7 +69,7 @@
     "verify:eth": "npx hardhat --network eth etherscan-verify",
     "verify:bsc-LucksExecutor": "npx hardhat verify --network bsc 0x7B3a23f69f5548E7eEFb57F613027c4252f52366",
     "verify:eth-LucksExecutor": "npx hardhat verify --network eth 0xB9a01e8f0D3d730614B54D7e4b3bEE521E350E9e",
-
+    "verify:test-bsc-LucksGroup": "npx hardhat verify --network bsc 0x1a403Eb1294aeb6596935e3369Ae1E041C9ADd95",
     "wireBridges:eth": "npx hardhat --network eth wireBridges --target-networks bsc",
     "wireBridges:bsc": "npx hardhat --network bsc wireBridges --target-networks eth",
     "checkSettings:bsc": "npx hardhat --network bsc checkSettings --auto-fix true",

@@ -14,23 +14,7 @@
     "gasAmounts": {
         "1": "600000",
         "2": "500000"
-    },
-    "ProxyContract": {
-        "eth": "0x897be0747988558c507aF3fd1e07d55c74EfadE8",
-        "bsc": "0xd667Ae0B67A1f3b92F2dF1219C2C501FECF306bF",      
-        "rinkeby-testnet": "0xF2A09f37aA6FEd4018922Cc9f3ac8f77c8Fb1Cbd",
-        "bsctestnet-testnet": "0x51f57486F8b09Df7b37Ee78821E19d566B8dEd3d",
-        "localhost-eth": "0x4Ae4CCEFFa9790c7BF455e34951C513417Bc4D6D",
-        "localhost-bsc": "0x686746214BCc37b7D4935B098C4899031C288fFd"
-    },
-    "ProxyUpgradeContract": {
-        "eth": "0xB9a01e8f0D3d730614B54D7e4b3bEE521E350E9e",
-        "bsc": "0x7B3a23f69f5548E7eEFb57F613027c4252f52366",      
-        "rinkeby-testnet": "0x43Aac401D7B545ad9D1f19D7aE5f4A4eC228CE4c",
-        "bsctestnet-testnet": "0x11c0e6275AaCb964068f8505861696D06Db03f54",
-        "localhost-eth": "0xc6F5d17426D42C0fd6A5E12bE6df23C68D177914",
-        "localhost-bsc": "0x2945D9Ea3BBeE8E42ee5988E49dc49E66BBA3baD"
-    },
+    },    
     "PriceFeeds": {
         "eth": "",
         "bsc": [

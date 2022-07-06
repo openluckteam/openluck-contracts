@@ -9,6 +9,11 @@
       "address": "0xd667Ae0B67A1f3b92F2dF1219C2C501FECF306bF",
       "txHash": "0xb6b6c4a48b51a4f41687bdedf9d303254eca0cbd2a1838a3b38cc2f02d7cc960",
       "kind": "transparent"
+    },
+    {
+      "address": "0x85C8c8E11aCa93ac7C4e3b5beEf10fA803Bb19b1",
+      "txHash": "0x64f59f37ff983caeafa14ceace3e3ecae154620b959f37bf3be78f5b17cac255",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -439,6 +444,185 @@
               }
             ],
             "numberOfBytes": "64"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "00dc81080add80dbc4e1507df0e8ad46fc352ad33e6fe71c2277cf29c7ddaaf2": {
+      "address": "0x1a403Eb1294aeb6596935e3369Ae1E041C9ADd95",
+      "txHash": "0x97b5f619c4def6c1f53276b7d1fdb3da90f411a4236088efdb736010f5cf642e",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:74"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:87"
+          },
+          {
+            "label": "EXECUTOR",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_contract(ILucksExecutor)10402",
+            "contract": "LucksGroup",
+            "src": "contracts\\lucks\\LucksGroup.sol:21"
+          },
+          {
+            "label": "MAX_SEAT",
+            "offset": 20,
+            "slot": "151",
+            "type": "t_uint32",
+            "contract": "LucksGroup",
+            "src": "contracts\\lucks\\LucksGroup.sol:23"
+          },
+          {
+            "label": "groupIds",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "LucksGroup",
+            "src": "contracts\\lucks\\LucksGroup.sol:25"
+          },
+          {
+            "label": "groups",
+            "offset": 0,
+            "slot": "153",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_array(t_address)dyn_storage))",
+            "contract": "LucksGroup",
+            "src": "contracts\\lucks\\LucksGroup.sol:26"
+          },
+          {
+            "label": "userGroups",
+            "offset": 0,
+            "slot": "154",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_uint256))",
+            "contract": "LucksGroup",
+            "src": "contracts\\lucks\\LucksGroup.sol:27"
+          },
+          {
+            "label": "groupSeat",
+            "offset": 0,
+            "slot": "155",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_uint16))",
+            "contract": "LucksGroup",
+            "src": "contracts\\lucks\\LucksGroup.sol:28"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(ILucksExecutor)10402": {
+            "label": "contract ILucksExecutor",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_uint256))": {
+            "label": "mapping(address => mapping(uint256 => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_array(t_address)dyn_storage)": {
+            "label": "mapping(uint256 => address[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_array(t_address)dyn_storage))": {
+            "label": "mapping(uint256 => mapping(uint256 => address[]))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_uint16))": {
+            "label": "mapping(uint256 => mapping(uint256 => uint16))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint16)": {
+            "label": "mapping(uint256 => uint16)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
           },
           "t_uint16": {
             "label": "uint16",

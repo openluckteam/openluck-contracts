@@ -1,6 +1,7 @@
 const { utils } = require('ethers');
 const { isTestnet, isLocalhost, getEndpointId, isNetworkAllowTaskForTest } = require("../utils/network")
 const CONFIG = require("../constants/config.json")
+const upgradeContracts = require("../constants/upgradeContracts.json")
 
 function getDependencies() {
     if (isLocalhost()) {
@@ -17,7 +18,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     console.log('DEPLOY >> deploy Mock for Tests: starting')
 
     const LucksExecutorBox = await ethers.getContractFactory("LucksExecutor");
-    const executor = LucksExecutorBox.attach(CONFIG.ProxyContract[hre.network.name]);
+    const executor = LucksExecutorBox.attach(upgradeContracts["LucksExecutor"][hre.network.name]);
 
     // =================== Deploy Local VRF ===================
     const lucksHelper = await ethers.getContract("LucksHelper");

@@ -4,6 +4,7 @@ let { getSettings } = require('../utils/deploySetting');
 const { isLocalhost, isTestnet, isNetworkAllowTaskForTest } = require("../utils/network")
 const { getLayerZeroAddress } = require("../utils/layerzero")
 const CONFIG = require("../constants/config.json")
+const upgradeContracts = require("../constants/upgradeContracts.json")
 
 function getDependencies() {
     
@@ -41,11 +42,11 @@ module.exports = async ({ ethers, getNamedAccounts, deployments, getChainId }) =
     let LucksAutoDrawTask;
     let ProxyCryptoPunks;
     
-    // Deploy Proxy 
+    // Deploy Proxy - LucksExecutor
     {
          // contract code
         const code = await ethers.getContractFactory("LucksExecutor");
-        if (CONFIG.ProxyContract[hre.network.name] == "") {           
+        if (upgradeContracts["LucksExecutor"][hre.network.name] == "") {           
             // deployProxy
             const instance = await upgrades.deployProxy(code, 
                 [
@@ -61,13 +62,13 @@ module.exports = async ({ ethers, getNamedAccounts, deployments, getChainId }) =
             console.log(`DEPLOY >> Proxy LucksExecutor deployed! ${LucksExecutor.address}`);
         }
         else {
-            LucksExecutor = code.attach(CONFIG.ProxyContract[hre.network.name]);
+            LucksExecutor = code.attach(upgradeContracts["LucksExecutor"][hre.network.name]);
         }
 
         // Upgrade Proxy
-        if (CONFIG.ProxyContract[hre.network.name] != "" && CONFIG.ProxyUpgradeContract[hre.network.name] == "") {  
+        if (upgradeContracts["LucksExecutor"][hre.network.name] != "" && upgradeContracts["LucksExecutorImpl"][hre.network.name] == "") {  
             // deployProxy
-            const instance = await upgrades.upgradeProxy(CONFIG.ProxyContract[hre.network.name],code);
+            const instance = await upgrades.upgradeProxy(upgradeContracts["LucksExecutor"][hre.network.name],code);
             LucksExecutor = code.attach(instance.address);            
 
             console.log(`UPGRADE >> Proxy LucksExecutor upgraded! ${LucksExecutor.address}`);
@@ -109,12 +110,38 @@ module.exports = async ({ ethers, getNamedAccounts, deployments, getChainId }) =
             log: true,
         });
 
-        LucksGroup = await deploy('LucksGroup', {
-            from: deployer,
-            args: [LucksExecutor.address, 10],
-            skipIfAlreadyDeployed: true,
-            log: true,
-        });
+        // LucksGroup
+        {
+            // contract code
+           const code = await ethers.getContractFactory("LucksGroup");
+           if (upgradeContracts["LucksGroup"][hre.network.name] == "") {           
+               // deployProxy
+               const instance = await upgrades.deployProxy(code, 
+                   [
+                        LucksExecutor.address, // _executor 
+                        10 // _maxSeat
+                   ],
+                   { initializer: "initialize" }
+               );
+               await instance.deployed();  
+               // get contract
+               LucksGroup = code.attach(instance.address);            
+   
+               console.log(`DEPLOY >> Proxy LucksGroup deployed! ${LucksGroup.address}`);
+           }
+           else {
+                LucksGroup = code.attach(upgradeContracts["LucksGroup"][hre.network.name]);
+           }
+   
+           // Upgrade Proxy
+           if (upgradeContracts["LucksGroup"][hre.network.name] != "" && upgradeContracts["LucksGroupImpl"][hre.network.name] == "") {  
+               // deployProxy
+               const instance = await upgrades.upgradeProxy(upgradeContracts["LucksGroup"][hre.network.name],code);
+               LucksGroup = code.attach(instance.address);            
+   
+               console.log(`UPGRADE >> Proxy LucksGroup upgraded! ${LucksGroup.address}`);
+           }
+       }
 
         LucksPaymentStrategy = await deploy('LucksPaymentStrategy', {
             from: deployer,
@@ -201,33 +228,6 @@ module.exports = async ({ ethers, getNamedAccounts, deployments, getChainId }) =
 
     console.log("DEPLOY >> Core Contracts deployed!");
 
-    // ---------------
-    // // tenderly
-    // {
-    //     console.log("tenderly >> starting");
-
-    //     await hre.tenderly.persistArtifacts({
-    //         name: "LucksExecutor",
-    //         address: LucksExecutor.address
-    //     });
-
-    //     await hre.tenderly.persistArtifacts({
-    //         name: "LucksBridge",
-    //         address: LucksBridge.address
-    //     });
-
-    //     await hre.tenderly.persistArtifacts({
-    //         name: "LucksHelper",
-    //         address: LucksHelper.address
-    //     });
-
-    //     await hre.tenderly.persistArtifacts({
-    //         name: "ProxyNFTStation",
-    //         address: ProxyNFTStation.address
-    //     });
-    
-    //     console.log("tenderly >> done!");
-    // }
 
     // ----------------------------------------------
     //  Update Contracts params

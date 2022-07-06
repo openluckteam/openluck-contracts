@@ -2,8 +2,9 @@
 pragma solidity ^0.8.0;
 
 // OpenZeppelin contracts
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
 // Openluck interfaces
 import {ILucksGroup} from "../interfaces/ILucksGroup.sol";
@@ -13,21 +14,23 @@ import {ILucksExecutor, TaskItem, TaskStatus} from "../interfaces/ILucksExecutor
 /** @title Openluck LucksGroup
  * @notice It is the contract for LucksGroup
  */
-contract LucksGroup is ILucksGroup, Ownable {
+contract LucksGroup is ILucksGroup, ReentrancyGuardUpgradeable, OwnableUpgradeable {
 
     using Counters for Counters.Counter;    
 
     ILucksExecutor public EXECUTOR;
 
-    uint32 public MAX_SEAT = 10;
+    uint32 public MAX_SEAT;
     
     mapping(uint256 => uint256) public groupIds;               // groupId counter (taskId => groupId)
     mapping(uint256 => mapping(uint256 => address[])) public groups;     // store task groups (taskId => groupId => group member address)
     mapping(address => mapping(uint256 => uint256)) public userGroups;   // store user joined groups (user => taskId => groupId)
     mapping(uint256 => mapping(uint256 => uint16)) public groupSeat;     // store group setting(task=> groupId = > group seat)
 
-    constructor(address _executor, uint32 _maxSeat) {
-        EXECUTOR =  ILucksExecutor(_executor);        
+    function initialize(address _executor, uint32 _maxSeat) external initializer { 
+        __ReentrancyGuard_init();
+        __Ownable_init();
+        EXECUTOR = ILucksExecutor(_executor);        
         MAX_SEAT = _maxSeat;
     }
 
