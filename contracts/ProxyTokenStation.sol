@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
 
 // interfaces
 import {IProxyTokenStation} from "./interfaces/IProxyTokenStation.sol";
@@ -16,6 +17,8 @@ contract ProxyTokenStation is IProxyTokenStation, Ownable {
     using SafeERC20 for IERC20;
 
     // ============ Public  ============    
+
+    uint public GAS_LIMIT = 100000;
    
     // OpenLuck executors
     mapping(address => bool) public executors;
@@ -98,9 +101,17 @@ contract ProxyTokenStation is IProxyTokenStation, Ownable {
 
         // transfer
         if (token == address(0)) {    
-            require(address(this).balance >= amount, "Lack of funds");       
+            require(address(this).balance >= amount, "Lack of funds");  
+
             // transfer funds 
-            payable(user).transfer(amount);                      
+            if (Address.isContract(user)) {
+                (bool state,) = address(user).call{ value: amount, gas: GAS_LIMIT}("");
+                require(state, "send value failed");                
+            }
+            else {
+                payable(user).transfer(amount);  
+            }                  
+
         } else {        
             require(IERC20(token).balanceOf(address(this)) >= amount, "Lack of token");
             // Transfer tokens                
@@ -121,5 +132,9 @@ contract ProxyTokenStation is IProxyTokenStation, Ownable {
      */
     function setWETH(address _eth) external onlyOwner {
         WETH = _eth;
+    }
+
+    function setGasLimit(uint amount) external onlyOwner {
+        GAS_LIMIT = amount;
     }
 } 

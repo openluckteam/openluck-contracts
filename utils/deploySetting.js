@@ -51,7 +51,7 @@ function getSettings(chainId, deployer, ethers) {
         // bsc
         case "56":
             setting.testing = false;
-            setting.chainLink_vrfId = 200;
+            setting.chainLink_vrfId = 266;
             setting.chainLink_linkToken = "0x404460c6a5ede2d891e8297795264fde62adbb75";
             setting.chainLink_vrfCoordinator = "0xc587d9053cd1118f25F645F9E08BB98c9712A4EE";
             setting.chainLink_linkKeyHash = "0x114f3da0a805b6a67d6e9cd2ec746f7028f1b7376365af575cfea3550dd1aa04";
