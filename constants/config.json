@@ -73,7 +73,7 @@
             }
         ]
     },
-    "CryptoPunk": "0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb",
+    "CryptoPunk": "0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB",
     "MultiSig": {
         "eth": "0x4353BB08b032BC2a93A7AEd78AC1DA5d325E55EC",
         "bsc": "0x083b9f29f874730bcb36298721bc5b59c5F4c853",      

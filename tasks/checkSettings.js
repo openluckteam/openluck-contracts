@@ -1,5 +1,5 @@
 const getContracts = require('../utils/getContracts');
-const { isNetworkAllowTaskForTest } = require("../utils/network")
+const { isNetworkAllowTaskForTest, isTestnet } = require("../utils/network")
 const { getDeploymentAddresses } = require("../utils/readDeployments")
 
 
@@ -221,6 +221,7 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
 
         // ProxyTokenStation
         if (contracts.ProxyTokenStation) {
+
             if (await contracts.ProxyTokenStation.executors(contracts.LucksExecutor.address) == true) {
                 console.log(` ✅ ${hre.network.name} > ProxyTokenStation.executor | *already set*`);
             }
@@ -228,7 +229,6 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
                 console.log(` ✘ ${hre.network.name} > ProxyTokenStation.executor ==> Wrong set`);
             }
         }
-
 
         // LucksGroup
         if (contracts.LucksGroup) {
@@ -314,12 +314,13 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
         if (contracts.ProxyCryptoPunks) {
 
             let punkAddress = CONFIG.CryptoPunk;
-
-            if (!isNetworkAllowTaskForTest()) {
+          
+            if (isTestnet() && !isNetworkAllowTaskForTest()) {
                 let taskNetworkAddrs = getDeploymentAddresses(hre.network.name);
                 punkAddress = ethers.utils.getAddress(taskNetworkAddrs["EthCryptoPunksMarket"]);
             }
 
+            
             if (await contracts.LucksHelper.PUNKS() == punkAddress) {
                 console.log(` ✅ ${hre.network.name} > LucksHelper.PUNKS | *already set*`);
             }
