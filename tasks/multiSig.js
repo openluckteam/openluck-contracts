@@ -17,6 +17,7 @@ task("multiSig", "checking and transfer ownership to multiSig accounts")
             return;
         }
 
+        console.log(`multiSigAddress: ${multiSigAddress}`)
         //LucksExecutor
         {            
             if (await contracts.LucksExecutor.owner() == multiSigAddress) {
