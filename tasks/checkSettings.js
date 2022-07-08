@@ -307,6 +307,10 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
             }
             else {
                 console.log(` ✘ ${hre.network.name} > LucksPaymentStrategy.GROUPS ==> Wrong set`);
+                if (autoFix) {
+                    await contracts.LucksAutoDrawTask.connect(deployer).setBridge(contracts.LucksBridge.address);
+                    console.log(` ✅ ${hre.network.name} > LucksAutoDrawTask.BRIDGE | *already Fixed*`);
+                }
             }
         }
 

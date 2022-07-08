@@ -5,12 +5,13 @@ pragma solidity ^0.8.0;
 import {ILucksPaymentStrategy} from "../interfaces/ILucksPaymentStrategy.sol";
 import {ILucksGroup} from "../interfaces/ILucksGroup.sol";
 import {ILucksExecutor, Ticket} from "../interfaces/ILucksExecutor.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 
 /** @title Openluck LucksPaymentStrategy
  * @notice It is the contract for PaymentStrategy
  */
-contract LucksPaymentStrategy is ILucksPaymentStrategy {    
+contract LucksPaymentStrategy is ILucksPaymentStrategy, Ownable {    
 
     ILucksExecutor public EXECUTOR;
     ILucksGroup public GROUPS;
@@ -53,5 +54,15 @@ contract LucksPaymentStrategy is ILucksPaymentStrategy {
         }
 
         return (rate,spliter,users);
+    }
+
+
+    function setExecutor(ILucksExecutor _executor) external onlyOwner {
+        EXECUTOR = _executor;
+    }
+
+
+    function setLucksGroup(ILucksGroup _group) external onlyOwner {
+        GROUPS = _group;
     }
 }
