@@ -74,7 +74,7 @@
     "wireBridges:bsc": "npx hardhat --network bsc wireBridges --target-networks eth",
     "checkSettings:bsc": "npx hardhat --network bsc checkSettings --auto-fix true",
     "checkSettings:eth": "npx hardhat --network eth checkSettings --auto-fix true",
-    "multiSig:eth": "npx hardhat --network eth multiSig --auto-fix false",
+    "multiSig:eth": "npx hardhat --network eth multiSig --auto-fix true",
     "multiSig:bsc": "npx hardhat --network bsc multiSig --auto-fix true",
     "multiSig": "yarn multiSig:eth && multiSig:bsc",
     
