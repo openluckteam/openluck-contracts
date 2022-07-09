@@ -205,7 +205,7 @@ const tests = {
   ],
   failure: [
     {
-      description: 'createTask - Invalid seller',
+      description: 'createTask - onlySeller',
       fn: ({ caller, contracts, acceptToken }) => ({
         arg_item: {
           nftChainId: getNftChainIdForTest(),
@@ -226,7 +226,7 @@ const tests = {
 
           paymentStrategy: 0
         },
-        revert: 'Invalid seller',
+        revert: 'onlySeller',
       }),
     },
     {
@@ -251,11 +251,11 @@ const tests = {
 
           paymentStrategy: 0
         },
-        revert: 'Empty tokenIds',
+        revert: 'tokenIds',
       }),
     },
     {
-      description: 'createTask - Invalid time range',
+      description: 'createTask - endTime',
       fn: ({ caller, contracts, acceptToken }) => ({
         arg_item: {
           nftChainId: getNftChainIdForTest(),
@@ -276,7 +276,7 @@ const tests = {
 
           paymentStrategy: 0
         },
-        revert: 'Invalid time range',
+        revert: 'endTime',
       }),
     },
     {
@@ -305,7 +305,7 @@ const tests = {
       }),
     },
     {
-      description: 'createTask - Invalid amountCollected',
+      description: 'createTask - collect',
       fn: ({ caller, contracts, acceptToken }) => ({
         arg_item: {
           nftChainId: getNftChainIdForTest(),
@@ -326,7 +326,7 @@ const tests = {
 
           paymentStrategy: 0
         },
-        revert: 'Invalid amountCollected',
+        revert: 'collect',
       }),
     },
     {
@@ -355,7 +355,7 @@ const tests = {
       }),
     },
     {
-      description: 'createTask - Invalid nftContract',
+      description: 'createTask - nft',
       fn: ({ caller, contracts, acceptToken }) => ({
         arg_item: {
           nftChainId: getNftChainIdForTest(),
@@ -376,7 +376,7 @@ const tests = {
 
           paymentStrategy: 0
         },
-        revert: 'Invalid nftContract',
+        revert: 'nft',
       }),
     },
     {

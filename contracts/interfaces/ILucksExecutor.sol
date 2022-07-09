@@ -101,6 +101,7 @@ interface ILucksExecutor {
     function getChainId() external view returns (uint16);
 
     function createTask(TaskItem memory item, TaskExt memory ext, lzTxObj memory _param) external payable;
+    function reCreateTask(uint256 taskId, TaskItem memory item, TaskExt memory ext) external payable;
     function updateTaskNote(uint256, string memory note) external;
     function joinTask(uint256 taskId, uint32 num, string memory note) external payable;
     function cancelTask(uint256 taskId, lzTxObj memory _param) external payable;

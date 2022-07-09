@@ -14,7 +14,7 @@ import {IProxyNFTStation, DepositNFT} from "./interfaces/IProxyNFTStation.sol";
 import {IProxyTokenStation} from "./interfaces/IProxyTokenStation.sol";
 import {ILucksHelper} from "./interfaces/ILucksHelper.sol";
 import {ILucksBridge, lzTxObj} from "./interfaces/ILucksBridge.sol";
-
+import {LucksValidator} from "./libraries/LucksValidator.sol";
 
 /** @title Openluck LucksTrade.
  * @notice It is the core contract for crowd funds to buy NFTs result to one lucky winner
@@ -44,7 +44,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
     mapping(uint256 => mapping(uint256 => Ticket)) public tickets; // store tickets (taskId => ticketId => ticket)    
     mapping(uint256 => uint256[]) public ticketIds; // store ticket ids (taskId => lastTicketIds)             
     mapping(address => mapping(uint256 => UserState)) public userState; // Keep track of user ticket ids for a given taskId (user => taskId => userstate)        
-    
+
     // ======== Constructor =========
 
     /**
@@ -100,8 +100,9 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
         require(address(NFT) != address(0), "ProxyNFT unset");
 
         // inputs validation
-        HELPER.checkNewTask(msg.sender, item);
-        HELPER.checkNewTaskExt(ext);        
+        LucksValidator.checkNewTask(msg.sender, item);
+        LucksValidator.checkNewTaskNFTs(msg.sender, item.nftContract, item.tokenIds, item.tokenAmounts, HELPER);
+        LucksValidator.checkNewTaskExt(ext);  
 
         // adapt to CryptoPunks
         if (HELPER.isPunks(item.nftContract)) {
@@ -116,7 +117,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
         }
              
         // Create Task Item           
-        if (ext.chainId == item.nftChainId) { // same chain creation    
+        if (ext.chainId == item.nftChainId) { // same chain creation              
             _createTask(item, ext);
         }
         else {
@@ -124,6 +125,32 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
             require(address(BRIDGE) != address(0), "Bridge unset");
             BRIDGE.sendCreateTask{value: msg.value}(ext.chainId, payable(msg.sender), item, ext, _param);
         }
+    }
+
+    /**
+    @notice Use the original NFTs to reCreateTask
+    Only if the task fails or can be cancelled
+    and the NFTs has not been claimed
+     */
+    function reCreateTask(uint256 taskId, TaskItem memory item, TaskExt memory ext) external payable override nonReentrant {
+        
+        LucksValidator.checkReCreateTask(tasks, userState, taskId, item, ext);
+       
+        // update originTask claim info
+        userState[tasks[taskId].seller][taskId].claimed = true;
+
+        // update task status
+        if (tasks[taskId].amountCollected > 0) {
+            tasks[taskId].status = TaskStatus.Fail; 
+            emit CloseTask(taskId, msg.sender, tasks[taskId].status);
+        }
+        else {
+            tasks[taskId].status = TaskStatus.Cancel; 
+            emit CancelTask(taskId, msg.sender);
+        }
+
+        // create new task
+        _createTask(item, ext);
     }
 
     function updateTaskNote(uint256 taskId, string memory note) external override isExists(taskId) {
@@ -141,7 +168,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
     function joinTask(uint256 taskId, uint32 num, string memory note) external payable override isExists(taskId) nonReentrant 
     {
         // check inputs and task
-        HELPER.checkJoinTask(msg.sender, taskId, num, note);
+        LucksValidator.checkJoinTask(tasks[taskId], msg.sender, num, note, HELPER);
 
         // Calculate number of TOKEN to this contract
         uint256 amount = tasks[taskId].price.mul(num);
@@ -174,7 +201,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
     function cancelTask(uint256 taskId, lzTxObj memory _param) external payable override isExists(taskId) nonReentrant 
     {                                
         require((tasks[taskId].status == TaskStatus.Pending || tasks[taskId].status == TaskStatus.Open) && infos[taskId].lastTID <= 0, "Opening or canceled");        
-        require(tasks[taskId].seller == msg.sender, "Invalid auth"); // only seller can cancel
+        require(tasks[taskId].seller == msg.sender, "onlySeller"); // only seller can cancel
         
         // update status
         tasks[taskId].status = TaskStatus.Close;
@@ -234,7 +261,6 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
     function pickWinner(uint256 taskId, lzTxObj memory _param) external payable override isExists(taskId) nonReentrant
     {                
         require(tasks[taskId].status == TaskStatus.Close, "Not Close");
-        // require(block.timestamp >= infos[taskId].closeTime + HELPER.getDrawDelay(), "Delay limit");
          
         // get drawn number from Chainlink VRF
         uint32 finalNo = HELPER.getVRF().viewRandomResult(taskId);
@@ -284,8 +310,9 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
     function onLzReceive(uint8 functionType, bytes memory _payload) override external {
         require(msg.sender == address(BRIDGE) || msg.sender == owner(), "Executor: onlyBridge");
         if (functionType == 1) { //TYPE_CREATE_TASK
-            (, TaskItem memory item, TaskExt memory ext) = abi.decode(_payload, (uint256, TaskItem, TaskExt));
-             _createTask(item, ext);
+            (, TaskItem memory item, TaskExt memory ext) = abi.decode(_payload, (uint256, TaskItem, TaskExt));             
+
+            _createTask(item, ext);
                     
         } else if (functionType == 2) { //TYPE_WITHDRAW_NFT
             (, address user, address nftContract, uint256 depositId) = abi.decode(_payload, (uint8, address, address, uint256));                        
@@ -295,14 +322,10 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
 
     // ============ Internal functions ============
 
-    /**
-    @notice seller create a crowdluck task
-    returns: new taskId
-     */
     function _createTask(TaskItem memory item, TaskExt memory ext) internal 
     {        
         require(isAllowTask, "Not allow task");
-        HELPER.checkNewTaskRemote(item);
+        LucksValidator.checkNewTaskRemote(item, HELPER);  
 
         //create TaskId
         ids.increment();
@@ -312,7 +335,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
         if (item.status == TaskStatus.Open) {
             item.startTime = item.startTime < block.timestamp ? item.startTime : block.timestamp;
         } else {
-            require(block.timestamp <= item.startTime && item.startTime < item.endTime, "Invalid time range");
+            require(block.timestamp <= item.startTime && item.startTime < item.endTime, "endTime");
             // start in future
             item.status = TaskStatus.Pending;
         }
@@ -323,12 +346,6 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
         emit CreateTask(taskId, item, ext);
     }
 
-    /**
-     * @notice join task succes. create tickets for buyer
-     * @param taskId task id
-     * @param num how many ticket
-     * @param buyer buery
-     */
     function _createTickets(uint256 taskId, uint32 num, address buyer) internal returns (uint256) 
     {
         uint256 start = infos[taskId].lastTID.add(1);
@@ -344,12 +361,10 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
         return lastTID;
     }
 
-    /**
-     * @notice search a winner ticket by number
-     * @param taskId task id
-     * @param number final number
-     */
-    function _findWinnerTicket(uint256 taskId, uint32 number) internal view returns (Ticket memory)
+    function _findWinnerTicket(
+        uint256 taskId, 
+        uint32 number
+        ) internal view returns (Ticket memory)
     {
         // find by ticketId
         Ticket memory ticket = tickets[taskId][number];
@@ -364,12 +379,9 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
         return ticket;
     }
 
-    /**
-    @notice when taskItem Fail, user can claim token back  
-    */
     function _claimToken(uint256 taskId) internal isExists(taskId)
     {
-        TaskItem memory item = tasks[taskId];
+        TaskItem storage item = tasks[taskId];
         require(isFail(taskId), "Not Fail");
         require(userState[msg.sender][taskId].claimed == false, "Claimed");
 
@@ -384,6 +396,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
 
         emit ClaimToken(taskId, msg.sender, amount, item.acceptToken);
     }
+
 
     function _claimNFTs(uint256 taskId, lzTxObj memory _param) internal isExists(taskId)
     {

@@ -11,7 +11,7 @@
         "eth": "0xB9a01e8f0D3d730614B54D7e4b3bEE521E350E9e",
         "bsc": "0x7B3a23f69f5548E7eEFb57F613027c4252f52366",      
         "rinkeby-testnet": "0x43Aac401D7B545ad9D1f19D7aE5f4A4eC228CE4c",
-        "bsctestnet-testnet": "0x11c0e6275AaCb964068f8505861696D06Db03f54",
+        "bsctestnet-testnet": "0x90b2441b36e1488a9873eafca9748fd1abcae967",
         "localhost-eth": "0xc6F5d17426D42C0fd6A5E12bE6df23C68D177914",
         "localhost-bsc": "0x2945D9Ea3BBeE8E42ee5988E49dc49E66BBA3baD"
     },

@@ -1,0 +1,142 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/utils/Arrays.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+
+import {TaskItem, TaskExt, TaskStatus, Ticket, TaskInfo, UserState} from "../interfaces/ILucksExecutor.sol";
+import {IProxyTokenStation} from "../interfaces/IProxyTokenStation.sol";
+import {ILucksHelper} from "../interfaces/ILucksHelper.sol";
+
+library LucksLogic {
+    using Arrays for uint256[];
+    using SafeMath for uint256;
+    using Counters for Counters.Counter;
+
+    // // ============= events ====================
+
+    // event CreateTask(uint256 taskId, TaskItem item, TaskExt ext);
+    // event ClaimToken(uint256 taskId, address caller, uint256 amount, address acceptToken);  
+    // event CreateTickets(uint256 taskId, address buyer, uint256 num, uint256 start, uint256 end);
+
+    // // ============= functions ====================
+
+    // function createTask(
+    //     Counters.Counter storage ids,
+    //     mapping(uint256 => TaskItem) storage tasks,
+    //     bool isAllowTask, 
+    //     TaskItem memory item, 
+    //     TaskExt memory ext,
+    //     ILucksHelper HELPER
+    //     ) internal 
+    // {        
+    //     require(isAllowTask, "Not allow task");
+
+    //     //create TaskId
+    //     ids.increment();
+    //     uint256 taskId = ids.current();
+
+    //     // start now
+    //     if (item.status == TaskStatus.Open) {
+    //         item.startTime = item.startTime < block.timestamp ? item.startTime : block.timestamp;
+    //     } else {
+    //         require(block.timestamp <= item.startTime && item.startTime < item.endTime, "endTime");
+    //         // start in future
+    //         item.status = TaskStatus.Pending;
+    //     }
+
+    //     //store taskItem
+    //     tasks[taskId] = item;
+
+    //     emit CreateTask(taskId, item, ext);
+    // }
+    
+    // /**
+    //  * @notice join task succes. create tickets for buyer
+    //  * @param taskId task id
+    //  * @param num how many ticket
+    //  * @param buyer buery
+    //  */
+    // function createTickets(
+    //     mapping(uint256 => mapping(uint256 => Ticket)) storage tickets,
+    //     mapping(uint256 => uint256[]) storage ticketIds,
+    //     mapping(uint256 => TaskInfo) storage infos,
+    //     mapping(address => mapping(uint256 => UserState)) storage userState,
+    //     uint256 taskId, 
+    //     uint32 num, 
+    //     address buyer
+    //     ) internal returns (uint256) 
+    // {
+    //     uint256 start = infos[taskId].lastTID.add(1);
+    //     uint256 lastTID = start.add(num).sub(1);
+
+    //     tickets[taskId][lastTID] = Ticket(lastTID, num, buyer);
+    //     ticketIds[taskId].push(lastTID);
+
+    //     userState[buyer][taskId].num += num;
+    //     infos[taskId].lastTID = lastTID;
+
+    //     emit CreateTickets(taskId, buyer, num, start, lastTID);
+    //     return lastTID;
+    // }
+
+    // /**
+    //  * @notice search a winner ticket by number
+    //  * @param taskId task id
+    //  * @param number final number
+    //  */
+    // function findWinnerTicket(
+    //     mapping(uint256 => mapping(uint256 => Ticket)) storage tickets,
+    //     mapping(uint256 => uint256[]) storage ticketIds,
+    //     uint256 taskId, 
+    //     uint32 number
+    //     ) internal view returns (Ticket memory)
+    // {
+    //     // find by ticketId
+    //     Ticket memory ticket = tickets[taskId][number];
+
+    //     if (ticket.number == 0) {
+
+    //         uint256 idx = ticketIds[taskId].findUpperBound(number);
+    //         uint256 lastTID = ticketIds[taskId][idx];
+    //         ticket = tickets[taskId][lastTID];
+    //     }
+
+    //     return ticket;
+    // }
+
+    //     /**
+    // @notice when taskItem Fail, user can claim token back  
+    // */
+    // function claimToken(
+    //     mapping(uint256 => TaskItem) storage tasks,
+    //     mapping(address => mapping(uint256 => UserState)) storage userState, 
+    //     uint256 taskId,
+    //     IProxyTokenStation TOKEN
+    // ) internal
+    // {
+    //     TaskItem storage item = tasks[taskId];
+    //     require(isFail(tasks, taskId), "Not Fail");
+    //     require(userState[msg.sender][taskId].claimed == false, "Claimed");
+
+    //     // Calculate the funds buyer payed
+    //     uint256 amount = item.price.mul(userState[msg.sender][taskId].num);
+        
+    //     // update claim info
+    //     userState[msg.sender][taskId].claimed = true;
+        
+    //     // Transfer
+    //     TOKEN.withdraw(msg.sender, item.acceptToken, amount);
+
+    //     emit ClaimToken(taskId, msg.sender, amount, item.acceptToken);
+    // }
+
+    // function isFail(
+    //     mapping(uint256 => TaskItem) storage tasks,
+    //     uint256 taskId) 
+    //     internal view returns(bool) {
+    //      return tasks[taskId].status == TaskStatus.Fail ||
+    //         (tasks[taskId].amountCollected < tasks[taskId].targetAmount && block.timestamp > tasks[taskId].endTime);
+    // }
+}

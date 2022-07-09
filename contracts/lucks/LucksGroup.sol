@@ -46,8 +46,8 @@ contract LucksGroup is ILucksGroup, ReentrancyGuardUpgradeable, OwnableUpgradeab
         require(address(EXECUTOR)!=address(0), "EXECUTOR not set");
             
         TaskItem memory item = EXECUTOR.getTask(taskId);        
-        require(block.timestamp <= item.endTime, "Invalid time range");    
-        require(item.status == TaskStatus.Pending || item.status == TaskStatus.Open, "Invalid status");
+        require(block.timestamp <= item.endTime, "endTime");    
+        require(item.status == TaskStatus.Pending || item.status == TaskStatus.Open, "status");
 
         // join
         if (groups[taskId][groupId].length < MAX_SEAT) {            
@@ -78,8 +78,8 @@ contract LucksGroup is ILucksGroup, ReentrancyGuardUpgradeable, OwnableUpgradeab
         require(address(EXECUTOR)!=address(0), "EXECUTOR not set");
             
         TaskItem memory item = EXECUTOR.getTask(taskId);        
-        require(block.timestamp <= item.endTime, "Invalid time range");    
-        require(item.status == TaskStatus.Pending || item.status == TaskStatus.Open, "Invalid status");
+        require(block.timestamp <= item.endTime, "endTime");    
+        require(item.status == TaskStatus.Pending || item.status == TaskStatus.Open, "status");
         
         uint256 groupId = groupIds[taskId] + 1;
         groupIds[taskId] = groupId;

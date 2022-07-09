@@ -93,7 +93,7 @@ contract ProxyTokenStation is IProxyTokenStation, Ownable {
     function _withdraw(address executor, address user, address token, uint256 amount) internal {
         
         require(user != address(0) && user != address(this), "Invalid address");
-        require(amount > 0, "Invalid amount");
+        require(amount > 0, "amount");
         require(deposits[executor][token] >= amount, "Insufficient deposited balance for this executor");
 
         // update deposits balance

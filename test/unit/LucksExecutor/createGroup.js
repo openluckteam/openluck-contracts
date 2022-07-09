@@ -122,7 +122,7 @@ const tests = {
       }),
     },
     {
-      description: 'createGroup - Invalid num = 0',
+      description: 'createGroup - num = 0',
       fn: ({ joiner, acceptToken }) => ({
         arg_item: {
           taskId: testTaskId,
@@ -132,11 +132,11 @@ const tests = {
           targetAmount: utils.parseEther("10"),
           price: utils.parseEther("0.1"),
         },
-        revert: 'Invalid num',
+        revert: 'num',
       }),
     },
     {
-      description: 'createGroup - Invalid num > 10001',
+      description: 'createGroup - num > 10001',
       fn: ({ joiner, acceptToken }) => ({
         arg_item: {
           taskId: 2,
@@ -178,7 +178,7 @@ const tests = {
       }),
     },
     {
-      description: 'createGroup - Invalid status',
+      description: 'createGroup - status',
       fn: ({ joiner, acceptToken }) => ({
         arg_item: {
           taskId: 4,
@@ -188,7 +188,7 @@ const tests = {
           targetAmount: utils.parseEther("10"),
           price: utils.parseEther("0.1"),
         },
-        revert: 'Invalid status',
+        revert: 'status',
       }),
     },
     {

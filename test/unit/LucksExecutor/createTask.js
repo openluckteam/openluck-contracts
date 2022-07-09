@@ -50,7 +50,7 @@ module.exports = function () {
         console.log("           lzChainId: " + await contracts.LucksExecutor.lzChainId());
 
         // await contracts.ProxyNFTStation.connect(caller).redeem(1, caller.address);
-        // arg_item.exclusiveToken.token = "0x793E92A30fdaD0AD4F6Bbc191729957Ae5aBb880"; // test Invalid exclusiveToken
+        // arg_item.exclusiveToken.token = "0x793E92A30fdaD0AD4F6Bbc191729957Ae5aBb880"; // test exclusive
         // arg_item.exclusiveToken.amount = 1;
 
         // //pre check
@@ -285,7 +285,7 @@ const tests = {
   ],
   failure: [
     {
-      description: 'createTask - Invalid seller',
+      description: 'createTask - onlySeller',
       fn: ({ caller, contracts, acceptToken }) => ({
         arg_item: {
           nftChainId: getNftChainIdForTest(),
@@ -306,7 +306,7 @@ const tests = {
 
           paymentStrategy: 0
         },
-        revert: 'Invalid seller',
+        revert: 'onlySeller',
       }),
     },
     {
@@ -331,11 +331,11 @@ const tests = {
 
           paymentStrategy: 0
         },
-        revert: 'Empty tokenIds',
+        revert: 'tokenIds',
       }),
     },
     {
-      description: 'createTask - Invalid time range',
+      description: 'createTask - endTime',
       fn: ({ caller, contracts, acceptToken }) => ({
         arg_item: {
           nftChainId: getNftChainIdForTest(),
@@ -356,7 +356,7 @@ const tests = {
 
           paymentStrategy: 0
         },
-        revert: 'Invalid time range',
+        revert: 'endTime',
       }),
     },
     {
@@ -385,7 +385,7 @@ const tests = {
       }),
     },
     {
-      description: 'createTask - Invalid amountCollected',
+      description: 'createTask - collect',
       fn: ({ caller, contracts, acceptToken }) => ({
         arg_item: {
           nftChainId: getNftChainIdForTest(),
@@ -406,7 +406,7 @@ const tests = {
 
           paymentStrategy: 0
         },
-        revert: 'Invalid amountCollected',
+        revert: 'collect',
       }),
     },
     {
@@ -435,7 +435,7 @@ const tests = {
       }),
     },
     {
-      description: 'createTask - Invalid nftContract',
+      description: 'createTask - nft',
       fn: ({ caller, contracts, acceptToken }) => ({
         arg_item: {
           nftChainId: getNftChainIdForTest(),
@@ -456,7 +456,7 @@ const tests = {
 
           paymentStrategy: 0
         },
-        revert: 'Invalid nftContract',
+        revert: 'nft',
       }),
     },
     {

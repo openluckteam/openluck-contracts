@@ -100,7 +100,7 @@ contract LucksHelper is ILucksHelper, Ownable {
      * @notice check nft contract, support erc721 & erc1155
      */
     function checkNFTContract(address addr) public view override returns (bool) {
-        require(addr != address(0) && Address.isContract(addr), "Invalid nftContract");
+        require(addr != address(0) && Address.isContract(addr), "nft");
         require(            
             isPunks(addr) || 
             IERC165(addr).supportsInterface(0x80ac58cd) ||  // ERC721 interfaceID
@@ -116,21 +116,20 @@ contract LucksHelper is ILucksHelper, Ownable {
      */
     function checkNewTask(address user, TaskItem memory item) public view override returns(bool) { 
 
-        require(item.seller != address(0) && item.seller == user, "Invalid seller address");      
-        require(item.nftChainId > 0, "Invalid nftChainId");       
-        require(item.tokenIds.length > 0, "Empty tokenIds");
-        require(block.timestamp < item.endTime, "Invalid time range");
-        require(item.endTime - block.timestamp > 84600 , "Duration too short"); // at least 23.5 hour
-        require(item.endTime - block.timestamp < 2678400 , "Duration too long"); // 31 days limit
-        require(item.price > 0 && item.price < item.targetAmount && item.targetAmount.mod(item.price) == 0,"Invalid price or targetAmount");
+        require(item.seller != address(0) && item.seller == user, "seller");      
+        require(item.nftChainId > 0, "nftChain");       
+        require(item.tokenIds.length > 0, "tokenIds");
+        require(block.timestamp < item.endTime, "endTime");
+         require(item.endTime - block.timestamp > 84600 && item.endTime - block.timestamp < 2678400, "duration"); // at least 23.5 hour, 31 days limit
+        require(item.price > 0 && item.price < item.targetAmount && item.targetAmount.mod(item.price) == 0,"price or targetAmount");
 
         uint num = item.targetAmount.div(item.price);
-        require(num > 0 && num <= 100000 && num.mod(10) == 0, "Invalid num");
+        require(num > 0 && num <= 100000 && num.mod(10) == 0, "num");
 
-        require(item.amountCollected == 0, "Invalid amountCollected");    
+        require(item.amountCollected == 0, "collect");    
        
         // check nftContract
-        require(checkNFTContract(item.nftContract), "Invalid nftContract");
+        require(checkNFTContract(item.nftContract), "nft");
         (bool checkState, string memory checkMsg) = checkTokenListing(item.nftContract, item.seller, item.tokenIds, item.tokenAmounts);
         require(checkState, checkMsg);
 
@@ -138,19 +137,19 @@ contract LucksHelper is ILucksHelper, Ownable {
     }
 
     function checkNewTaskExt(TaskExt memory ext) public pure override returns(bool) {
-        require(bytes(ext.title).length >=0 && bytes(ext.title).length <= 256, "Invalid ext title");
-        require(bytes(ext.note).length <= 256, "Invalid ext note");
+        require(bytes(ext.title).length >=0 && bytes(ext.title).length <= 256, "title");
+        require(bytes(ext.note).length <= 256, "note");
         return true;
     }
 
     function checkNewTaskRemote(TaskItem memory item) public view override returns (bool) 
     {        
         if (address(item.exclusiveToken.token) != address(0) && item.exclusiveToken.amount > 0) {
-            require(Address.isContract(item.exclusiveToken.token), "Invalid exclusiveToken");
+            require(Address.isContract(item.exclusiveToken.token), "exclusive");
         }       
         require(checkAcceptToken(item.acceptToken), "Unsupported acceptToken");
         uint256 minTarget = minTargetAmount[item.acceptToken];
-        require(minTarget == 0 || item.targetAmount >= minTarget, "Target too small");
+        require(minTarget == 0 || item.targetAmount >= minTarget, "target");
         return true;
     }
 
@@ -158,17 +157,17 @@ contract LucksHelper is ILucksHelper, Ownable {
 
         require(bytes(note).length <= 256, "Note too large");
         require(checkPerJoinLimit(num), "Over join limit");                
-        require(num > 0, "Invalid num");
+        require(num > 0, "num");
 
         TaskItem memory item = EXECUTOR.getTask(taskId);
 
         require(item.seller != user, "Not allow owner");
-        require(block.timestamp >= item.startTime && block.timestamp <= item.endTime, "Invalid time range");
-        require(item.status == TaskStatus.Pending || item.status == TaskStatus.Open, "Invalid status");
+        require(block.timestamp >= item.startTime && block.timestamp <= item.endTime, "endTime");
+        require(item.status == TaskStatus.Pending || item.status == TaskStatus.Open, "status");
 
         // Calculate number of TOKEN to this contract
         uint256 amount = item.price.mul(num);
-        require(amount > 0, "Invalid amount");
+        require(amount > 0, "amount");
 
         // check Exclusive
         if (address(item.exclusiveToken.token) != address(0) && item.exclusiveToken.amount > 0) {
@@ -207,7 +206,7 @@ contract LucksHelper is ILucksHelper, Ownable {
             require(tokenIds.length == amounts.length, "Invalid ids len");
             for (uint256 i = 0; i < tokenIds.length; i++) {
                 if (!(IERC1155(addr).balanceOf(seller, tokenIds[i]) >= amounts[i] && amounts[i] > 0)) {
-                    return (false, "Invalid amount or balance");
+                    return (false, "amount or balance");
                 }
             }
         }
