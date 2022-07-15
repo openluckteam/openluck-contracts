@@ -46,7 +46,8 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 module.exports.skip = ({ getChainId }) =>
     new Promise(async (resolve, reject) => {
         try {
-            resolve(!isTestnet());
+            resolve(true);
+            // resolve(!isTestnet());
             // resolve(hre.network.name.indexOf("bsc") >= 0);
         } catch (error) {
             reject(error)

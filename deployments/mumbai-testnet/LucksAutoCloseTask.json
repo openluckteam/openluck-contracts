@@ -1,0 +1,829 @@
+{
+  "address": "0x7B3a23f69f5548E7eEFb57F613027c4252f52366",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_keeperRegAddr",
+          "type": "address"
+        },
+        {
+          "internalType": "contract ILucksExecutor",
+          "name": "_executor",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amountAdded",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newBalance",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "FundsAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amountWithdrawn",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "payee",
+          "type": "address"
+        }
+      ],
+      "name": "FundsWithdrawn",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "oldAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "newAddress",
+          "type": "address"
+        }
+      ],
+      "name": "KeeperRegistryAddressUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "Paused",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "taskId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "RevertInvoke",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "Unpaused",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "BATCH_PERFORM_LIMIT",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "DST_GAS_AMOUNT",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "EXECUTOR",
+      "outputs": [
+        {
+          "internalType": "contract ILucksExecutor",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "KEEPER",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "taskId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "endTime",
+          "type": "uint256"
+        }
+      ],
+      "name": "addTask",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "taskIds",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "endTimes",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "addTasks",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
+      ],
+      "name": "checkUpkeep",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "upkeepNeeded",
+          "type": "bool"
+        },
+        {
+          "internalType": "bytes",
+          "name": "performData",
+          "type": "bytes"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "first",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "taskId",
+          "type": "uint256"
+        }
+      ],
+      "name": "get",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getQueueTasks",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "last",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "taskId",
+          "type": "uint256"
+        }
+      ],
+      "name": "next",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "paused",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "performData",
+          "type": "bytes"
+        }
+      ],
+      "name": "performUpkeep",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "taskId",
+          "type": "uint256"
+        }
+      ],
+      "name": "prev",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "taskId",
+          "type": "uint256"
+        }
+      ],
+      "name": "removeTask",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "num",
+          "type": "uint256"
+        }
+      ],
+      "name": "setBatchPerformLimist",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "setDstGasAmount",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract ILucksExecutor",
+          "name": "_executor",
+          "type": "address"
+        }
+      ],
+      "name": "setExecutor",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_keeperRegAddr",
+          "type": "address"
+        }
+      ],
+      "name": "setKeeper",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "size",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "num",
+          "type": "uint256"
+        }
+      ],
+      "name": "top",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "unpause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address payable",
+          "name": "payee",
+          "type": "address"
+        }
+      ],
+      "name": "withdraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
+    }
+  ],
+  "transactionHash": "0x25a0b6cf71c0f689b24f3c56ceeb83387effdf65af257042e30280958a9e1a66",
+  "receipt": {
+    "to": null,
+    "from": "0x5b770F460978C456d69bC46463dfda71FEEE60AD",
+    "contractAddress": "0x7B3a23f69f5548E7eEFb57F613027c4252f52366",
+    "transactionIndex": 6,
+    "gasUsed": "1604013",
+    "logsBloom": "0x00000000000000020000000000000000000000000000001000800000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000800001000000000000000100000000000000000000020000000000000000000800000000000000000080000000000000400000000000000000000000000000000000000000000000000000000000000000200000000000000021000000000000000001000000000000000000000000004000000000000000000001000000000000000000000000000000100000000020000000000000000020000000200000000000000000000000001000000000100000",
+    "blockHash": "0xb61c23d0930f61efe1c6936ded104fc5f0a536f27430a7afab5be0a82fe24db6",
+    "transactionHash": "0x25a0b6cf71c0f689b24f3c56ceeb83387effdf65af257042e30280958a9e1a66",
+    "logs": [
+      {
+        "transactionIndex": 6,
+        "blockNumber": 27178481,
+        "transactionHash": "0x25a0b6cf71c0f689b24f3c56ceeb83387effdf65af257042e30280958a9e1a66",
+        "address": "0x7B3a23f69f5548E7eEFb57F613027c4252f52366",
+        "topics": [
+          "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000005b770f460978c456d69bc46463dfda71feee60ad"
+        ],
+        "data": "0x",
+        "logIndex": 14,
+        "blockHash": "0xb61c23d0930f61efe1c6936ded104fc5f0a536f27430a7afab5be0a82fe24db6"
+      },
+      {
+        "transactionIndex": 6,
+        "blockNumber": 27178481,
+        "transactionHash": "0x25a0b6cf71c0f689b24f3c56ceeb83387effdf65af257042e30280958a9e1a66",
+        "address": "0x0000000000000000000000000000000000001010",
+        "topics": [
+          "0x4dfe1bbbcf077ddc3e01291eea2d5c70c2b422b415d95645b9adcfd678cb1d63",
+          "0x0000000000000000000000000000000000000000000000000000000000001010",
+          "0x0000000000000000000000005b770f460978c456d69bc46463dfda71feee60ad",
+          "0x000000000000000000000000c26880a0af2ea0c7e8130e6ec47af756465452e8"
+        ],
+        "data": "0x0000000000000000000000000000000000000000000000000071f8d394d65a98000000000000000000000000000000000000000000000000025c4d0482f563600000000000000000000000000000000000000000000011806fbab5160fc0af0000000000000000000000000000000000000000000000000001ea5430ee1f08c8000000000000000000000000000000000000000000001180702cade9a4970998",
+        "logIndex": 15,
+        "blockHash": "0xb61c23d0930f61efe1c6936ded104fc5f0a536f27430a7afab5be0a82fe24db6"
+      }
+    ],
+    "blockNumber": 27178481,
+    "cumulativeGasUsed": "2467336",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "0x7b3EC232b08BD7b4b3305BE0C044D907B2DF960B",
+    "0x897be0747988558c507aF3fd1e07d55c74EfadE8"
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "a366705d5343df8a750697e3fbefe33f",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.6+commit.11564f7e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_keeperRegAddr\",\"type\":\"address\"},{\"internalType\":\"contract ILucksExecutor\",\"name\":\"_executor\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amountAdded\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"newBalance\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"FundsAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amountWithdrawn\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"payee\",\"type\":\"address\"}],\"name\":\"FundsWithdrawn\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"oldAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"newAddress\",\"type\":\"address\"}],\"name\":\"KeeperRegistryAddressUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Paused\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"taskId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"reason\",\"type\":\"string\"}],\"name\":\"RevertInvoke\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Unpaused\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"BATCH_PERFORM_LIMIT\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"DST_GAS_AMOUNT\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"EXECUTOR\",\"outputs\":[{\"internalType\":\"contract ILucksExecutor\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"KEEPER\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"taskId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endTime\",\"type\":\"uint256\"}],\"name\":\"addTask\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"taskIds\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"endTimes\",\"type\":\"uint256[]\"}],\"name\":\"addTasks\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"checkUpkeep\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"upkeepNeeded\",\"type\":\"bool\"},{\"internalType\":\"bytes\",\"name\":\"performData\",\"type\":\"bytes\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"first\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"taskId\",\"type\":\"uint256\"}],\"name\":\"get\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getQueueTasks\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"last\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"taskId\",\"type\":\"uint256\"}],\"name\":\"next\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"pause\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"paused\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"performData\",\"type\":\"bytes\"}],\"name\":\"performUpkeep\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"taskId\",\"type\":\"uint256\"}],\"name\":\"prev\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"taskId\",\"type\":\"uint256\"}],\"name\":\"removeTask\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"num\",\"type\":\"uint256\"}],\"name\":\"setBatchPerformLimist\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"setDstGasAmount\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ILucksExecutor\",\"name\":\"_executor\",\"type\":\"address\"}],\"name\":\"setExecutor\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_keeperRegAddr\",\"type\":\"address\"}],\"name\":\"setKeeper\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"size\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"num\",\"type\":\"uint256\"}],\"name\":\"top\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"unpause\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"address payable\",\"name\":\"payee\",\"type\":\"address\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"constructor\":{\"params\":{\"_executor\":\"The LucksExecutor contract\",\"_keeperRegAddr\":\"The address of the keeper registry contract\"}},\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"paused()\":{\"details\":\"Returns true if the contract is paused, and false otherwise.\"},\"performUpkeep(bytes)\":{\"details\":\"The input to this method should not be trusted, and the caller of the method should not even be restricted to any single registry. Anyone should be able call it, and the input should be validated, there is no guarantee that the data passed in is the performData returned from checkUpkeep. This could happen due to malicious keepers, racing keepers, or simply a state change while the performUpkeep transaction is waiting for confirmation. Always validate the data passed in.\",\"params\":{\"performData\":\"is the data which was passed back from the checkData simulation. If it is encoded, it can easily be decoded into other types by calling `abi.decode`. This data should not be trusted, and should be validated against the contract's current state.\"}},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner.\"},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"},\"withdraw(uint256,address)\":{\"params\":{\"amount\":\"The amount of eth (in wei) to withdraw\",\"payee\":\"The address to pay\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"pause()\":{\"notice\":\"Pauses the contrac t, which prevents executing performUpkeep\"},\"performUpkeep(bytes)\":{\"notice\":\"method that is actually executed by the keepers, via the registry. The data returned by the checkUpkeep simulation will be passed into this method to actually be executed.\"},\"setExecutor(address)\":{\"notice\":\"set operator\"},\"setKeeper(address)\":{\"notice\":\"Sets the keeper registry address\"},\"unpause()\":{\"notice\":\"Unpauses the contract\"},\"withdraw(uint256,address)\":{\"notice\":\"Withdraws the contract balance\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/lucks/LucksAutoCloseTask.sol\":\"LucksAutoCloseTask\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@chainlink/contracts/src/v0.8/KeeperBase.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\ncontract KeeperBase {\\n  error OnlySimulatedBackend();\\n\\n  /**\\n   * @notice method that allows it to be simulated via eth_call by checking that\\n   * the sender is the zero address.\\n   */\\n  function preventExecution() internal view {\\n    if (tx.origin != address(0)) {\\n      revert OnlySimulatedBackend();\\n    }\\n  }\\n\\n  /**\\n   * @notice modifier that allows it to be simulated via eth_call by checking\\n   * that the sender is the zero address.\\n   */\\n  modifier cannotExecute() {\\n    preventExecution();\\n    _;\\n  }\\n}\\n\",\"keccak256\":\"0x5dc972fdf3a524312e68ef6d2e58bcdaf965d08d9415aefa289207350c2bc85a\",\"license\":\"MIT\"},\"@chainlink/contracts/src/v0.8/KeeperCompatible.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\nimport \\\"./KeeperBase.sol\\\";\\nimport \\\"./interfaces/KeeperCompatibleInterface.sol\\\";\\n\\nabstract contract KeeperCompatible is KeeperBase, KeeperCompatibleInterface {}\\n\",\"keccak256\":\"0xfdb84fea1ee213662ae66b95d4f620be73b7af5ede58be3d330b222b9b566d95\",\"license\":\"MIT\"},\"@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\ninterface KeeperCompatibleInterface {\\n  /**\\n   * @notice method that is simulated by the keepers to see if any work actually\\n   * needs to be performed. This method does does not actually need to be\\n   * executable, and since it is only ever simulated it can consume lots of gas.\\n   * @dev To ensure that it is never called, you may want to add the\\n   * cannotExecute modifier from KeeperBase to your implementation of this\\n   * method.\\n   * @param checkData specified in the upkeep registration so it is always the\\n   * same for a registered upkeep. This can easily be broken down into specific\\n   * arguments using `abi.decode`, so multiple upkeeps can be registered on the\\n   * same contract and easily differentiated by the contract.\\n   * @return upkeepNeeded boolean to indicate whether the keeper should call\\n   * performUpkeep or not.\\n   * @return performData bytes that the keeper should call performUpkeep with, if\\n   * upkeep is needed. If you would like to encode data to decode later, try\\n   * `abi.encode`.\\n   */\\n  function checkUpkeep(bytes calldata checkData) external returns (bool upkeepNeeded, bytes memory performData);\\n\\n  /**\\n   * @notice method that is actually executed by the keepers, via the registry.\\n   * The data returned by the checkUpkeep simulation will be passed into\\n   * this method to actually be executed.\\n   * @dev The input to this method should not be trusted, and the caller of the\\n   * method should not even be restricted to any single registry. Anyone should\\n   * be able call it, and the input should be validated, there is no guarantee\\n   * that the data passed in is the performData returned from checkUpkeep. This\\n   * could happen due to malicious keepers, racing keepers, or simply a state\\n   * change while the performUpkeep transaction is waiting for confirmation.\\n   * Always validate the data passed in.\\n   * @param performData is the data which was passed back from the checkData\\n   * simulation. If it is encoded, it can easily be decoded into other types by\\n   * calling `abi.decode`. This data should not be trusted, and should be\\n   * validated against the contract's current state.\\n   */\\n  function performUpkeep(bytes calldata performData) external;\\n}\\n\",\"keccak256\":\"0xb6577cda6b731b655aebcb6e3c24f8658d3f4c5eda07200622d07d4570af33ea\",\"license\":\"MIT\"},\"@openzeppelin/contracts/access/Ownable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts v4.4.1 (access/Ownable.sol)\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"../utils/Context.sol\\\";\\n\\n/**\\n * @dev Contract module which provides a basic access control mechanism, where\\n * there is an account (an owner) that can be granted exclusive access to\\n * specific functions.\\n *\\n * By default, the owner account will be the one that deploys the contract. This\\n * can later be changed with {transferOwnership}.\\n *\\n * This module is used through inheritance. It will make available the modifier\\n * `onlyOwner`, which can be applied to your functions to restrict their use to\\n * the owner.\\n */\\nabstract contract Ownable is Context {\\n    address private _owner;\\n\\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\\n\\n    /**\\n     * @dev Initializes the contract setting the deployer as the initial owner.\\n     */\\n    constructor() {\\n        _transferOwnership(_msgSender());\\n    }\\n\\n    /**\\n     * @dev Returns the address of the current owner.\\n     */\\n    function owner() public view virtual returns (address) {\\n        return _owner;\\n    }\\n\\n    /**\\n     * @dev Throws if called by any account other than the owner.\\n     */\\n    modifier onlyOwner() {\\n        require(owner() == _msgSender(), \\\"Ownable: caller is not the owner\\\");\\n        _;\\n    }\\n\\n    /**\\n     * @dev Leaves the contract without owner. It will not be possible to call\\n     * `onlyOwner` functions anymore. Can only be called by the current owner.\\n     *\\n     * NOTE: Renouncing ownership will leave the contract without an owner,\\n     * thereby removing any functionality that is only available to the owner.\\n     */\\n    function renounceOwnership() public virtual onlyOwner {\\n        _transferOwnership(address(0));\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Can only be called by the current owner.\\n     */\\n    function transferOwnership(address newOwner) public virtual onlyOwner {\\n        require(newOwner != address(0), \\\"Ownable: new owner is the zero address\\\");\\n        _transferOwnership(newOwner);\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Internal function without access restriction.\\n     */\\n    function _transferOwnership(address newOwner) internal virtual {\\n        address oldOwner = _owner;\\n        _owner = newOwner;\\n        emit OwnershipTransferred(oldOwner, newOwner);\\n    }\\n}\\n\",\"keccak256\":\"0x24e0364e503a9bbde94c715d26573a76f14cd2a202d45f96f52134ab806b67b9\",\"license\":\"MIT\"},\"@openzeppelin/contracts/security/Pausable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts v4.4.1 (security/Pausable.sol)\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"../utils/Context.sol\\\";\\n\\n/**\\n * @dev Contract module which allows children to implement an emergency stop\\n * mechanism that can be triggered by an authorized account.\\n *\\n * This module is used through inheritance. It will make available the\\n * modifiers `whenNotPaused` and `whenPaused`, which can be applied to\\n * the functions of your contract. Note that they will not be pausable by\\n * simply including this module, only once the modifiers are put in place.\\n */\\nabstract contract Pausable is Context {\\n    /**\\n     * @dev Emitted when the pause is triggered by `account`.\\n     */\\n    event Paused(address account);\\n\\n    /**\\n     * @dev Emitted when the pause is lifted by `account`.\\n     */\\n    event Unpaused(address account);\\n\\n    bool private _paused;\\n\\n    /**\\n     * @dev Initializes the contract in unpaused state.\\n     */\\n    constructor() {\\n        _paused = false;\\n    }\\n\\n    /**\\n     * @dev Returns true if the contract is paused, and false otherwise.\\n     */\\n    function paused() public view virtual returns (bool) {\\n        return _paused;\\n    }\\n\\n    /**\\n     * @dev Modifier to make a function callable only when the contract is not paused.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must not be paused.\\n     */\\n    modifier whenNotPaused() {\\n        require(!paused(), \\\"Pausable: paused\\\");\\n        _;\\n    }\\n\\n    /**\\n     * @dev Modifier to make a function callable only when the contract is paused.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must be paused.\\n     */\\n    modifier whenPaused() {\\n        require(paused(), \\\"Pausable: not paused\\\");\\n        _;\\n    }\\n\\n    /**\\n     * @dev Triggers stopped state.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must not be paused.\\n     */\\n    function _pause() internal virtual whenNotPaused {\\n        _paused = true;\\n        emit Paused(_msgSender());\\n    }\\n\\n    /**\\n     * @dev Returns to normal state.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must be paused.\\n     */\\n    function _unpause() internal virtual whenPaused {\\n        _paused = false;\\n        emit Unpaused(_msgSender());\\n    }\\n}\\n\",\"keccak256\":\"0xe68ed7fb8766ed1e888291f881e36b616037f852b37d96877045319ad298ba87\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Context.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Provides information about the current execution context, including the\\n * sender of the transaction and its data. While these are generally available\\n * via msg.sender and msg.data, they should not be accessed in such a direct\\n * manner, since when dealing with meta-transactions the account sending and\\n * paying for execution may not be the actual sender (as far as an application\\n * is concerned).\\n *\\n * This contract is only required for intermediate, library-like contracts.\\n */\\nabstract contract Context {\\n    function _msgSender() internal view virtual returns (address) {\\n        return msg.sender;\\n    }\\n\\n    function _msgData() internal view virtual returns (bytes calldata) {\\n        return msg.data;\\n    }\\n}\\n\",\"keccak256\":\"0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7\",\"license\":\"MIT\"},\"contracts/interfaces/ILucksAuto.sol\":{\"content\":\"  // SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.0;\\r\\n\\r\\nstruct Task {\\r\\n    uint256 endTime;\\r\\n    uint256 lastTimestamp;\\r\\n}\\r\\n\\r\\ninterface ILucksAuto {\\r\\n\\r\\n    event FundsAdded(uint256 amountAdded, uint256 newBalance, address sender);\\r\\n    event FundsWithdrawn(uint256 amountWithdrawn, address payee);\\r\\n\\r\\n    event KeeperRegistryAddressUpdated(address oldAddress, address newAddress);    \\r\\n    \\r\\n    event RevertInvoke(uint256 taskId, string reason);\\r\\n\\r\\n    function addTask(uint256 taskId, uint endTime) external;\\r\\n    function addTasks(uint256[] memory taskIds, uint[] memory endTime) external;\\r\\n    function removeTask(uint256 taskId) external;\\r\\n    function getQueueTasks() external view returns (uint256[] memory);\\r\\n\\r\\n}\",\"keccak256\":\"0x070b6357514440f3f4586e635590f33a94694a0e190ff94afe513520ee9cc98f\",\"license\":\"MIT\"},\"contracts/interfaces/ILucksBridge.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.0;\\r\\n\\r\\n// OpenLuck\\r\\nimport {TaskItem, TaskExt} from \\\"./ILucksExecutor.sol\\\";\\r\\n\\r\\nstruct lzTxObj {\\r\\n    uint256 dstGasForCall;\\r\\n    uint256 dstNativeAmount;\\r\\n    bytes dstNativeAddr;\\r\\n    bytes zroPaymentAddr; //  the address of the ZRO token holder who would pay for the transaction\\r\\n}\\r\\n\\r\\ninterface ILucksBridge {\\r\\n    \\r\\n    // ============= events ====================\\r\\n    event SendMsg(uint8 msgType, uint64 nonce);\\r\\n    event InvokeFailed(uint64 nonce, string reason);\\r\\n\\r\\n    // ============= Task functions ====================\\r\\n\\r\\n    function sendCreateTask(\\r\\n        uint16 _dstChainId,\\r\\n        address payable _refundAddress,\\r\\n        TaskItem memory item,\\r\\n        TaskExt memory ext,\\r\\n        lzTxObj memory _lzTxParams\\r\\n    ) external payable;\\r\\n\\r\\n    function sendWithdrawNFTs(\\r\\n        uint16 _dstChainId,\\r\\n        address payable _refundAddress,\\r\\n        address payable _user,\\r\\n        address nftContract,\\r\\n        uint256 depositId,\\r\\n        lzTxObj memory _lzTxParams\\r\\n    ) external payable;\\r\\n\\r\\n    // ============= Assets functions ====================\\r\\n\\r\\n    function quoteLayerZeroFee(\\r\\n        uint16 _dstChainId,\\r\\n        uint8 _functionType,\\r\\n        string memory _note,\\r\\n        lzTxObj memory _lzTxParams\\r\\n    ) external view returns (uint256 nativeFee, uint256 zroFee);\\r\\n\\r\\n    function estimateCreateTaskFee(\\r\\n        uint16 _dstChainId,\\r\\n        TaskItem memory item,\\r\\n        TaskExt memory ext,\\r\\n        lzTxObj memory _lzTxParams\\r\\n    ) external view returns (uint256 nativeFee, uint256 zroFee);\\r\\n\\r\\n    function estimateWithdrawNFTsFee(\\r\\n        uint16 _dstChainId,\\r\\n        address payable _user,\\r\\n        address nftContract,\\r\\n        uint256 depositId,\\r\\n        lzTxObj memory _lzTxParams\\r\\n    ) external view returns (uint256 nativeFee, uint256 zroFee);\\r\\n}\\r\\n\",\"keccak256\":\"0xb94f71c2ea0c179500bf550ed44f3befa33451172073f4fa3b19c635bbca2a16\",\"license\":\"MIT\"},\"contracts/interfaces/ILucksExecutor.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.0;\\r\\n\\r\\nimport { lzTxObj } from \\\"./ILucksBridge.sol\\\";\\r\\n\\r\\n/** \\r\\n    TaskStatus\\r\\n    0) Pending: task created but not reach starttime\\r\\n    1) Open: task opening\\r\\n    2) Close: task close, waiting for draw\\r\\n    3) Success: task reach target, drawed winner\\r\\n    4) Fail: task Fail and expired\\r\\n    5) Cancel: task user cancel\\r\\n */\\r\\nenum TaskStatus {\\r\\n    Pending,\\r\\n    Open,\\r\\n    Close,\\r\\n    Success,\\r\\n    Fail,\\r\\n    Cancel\\r\\n}\\r\\n\\r\\nstruct ExclusiveToken {\\r\\n    address token; // exclusive token contract address    \\r\\n    uint256 amount; // exclusive token holding amount required\\r\\n}\\r\\n\\r\\nstruct TaskItem {\\r\\n\\r\\n    address seller; // Owner of the NFTs\\r\\n    uint16 nftChainId; // NFT source ChainId    \\r\\n    address nftContract; // NFT registry address    \\r\\n    uint256[] tokenIds; // Allow mulit nfts for sell    \\r\\n    uint256[] tokenAmounts; // support ERC1155\\r\\n    \\r\\n    address acceptToken; // acceptToken    \\r\\n    TaskStatus status; // Task status    \\r\\n\\r\\n    uint256 startTime; // Task start time    \\r\\n    uint256 endTime; // Task end time\\r\\n    \\r\\n    uint256 targetAmount; // Task target crowd amount (in wei) for the published item    \\r\\n    uint256 price; // Per ticket price  (in wei)    \\r\\n    \\r\\n    uint16 paymentStrategy; // payment strategy;\\r\\n    ExclusiveToken exclusiveToken; // exclusive token contract address    \\r\\n    \\r\\n    // editable fields\\r\\n    uint256 amountCollected; // The amount (in wei) collected of this task\\r\\n    uint256 depositId; // NFTs depositId (system set)\\r\\n}\\r\\n\\r\\nstruct TaskExt {\\r\\n    uint16 chainId; // Task Running ChainId   \\r\\n    string title; // title (for searching keywords)  \\r\\n    string note;   // memo\\r\\n}\\r\\n\\r\\nstruct Ticket {\\r\\n    uint256 number;  // the ticket's id, equal to the end number (last ticket id)\\r\\n    uint32 count;   // how many QTY the ticket joins, (number-count+1) equal to the start number of this ticket.\\r\\n    address owner;  // ticket owner\\r\\n}\\r\\n\\r\\nstruct TaskInfo {\\r\\n    uint256 lastTID;\\r\\n    uint256 closeTime;\\r\\n    uint256 finalNo;\\r\\n}\\r\\n \\r\\nstruct UserState {\\r\\n    uint256 num; // user buyed tickets count\\r\\n    bool claimed;  // user claimed\\r\\n}\\r\\ninterface ILucksExecutor {\\r\\n\\r\\n    // ============= events ====================\\r\\n\\r\\n    event CreateTask(uint256 taskId, TaskItem item, TaskExt ext);\\r\\n    event CancelTask(uint256 taskId, address seller);\\r\\n    event CloseTask(uint256 taskId, address caller, TaskStatus status);\\r\\n    event JoinTask(uint256 taskId, address buyer, uint256 amount, uint256 count, uint256 number,string note);\\r\\n    event PickWinner(uint256 taskId, address winner, uint256 number);\\r\\n    event ClaimToken(uint256 taskId, address caller, uint256 amount, address acceptToken);\\r\\n    event ClaimNFT(uint256 taskId, address seller, address nftContract, uint256[] tokenIds);    \\r\\n    event CreateTickets(uint256 taskId, address buyer, uint256 num, uint256 start, uint256 end);\\r\\n    event UpdateTaskNote(uint256 taskId, string note);\\r\\n\\r\\n    event TransferFee(uint256 taskId, address to, address token, uint256 amount); // for protocol\\r\\n    event TransferShareAmount(uint256 taskId, address to, address token, uint256 amount); // for winners\\r\\n    event TransferPayment(uint256 taskId, address to, address token, uint256 amount); // for seller\\r\\n\\r\\n    // ============= functions ====================\\r\\n\\r\\n    function count() external view returns (uint256);\\r\\n    function exists(uint256 taskId) external view returns (bool);\\r\\n    function getTask(uint256 taskId) external view returns (TaskItem memory);\\r\\n    function getInfo(uint256 taskId) external view returns (TaskInfo memory);\\r\\n    function isFail(uint256 taskId) external view returns(bool);\\r\\n    function getChainId() external view returns (uint16);\\r\\n\\r\\n    function createTask(TaskItem memory item, TaskExt memory ext, lzTxObj memory _param) external payable;\\r\\n    function reCreateTask(uint256 taskId, TaskItem memory item, TaskExt memory ext) external payable;\\r\\n    function updateTaskNote(uint256, string memory note) external;\\r\\n    function joinTask(uint256 taskId, uint32 num, string memory note) external payable;\\r\\n    function cancelTask(uint256 taskId, lzTxObj memory _param) external payable;\\r\\n    function closeTask(uint256 taskId, lzTxObj memory _param) external payable;\\r\\n    function pickWinner(uint256 taskId, lzTxObj memory _param) external payable;\\r\\n\\r\\n    function claimTokens(uint256[] memory taskIds) external;\\r\\n    function claimNFTs(uint256[] memory taskIds, lzTxObj memory _param) external payable;\\r\\n\\r\\n    function onLzReceive(uint8 functionType, bytes memory _payload) external;\\r\\n}\\r\\n\",\"keccak256\":\"0x25cbcdc746b1d021aea3714ee1399dbf9505f2355956bb80be5937a06bdc0767\",\"license\":\"MIT\"},\"contracts/libraries/SortedLinkMap.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.0;\\r\\n\\r\\n\\r\\nlibrary SortedLinkMap {\\r\\n\\r\\n    struct Item {        \\r\\n        uint id;\\r\\n        uint value;\\r\\n        uint leftId;\\r\\n    }\\r\\n\\r\\n    uint constant None = uint(0);\\r\\n\\r\\n    struct SortedMap {\\r\\n        uint count;\\r\\n        uint maxId;\\r\\n        mapping(uint => uint) keys; // id => id , linked list\\r\\n        mapping(uint => Item) nodes; // id => value item\\r\\n    }\\r\\n    \\r\\n    function add(SortedMap storage self, uint id, uint value) internal {                \\r\\n\\r\\n        require(id > 0, \\\"require id > 0\\\");\\r\\n        \\r\\n        if (self.nodes[id].value > 0){\\r\\n            // not allow duplicate key\\r\\n            return;\\r\\n        }\\r\\n\\r\\n        uint leftId = findPrevByValue(self, value);\\r\\n        uint rightId = next(self, leftId);\\r\\n\\r\\n        // update prev item link\\r\\n        self.keys[leftId] = id;\\r\\n\\r\\n        // update current item\\r\\n        self.keys[id] = rightId;        \\r\\n        self.nodes[id] = Item(id, value, leftId);   \\r\\n\\r\\n        // update max item\\r\\n        if (rightId == None) {\\r\\n            self.maxId = id;\\r\\n        }        \\r\\n        else {\\r\\n            // upate next item link\\r\\n            self.nodes[rightId].leftId = id;   \\r\\n        }\\r\\n\\r\\n        // update counts\\r\\n        self.count ++;                    \\r\\n    }\\r\\n\\r\\n    function remove(SortedMap storage self, uint id) internal {\\r\\n\\r\\n        if (exists(self, id)) {\\r\\n\\r\\n            // get left and right\\r\\n            uint leftId = prev(self, id);\\r\\n            uint rightId = next(self, id);\\r\\n\\r\\n            self.keys[leftId] = rightId;\\r\\n\\r\\n            if (rightId > 0) {\\r\\n                self.nodes[rightId].leftId = leftId;\\r\\n            }\\r\\n\\r\\n            // update max item\\r\\n            if (rightId == None) {\\r\\n                self.maxId = leftId;\\r\\n            }   \\r\\n\\r\\n            delete self.nodes[id]; // remove value\\r\\n            delete self.keys[id]; // remove key\\r\\n\\r\\n            self.count --;\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function exists(SortedMap storage self, uint id) internal view returns(bool) {\\r\\n        require(id > 0);\\r\\n        return self.nodes[id].value > 0;\\r\\n    }\\r\\n\\r\\n    function first(SortedMap storage self) internal view returns(uint) {\\r\\n        return next(self, 0);\\r\\n    }\\r\\n       \\r\\n    function last(SortedMap storage self) internal view returns(uint) {\\r\\n        return self.maxId;\\r\\n    }\\r\\n\\r\\n    function size(SortedMap storage self) internal view returns(uint) {\\r\\n        return self.count;\\r\\n    }\\r\\n\\r\\n    function findPrevByValue(SortedMap storage self, uint target) internal view returns(uint256) {  \\r\\n\\r\\n        require(target > 0, \\\"require target > 0\\\");\\r\\n\\r\\n        if (self.count == 0) return None;\\r\\n        \\r\\n        // try to match last item\\r\\n        uint lastId = self.maxId;        \\r\\n        uint lastValue = self.nodes[lastId].value;\\r\\n        if (target >= lastValue) {            \\r\\n            return lastId; // return max\\r\\n        }\\r\\n\\r\\n        // try to match first item\\r\\n        uint firstId = first(self);\\r\\n        uint firsValue = self.nodes[firstId].value;\\r\\n        if (target <= firsValue) {\\r\\n            return None;  // return head\\r\\n        }\\r\\n\\r\\n        uint mid = (firsValue + lastValue) >> 1;\\r\\n\\r\\n        if (target >= mid) {\\r\\n            // find prev item step by step (right to left)\\r\\n            uint curentId = lastId;\\r\\n            while (curentId > 0) {\\r\\n                curentId = prev(self, curentId);\\r\\n                if (curentId > 0 && target >= self.nodes[curentId].value) {\\r\\n                    return curentId;\\r\\n                }        \\r\\n            }\\r\\n        }\\r\\n        else {\\r\\n            // find next item step by step (left to right)\\r\\n            uint curentId = firstId;\\r\\n            while (curentId > 0) { // the lastId node is zero\\r\\n                curentId = next(self, curentId);\\r\\n                if (curentId > 0 && target >= self.nodes[curentId].value) {\\r\\n                    return curentId;\\r\\n                }        \\r\\n            }\\r\\n        }\\r\\n\\r\\n        return None;\\r\\n    }\\r\\n\\r\\n    function prev(SortedMap storage self, uint id) internal view returns(uint256) {\\r\\n        if (exists(self, id)) {\\r\\n            return self.nodes[id].leftId;\\r\\n        }  \\r\\n        return None;     \\r\\n    }\\r\\n\\r\\n    function next(SortedMap storage self, uint id) internal view returns(uint256) {\\r\\n        uint nextId = self.keys[id];\\r\\n        return nextId;\\r\\n    }  \\r\\n\\r\\n    function get(SortedMap storage self, uint id) internal view returns(Item memory) {\\r\\n        return self.nodes[id];\\r\\n    }  \\r\\n\\r\\n    function top(SortedMap storage self, uint num) internal view returns(uint[] memory){        \\r\\n        if(num > self.count) {\\r\\n            num = self.count;\\r\\n        }\\r\\n        if (num < 1) {\\r\\n            return new uint[](0);\\r\\n        }\\r\\n\\r\\n        uint[] memory items = new uint[](num);\\r\\n\\r\\n        uint curentId = first(self);\\r\\n        for(uint i=0; i < num; i++) {            \\r\\n            if (curentId > 0) {\\r\\n                items[i] = curentId;\\r\\n            }   \\r\\n            curentId = next(self, curentId);\\r\\n        }\\r\\n        \\r\\n        return items;\\r\\n    }\\r\\n}\",\"keccak256\":\"0x3188c257d3770ed356a1134707fe7feae9b4e96f758cdd1bf0eb60f90f618b2e\",\"license\":\"MIT\"},\"contracts/lucks/LucksAutoCloseTask.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.0;\\r\\n\\r\\n// Chainlink contracts\\r\\nimport \\\"@chainlink/contracts/src/v0.8/KeeperCompatible.sol\\\";\\r\\n\\r\\n// Openluck interfaces\\r\\nimport \\\"./LucksAutoTask.sol\\\";\\r\\n\\r\\ncontract LucksAutoCloseTask is LucksAutoTask, KeeperCompatibleInterface {\\r\\n\\r\\n    /**\\r\\n    * @param _keeperRegAddr The address of the keeper registry contract\\r\\n    * @param _executor The LucksExecutor contract\\r\\n    */\\r\\n    constructor(address _keeperRegAddr, ILucksExecutor _executor) LucksAutoTask(_keeperRegAddr,_executor){        \\r\\n    }\\r\\n\\r\\n\\r\\n    //  ============ internal  functions  ============\\r\\n\\r\\n    function invokeTasks(uint256[] memory _taskIds) internal override {\\r\\n\\r\\n        lzTxObj memory _lzTxObj = lzTxObj(DST_GAS_AMOUNT, 0, bytes(\\\"0x\\\"), bytes(\\\"0x\\\"));\\r\\n\\r\\n         for (uint256 i = 0; i < _taskIds.length; i++) {\\r\\n\\r\\n            uint256 taskId = _taskIds[i];\\r\\n            _removeTask(taskId);\\r\\n\\r\\n            try EXECUTOR.closeTask(taskId, _lzTxObj) {\\r\\n         \\r\\n            } catch(bytes memory reason) {\\r\\n                emit RevertInvoke(taskId, _getRevertMsg(reason));\\r\\n            }            \\r\\n        }\\r\\n    }\\r\\n\\r\\n    //  ============ Keeper  functions  ============\\r\\n\\r\\n    function checkUpkeep(bytes calldata /* checkData */) external view override whenNotPaused returns (bool upkeepNeeded, bytes memory performData) {\\r\\n        uint256[] memory ids = getQueueTasks();\\r\\n        upkeepNeeded = ids.length > 0;\\r\\n        performData = abi.encode(ids);\\r\\n        return (upkeepNeeded, performData);\\r\\n    }\\r\\n\\r\\n    function performUpkeep(bytes calldata performData) external override whenNotPaused onlyKeeper {\\r\\n        uint256[] memory ids = abi.decode(performData, (uint256[]));\\r\\n        invokeTasks(ids);\\r\\n    }\\r\\n}\\r\\n\\r\\n\",\"keccak256\":\"0xe4c026c62eda60bc547325a635d0f9ccc9e840975e36e2988b09ca29f3691b5c\",\"license\":\"MIT\"},\"contracts/lucks/LucksAutoTask.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.0;\\r\\n\\r\\n// OpenZeppelin contracts\\r\\nimport \\\"@openzeppelin/contracts/access/Ownable.sol\\\";\\r\\nimport \\\"@openzeppelin/contracts/security/Pausable.sol\\\";\\r\\n\\r\\n// Openluck interfaces\\r\\nimport {ILucksExecutor, TaskItem} from \\\"../interfaces/ILucksExecutor.sol\\\";\\r\\nimport {ILucksAuto,Task} from \\\"../interfaces/ILucksAuto.sol\\\";\\r\\nimport {lzTxObj} from \\\"../interfaces/ILucksBridge.sol\\\";\\r\\nimport \\\"../libraries/SortedLinkMap.sol\\\";\\r\\n\\r\\nabstract contract LucksAutoTask is ILucksAuto, Ownable, Pausable {\\r\\n\\r\\n    using SortedLinkMap for SortedLinkMap.SortedMap;    \\r\\n\\r\\n    SortedLinkMap.SortedMap internal taskList;\\r\\n    \\r\\n    uint256 public BATCH_PERFORM_LIMIT = 5; // perform limist, default 5\\r\\n    uint256 public DST_GAS_AMOUNT = 0; // layer zero dstGasAmount\\r\\n\\r\\n    address public KEEPER; // chainLink keeper Registry Address\\r\\n    ILucksExecutor public EXECUTOR;    \\r\\n\\r\\n    /**\\r\\n    * @param _keeperRegAddr The address of the keeper registry contract\\r\\n    * @param _executor The LucksExecutor contract\\r\\n    */\\r\\n    constructor(address _keeperRegAddr, ILucksExecutor _executor) {        \\r\\n        KEEPER = _keeperRegAddr;\\r\\n        EXECUTOR = _executor;\\r\\n    }\\r\\n\\r\\n\\r\\n    modifier onlyKeeper() {\\r\\n        require(msg.sender == KEEPER || msg.sender == owner(), \\\"onlyKeeperRegistry\\\");\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier onlyExecutor() {\\r\\n        require(msg.sender == address(EXECUTOR) || msg.sender == owner(), \\\"onlyExecutor\\\");\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    /**\\r\\n    * @notice Receive funds\\r\\n    */\\r\\n    receive() external payable {\\r\\n        emit FundsAdded(msg.value, address(this).balance, msg.sender);\\r\\n    }\\r\\n\\r\\n    //  ============ Public  functions  ============\\r\\n\\r\\n    function size() external view returns(uint256) {\\r\\n        return taskList.count;\\r\\n    }\\r\\n\\r\\n    function first() external view returns(uint256) {\\r\\n        return taskList.first();\\r\\n    }\\r\\n\\r\\n    function last() external view returns(uint256) {\\r\\n        return taskList.last();\\r\\n    }\\r\\n\\r\\n    function prev(uint256 taskId) external view returns(uint256) {\\r\\n        return taskList.prev(taskId);\\r\\n    }   \\r\\n\\r\\n    function next(uint256 taskId) external view returns(uint256) {\\r\\n        return taskList.next(taskId);\\r\\n    }    \\r\\n\\r\\n    function get(uint256 taskId) external view returns(uint256) {\\r\\n        return taskList.nodes[taskId].value;\\r\\n    }\\r\\n\\r\\n    function top(uint256 num) external view returns(uint256[] memory) {\\r\\n        return taskList.top(num);\\r\\n    }\\r\\n\\r\\n    function addTask(uint256 taskId, uint endTime) external override onlyExecutor {    \\r\\n        if (taskId > 0 && endTime > 0) {            \\r\\n            taskList.add(taskId, endTime);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function addTasks(uint256[] memory taskIds, uint[] memory endTimes) external override onlyExecutor {    \\r\\n        require(taskIds.length > 0 && taskIds.length == endTimes.length, \\\"Invalid len\\\");\\r\\n        for(uint i=0; i < taskIds.length; i++) {\\r\\n            if (taskIds[i] > 0 && endTimes[i] > 0) {            \\r\\n                taskList.add(taskIds[i], endTimes[i]);\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function removeTask(uint256 taskId) external override onlyExecutor {        \\r\\n        _removeTask(taskId);\\r\\n    }\\r\\n\\r\\n    function getQueueTasks() public override view virtual returns (uint256[] memory) {\\r\\n        \\r\\n        uint256[] memory ids = new uint256[](BATCH_PERFORM_LIMIT);\\r\\n\\r\\n        uint256 count = 0;\\r\\n        uint taskId = taskList.first();\\r\\n       \\r\\n        while (taskId > 0 && count < BATCH_PERFORM_LIMIT) {\\r\\n                  \\r\\n            if (taskList.nodes[taskId].value <= block.timestamp) {                \\r\\n                ids[count] = taskId;    \\r\\n                count++;                   \\r\\n            }else {\\r\\n                break;\\r\\n            }\\r\\n            taskId = taskList.next(taskId);           \\r\\n        }\\r\\n       \\r\\n        if (count != BATCH_PERFORM_LIMIT) {\\r\\n            assembly {\\r\\n                mstore(ids, count)\\r\\n            }\\r\\n        }\\r\\n        return ids;   \\r\\n    }\\r\\n\\r\\n    //  ============ internal  functions  ============\\r\\n\\r\\n    function _removeTask(uint256 taskId) internal {                \\r\\n        taskList.remove(taskId);\\r\\n    }\\r\\n\\r\\n    function _getRevertMsg(bytes memory _returnData) internal pure returns (string memory) {\\r\\n        // If the _res length is less than 68, then the transaction failed silently (without a revert message)\\r\\n        if (_returnData.length < 68) return '';\\r\\n\\r\\n        assembly {\\r\\n            // Slice the sighash.\\r\\n            _returnData := add(_returnData, 0x04)\\r\\n        }\\r\\n        return abi.decode(_returnData, (string)); // All that remains is the revert string\\r\\n    }\\r\\n\\r\\n    function invokeTasks(uint256[] memory _taskIds) internal virtual {       \\r\\n    }\\r\\n\\r\\n    //  ============ onlyOwner  functions  ============\\r\\n    \\r\\n    /**\\r\\n    * @notice Pauses the contrac t, which prevents executing performUpkeep\\r\\n    */\\r\\n    function pause() external onlyOwner {\\r\\n        _pause();\\r\\n    }\\r\\n\\r\\n    /**\\r\\n    * @notice Unpauses the contract\\r\\n    */\\r\\n    function unpause() external onlyOwner {\\r\\n        _unpause();\\r\\n    }\\r\\n\\r\\n    /**\\r\\n    * @notice Withdraws the contract balance\\r\\n    * @param amount The amount of eth (in wei) to withdraw\\r\\n    * @param payee The address to pay\\r\\n    */\\r\\n    function withdraw(uint256 amount, address payable payee) external onlyOwner {\\r\\n        require(payee != address(0));\\r\\n        emit FundsWithdrawn(amount, payee);\\r\\n        payee.transfer(amount);\\r\\n    }\\r\\n\\r\\n    /**\\r\\n    * @notice Sets the keeper registry address\\r\\n    */\\r\\n    function setKeeper(address _keeperRegAddr) public onlyOwner {\\r\\n        require(_keeperRegAddr != address(0));\\r\\n        emit KeeperRegistryAddressUpdated(KEEPER, _keeperRegAddr);\\r\\n        KEEPER = _keeperRegAddr;\\r\\n    }\\r\\n\\r\\n\\r\\n    function setBatchPerformLimist(uint256 num) public onlyOwner {      \\r\\n        require(num > 0, \\\"Invalid limit num\\\");\\r\\n        BATCH_PERFORM_LIMIT = num;\\r\\n    }\\r\\n\\r\\n    function setDstGasAmount(uint256 amount) public onlyOwner {      \\r\\n        DST_GAS_AMOUNT = amount;\\r\\n    }\\r\\n\\r\\n    /**\\r\\n    @notice set operator\\r\\n     */\\r\\n    function setExecutor(ILucksExecutor _executor) external onlyOwner {\\r\\n        EXECUTOR = _executor;\\r\\n    }\\r\\n}\\r\\n\\r\\n\",\"keccak256\":\"0x3ac7188b89d5e03fbd0504a5aa648a27e0cffb02ccc5eced87ba56c3e6cbaa67\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60806040526005805560006006553480156200001a57600080fd5b5060405162001b8d38038062001b8d8339810160408190526200003d91620000dc565b81816200004a336200008c565b6000805460ff60a01b19169055600780546001600160a01b039384166001600160a01b0319918216179091556008805492909316911617905550620001349050565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b60008060408385031215620000f057600080fd5b8251620000fd816200011b565b602084015190925062000110816200011b565b809150509250929050565b6001600160a01b03811681146200013157600080fd5b50565b611a4980620001446000396000f3fe6080604052600436106101b95760003560e01c8063715018a6116100ec578063aa0a31001161008a578063c81c6c7c11610064578063c81c6c7c1461051b578063d6ff17a014610530578063edd004e514610546578063f2fde38b1461056657600080fd5b8063aa0a3100146104c5578063b15269a5146104e5578063c3084117146104fb57600080fd5b8063862a179e116100c6578063862a179e146104425780638da5cb5b14610462578063949d225d146104805780639507d39a1461049557600080fd5b8063715018a6146103f8578063748747e61461040d5780638456cb591461042d57600080fd5b80633df4ddf41161015957806347799da81161013357806347799da8146103535780635c975abb14610368578063630dc7cb146103925780636e04ff0d146103ca57600080fd5b80633df4ddf4146103095780633f4ba83a1461031e5780634585e33b1461033357600080fd5b80631c3c0ea8116101955780631c3c0ea814610265578063257baa3a14610285578063313ae541146102a557806335671214146102db57600080fd5b8062b34ebd14610203578062f714ce146102255780630fbeb0321461024557600080fd5b366101fe5760408051348152476020820152338183015290517fc6f3fb0fec49e4877342d4625d77a632541f55b7aae0f9d0b34c69b3478706dc9181900360600190a1005b600080fd5b34801561020f57600080fd5b5061022361021e36600461176a565b610586565b005b34801561023157600080fd5b5061022361024036600461173a565b6105f3565b34801561025157600080fd5b50610223610260366004611721565b6106ac565b34801561027157600080fd5b50610223610280366004611556565b6106db565b34801561029157600080fd5b506102236102a03660046115b7565b610727565b3480156102b157600080fd5b506102c56102c0366004611721565b61085f565b6040516102d291906117b8565b60405180910390f35b3480156102e757600080fd5b506102fb6102f6366004611721565b610872565b6040519081526020016102d2565b34801561031557600080fd5b506102fb61087f565b34801561032a57600080fd5b50610223610890565b34801561033f57600080fd5b5061022361034e36600461161b565b6108c4565b34801561035f57600080fd5b506002546102fb565b34801561037457600080fd5b50600054600160a01b900460ff1660405190151581526020016102d2565b34801561039e57600080fd5b506008546103b2906001600160a01b031681565b6040516001600160a01b0390911681526020016102d2565b3480156103d657600080fd5b506103ea6103e536600461161b565b61096b565b6040516102d29291906117fc565b34801561040457600080fd5b506102236109d6565b34801561041957600080fd5b50610223610428366004611556565b610a0a565b34801561043957600080fd5b50610223610ab0565b34801561044e57600080fd5b506007546103b2906001600160a01b031681565b34801561046e57600080fd5b506000546001600160a01b03166103b2565b34801561048c57600080fd5b506001546102fb565b3480156104a157600080fd5b506102fb6104b0366004611721565b60009081526004602052604090206001015490565b3480156104d157600080fd5b506102236104e0366004611721565b610ae2565b3480156104f157600080fd5b506102fb60065481565b34801561050757600080fd5b50610223610516366004611721565b610b55565b34801561052757600080fd5b506102c5610ba0565b34801561053c57600080fd5b506102fb60055481565b34801561055257600080fd5b506102fb610561366004611721565b610c87565b34801561057257600080fd5b50610223610581366004611556565b610c9b565b6008546001600160a01b03163314806105a957506000546001600160a01b031633145b6105ce5760405162461bcd60e51b81526004016105c590611817565b60405180910390fd5b6000821180156105de5750600081115b156105ef576105ef60018383610d33565b5050565b6000546001600160a01b0316331461061d5760405162461bcd60e51b81526004016105c590611867565b6001600160a01b03811661063057600080fd5b604080518381526001600160a01b03831660208201527f6141b54b56b8a52a8c6f5cd2a857f6117b18ffbf4d46bd3106f300a839cbf5ea910160405180910390a16040516001600160a01b0382169083156108fc029084906000818181858888f193505050501580156106a7573d6000803e3d6000fd5b505050565b6000546001600160a01b031633146106d65760405162461bcd60e51b81526004016105c590611867565b600655565b6000546001600160a01b031633146107055760405162461bcd60e51b81526004016105c590611867565b600880546001600160a01b0319166001600160a01b0392909216919091179055565b6008546001600160a01b031633148061074a57506000546001600160a01b031633145b6107665760405162461bcd60e51b81526004016105c590611817565b60008251118015610778575080518251145b6107b25760405162461bcd60e51b815260206004820152600b60248201526a24b73b30b634b2103632b760a91b60448201526064016105c5565b60005b82518110156106a75760008382815181106107d2576107d26119d2565b6020026020010151118015610800575060008282815181106107f6576107f66119d2565b6020026020010151115b1561084d5761084d83828151811061081a5761081a6119d2565b6020026020010151838381518110610834576108346119d2565b60200260200101516001610d339092919063ffffffff16565b80610857816119a1565b9150506107b5565b606061086c600183610e40565b92915050565b600061086c600183610f23565b600061088b6001610f57565b905090565b6000546001600160a01b031633146108ba5760405162461bcd60e51b81526004016105c590611867565b6108c2610f6d565b565b600054600160a01b900460ff16156108ee5760405162461bcd60e51b81526004016105c59061183d565b6007546001600160a01b031633148061091157506000546001600160a01b031633145b6109525760405162461bcd60e51b81526020600482015260126024820152716f6e6c794b6565706572526567697374727960701b60448201526064016105c5565b60006109608284018461157a565b90506106a78161100a565b60008054606090600160a01b900460ff16156109995760405162461bcd60e51b81526004016105c59061183d565b60006109a3610ba0565b905060008151119250806040516020016109bd91906117b8565b6040516020818303038152906040529150509250929050565b6000546001600160a01b03163314610a005760405162461bcd60e51b81526004016105c590611867565b6108c26000611180565b6000546001600160a01b03163314610a345760405162461bcd60e51b81526004016105c590611867565b6001600160a01b038116610a4757600080fd5b600754604080516001600160a01b03928316815291831660208301527fb732223055abcde751d7a24272ffc8a3aa571cb72b443969a4199b7ecd59f8b9910160405180910390a1600780546001600160a01b0319166001600160a01b0392909216919091179055565b6000546001600160a01b03163314610ada5760405162461bcd60e51b81526004016105c590611867565b6108c26111d0565b6000546001600160a01b03163314610b0c5760405162461bcd60e51b81526004016105c590611867565b60008111610b505760405162461bcd60e51b8152602060048201526011602482015270496e76616c6964206c696d6974206e756d60781b60448201526064016105c5565b600555565b6008546001600160a01b0316331480610b7857506000546001600160a01b031633145b610b945760405162461bcd60e51b81526004016105c590611817565b610b9d81611235565b50565b6060600060055467ffffffffffffffff811115610bbf57610bbf6119e8565b604051908082528060200260200182016040528015610be8578160200160208202803683370190505b509050600080610bf86001610f57565b90505b600081118015610c0c575060055482105b15610c72576000818152600460205260409020600101544210610c595780838381518110610c3c57610c3c6119d2565b602090810291909101015281610c51816119a1565b925050610c5e565b610c72565b600090815260036020526040902054610bfb565b6005548214610c7f578183525b509092915050565b60008181526003602052604081205461086c565b6000546001600160a01b03163314610cc55760405162461bcd60e51b81526004016105c590611867565b6001600160a01b038116610d2a5760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b60648201526084016105c5565b610b9d81611180565b60008211610d745760405162461bcd60e51b815260206004820152600e60248201526d072657175697265206964203e20360941b60448201526064016105c5565b600082815260038401602052604090206001015415610d9257505050565b6000610d9e8483611240565b600081815260028681016020908152604080842080549089905588855281852081905581516060810183528981528084018981528184018881528b885260038d019095529290952094518555905160018501559051929091019190915590915080610e0f5760018501849055610e26565b600081815260038601602052604090206002018490555b8454856000610e34836119a1565b91905055505050505050565b8154606090821115610e5157825491505b6001821015610e6f575060408051600081526020810190915261086c565b60008267ffffffffffffffff811115610e8a57610e8a6119e8565b604051908082528060200260200182016040528015610eb3578160200160208202803683370190505b5090506000610ec185610f57565b905060005b84811015610f19578115610ef45781838281518110610ee757610ee76119d2565b6020026020010181815250505b6000828152600287016020526040902054915080610f11816119a1565b915050610ec6565b5090949350505050565b6000610f2f83836113c2565b15610f4e5750600081815260038301602052604090206002015461086c565b50600092915050565b600080805260028201602052604081205461086c565b600054600160a01b900460ff16610fbd5760405162461bcd60e51b815260206004820152601460248201527314185d5cd8589b194e881b9bdd081c185d5cd95960621b60448201526064016105c5565b6000805460ff60a01b191690557f5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa335b6040516001600160a01b03909116815260200160405180910390a1565b6000604051806080016040528060065481526020016000815260200160405180604001604052806002815260200161060f60f31b815250815260200160405180604001604052806002815260200161060f60f31b815250815250905060005b82518110156106a7576000838281518110611086576110866119d2565b6020026020010151905061109981611235565b60085460405163779691bb60e11b81526001600160a01b039091169063ef2d2376906110cb90849087906004016118b5565b600060405180830381600087803b1580156110e557600080fd5b505af19250505080156110f6575060015b61116d573d808015611124576040519150601f19603f3d011682016040523d82523d6000602084013e611129565b606091505b507f8a8daba70101a3ef953fcbe396dcf4370b8204bff0f421bdeaac9867e8fcfe0482611155836113ec565b60405161116392919061189c565b60405180910390a1505b5080611178816119a1565b915050611069565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b600054600160a01b900460ff16156111fa5760405162461bcd60e51b81526004016105c59061183d565b6000805460ff60a01b1916600160a01b1790557f62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258610fed3390565b610b9d600182611426565b60008082116112865760405162461bcd60e51b815260206004820152601260248201527107265717569726520746172676574203e20360741b60448201526064016105c5565b82546112945750600061086c565b60018084015460008181526003860160205260409020909101548084106112bd5750905061086c565b60006112c886610f57565b60008181526003880160205260409020600101549091508086116112f357600094505050505061086c565b600060016113018584611942565b901c905080871061136057845b801561135a5761131e8982610f23565b90506000811180156113435750600081815260038a0160205260409020600101548810155b1561135557955061086c945050505050565b61130e565b506113b4565b825b80156113b2576000908152600289016020526040902054801580159061139b5750600081815260038a0160205260409020600101548810155b156113ad57955061086c945050505050565b611362565b505b506000979650505050505050565b60008082116113d057600080fd5b5060009081526003919091016020526040902060010154151590565b606060448251101561140c57505060408051602081019091526000815290565b6004820191508180602001905181019061086c919061168d565b61143082826113c2565b156105ef5760006114418383610f23565b6000838152600285016020526040808220548383529120819055909150801561147b57600081815260038501602052604090206002018290555b8061148857600184018290555b600083815260038501602090815260408083208381556001810184905560029081018490558701909152812081905584549085906114c58361198a565b919050555050505050565b600082601f8301126114e157600080fd5b8135602067ffffffffffffffff8211156114fd576114fd6119e8565b8160051b61150c828201611911565b83815282810190868401838801850189101561152757600080fd5b600093505b8584101561154a57803583526001939093019291840191840161152c565b50979650505050505050565b60006020828403121561156857600080fd5b8135611573816119fe565b9392505050565b60006020828403121561158c57600080fd5b813567ffffffffffffffff8111156115a357600080fd5b6115af848285016114d0565b949350505050565b600080604083850312156115ca57600080fd5b823567ffffffffffffffff808211156115e257600080fd5b6115ee868387016114d0565b9350602085013591508082111561160457600080fd5b50611611858286016114d0565b9150509250929050565b6000806020838503121561162e57600080fd5b823567ffffffffffffffff8082111561164657600080fd5b818501915085601f83011261165a57600080fd5b81358181111561166957600080fd5b86602082850101111561167b57600080fd5b60209290920196919550909350505050565b60006020828403121561169f57600080fd5b815167ffffffffffffffff808211156116b757600080fd5b818401915084601f8301126116cb57600080fd5b8151818111156116dd576116dd6119e8565b6116f0601f8201601f1916602001611911565b915080825285602082850101111561170757600080fd5b61171881602084016020860161195a565b50949350505050565b60006020828403121561173357600080fd5b5035919050565b6000806040838503121561174d57600080fd5b82359150602083013561175f816119fe565b809150509250929050565b6000806040838503121561177d57600080fd5b50508035926020909101359150565b600081518084526117a481602086016020860161195a565b601f01601f19169290920160200192915050565b6020808252825182820181905260009190848201906040850190845b818110156117f0578351835292840192918401916001016117d4565b50909695505050505050565b82151581526040602082015260006115af604083018461178c565b6020808252600c908201526b37b7363ca2bc32b1baba37b960a11b604082015260600190565b60208082526010908201526f14185d5cd8589b194e881c185d5cd95960821b604082015260600190565b6020808252818101527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604082015260600190565b8281526040602082015260006115af604083018461178c565b828152604060208201528151604082015260208201516060820152600060408301516080808401526118ea60c084018261178c565b90506060840151603f198483030160a0850152611907828261178c565b9695505050505050565b604051601f8201601f1916810167ffffffffffffffff8111828210171561193a5761193a6119e8565b604052919050565b60008219821115611955576119556119bc565b500190565b60005b8381101561197557818101518382015260200161195d565b83811115611984576000848401525b50505050565b600081611999576119996119bc565b506000190190565b60006000198214156119b5576119b56119bc565b5060010190565b634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052603260045260246000fd5b634e487b7160e01b600052604160045260246000fd5b6001600160a01b0381168114610b9d57600080fdfea2646970667358221220718fb1520da8ac836becb2b74f5e4cd9d060534a4e8156d9178f133cc15fd14864736f6c63430008060033",
+  "deployedBytecode": "0x6080604052600436106101b95760003560e01c8063715018a6116100ec578063aa0a31001161008a578063c81c6c7c11610064578063c81c6c7c1461051b578063d6ff17a014610530578063edd004e514610546578063f2fde38b1461056657600080fd5b8063aa0a3100146104c5578063b15269a5146104e5578063c3084117146104fb57600080fd5b8063862a179e116100c6578063862a179e146104425780638da5cb5b14610462578063949d225d146104805780639507d39a1461049557600080fd5b8063715018a6146103f8578063748747e61461040d5780638456cb591461042d57600080fd5b80633df4ddf41161015957806347799da81161013357806347799da8146103535780635c975abb14610368578063630dc7cb146103925780636e04ff0d146103ca57600080fd5b80633df4ddf4146103095780633f4ba83a1461031e5780634585e33b1461033357600080fd5b80631c3c0ea8116101955780631c3c0ea814610265578063257baa3a14610285578063313ae541146102a557806335671214146102db57600080fd5b8062b34ebd14610203578062f714ce146102255780630fbeb0321461024557600080fd5b366101fe5760408051348152476020820152338183015290517fc6f3fb0fec49e4877342d4625d77a632541f55b7aae0f9d0b34c69b3478706dc9181900360600190a1005b600080fd5b34801561020f57600080fd5b5061022361021e36600461176a565b610586565b005b34801561023157600080fd5b5061022361024036600461173a565b6105f3565b34801561025157600080fd5b50610223610260366004611721565b6106ac565b34801561027157600080fd5b50610223610280366004611556565b6106db565b34801561029157600080fd5b506102236102a03660046115b7565b610727565b3480156102b157600080fd5b506102c56102c0366004611721565b61085f565b6040516102d291906117b8565b60405180910390f35b3480156102e757600080fd5b506102fb6102f6366004611721565b610872565b6040519081526020016102d2565b34801561031557600080fd5b506102fb61087f565b34801561032a57600080fd5b50610223610890565b34801561033f57600080fd5b5061022361034e36600461161b565b6108c4565b34801561035f57600080fd5b506002546102fb565b34801561037457600080fd5b50600054600160a01b900460ff1660405190151581526020016102d2565b34801561039e57600080fd5b506008546103b2906001600160a01b031681565b6040516001600160a01b0390911681526020016102d2565b3480156103d657600080fd5b506103ea6103e536600461161b565b61096b565b6040516102d29291906117fc565b34801561040457600080fd5b506102236109d6565b34801561041957600080fd5b50610223610428366004611556565b610a0a565b34801561043957600080fd5b50610223610ab0565b34801561044e57600080fd5b506007546103b2906001600160a01b031681565b34801561046e57600080fd5b506000546001600160a01b03166103b2565b34801561048c57600080fd5b506001546102fb565b3480156104a157600080fd5b506102fb6104b0366004611721565b60009081526004602052604090206001015490565b3480156104d157600080fd5b506102236104e0366004611721565b610ae2565b3480156104f157600080fd5b506102fb60065481565b34801561050757600080fd5b50610223610516366004611721565b610b55565b34801561052757600080fd5b506102c5610ba0565b34801561053c57600080fd5b506102fb60055481565b34801561055257600080fd5b506102fb610561366004611721565b610c87565b34801561057257600080fd5b50610223610581366004611556565b610c9b565b6008546001600160a01b03163314806105a957506000546001600160a01b031633145b6105ce5760405162461bcd60e51b81526004016105c590611817565b60405180910390fd5b6000821180156105de5750600081115b156105ef576105ef60018383610d33565b5050565b6000546001600160a01b0316331461061d5760405162461bcd60e51b81526004016105c590611867565b6001600160a01b03811661063057600080fd5b604080518381526001600160a01b03831660208201527f6141b54b56b8a52a8c6f5cd2a857f6117b18ffbf4d46bd3106f300a839cbf5ea910160405180910390a16040516001600160a01b0382169083156108fc029084906000818181858888f193505050501580156106a7573d6000803e3d6000fd5b505050565b6000546001600160a01b031633146106d65760405162461bcd60e51b81526004016105c590611867565b600655565b6000546001600160a01b031633146107055760405162461bcd60e51b81526004016105c590611867565b600880546001600160a01b0319166001600160a01b0392909216919091179055565b6008546001600160a01b031633148061074a57506000546001600160a01b031633145b6107665760405162461bcd60e51b81526004016105c590611817565b60008251118015610778575080518251145b6107b25760405162461bcd60e51b815260206004820152600b60248201526a24b73b30b634b2103632b760a91b60448201526064016105c5565b60005b82518110156106a75760008382815181106107d2576107d26119d2565b6020026020010151118015610800575060008282815181106107f6576107f66119d2565b6020026020010151115b1561084d5761084d83828151811061081a5761081a6119d2565b6020026020010151838381518110610834576108346119d2565b60200260200101516001610d339092919063ffffffff16565b80610857816119a1565b9150506107b5565b606061086c600183610e40565b92915050565b600061086c600183610f23565b600061088b6001610f57565b905090565b6000546001600160a01b031633146108ba5760405162461bcd60e51b81526004016105c590611867565b6108c2610f6d565b565b600054600160a01b900460ff16156108ee5760405162461bcd60e51b81526004016105c59061183d565b6007546001600160a01b031633148061091157506000546001600160a01b031633145b6109525760405162461bcd60e51b81526020600482015260126024820152716f6e6c794b6565706572526567697374727960701b60448201526064016105c5565b60006109608284018461157a565b90506106a78161100a565b60008054606090600160a01b900460ff16156109995760405162461bcd60e51b81526004016105c59061183d565b60006109a3610ba0565b905060008151119250806040516020016109bd91906117b8565b6040516020818303038152906040529150509250929050565b6000546001600160a01b03163314610a005760405162461bcd60e51b81526004016105c590611867565b6108c26000611180565b6000546001600160a01b03163314610a345760405162461bcd60e51b81526004016105c590611867565b6001600160a01b038116610a4757600080fd5b600754604080516001600160a01b03928316815291831660208301527fb732223055abcde751d7a24272ffc8a3aa571cb72b443969a4199b7ecd59f8b9910160405180910390a1600780546001600160a01b0319166001600160a01b0392909216919091179055565b6000546001600160a01b03163314610ada5760405162461bcd60e51b81526004016105c590611867565b6108c26111d0565b6000546001600160a01b03163314610b0c5760405162461bcd60e51b81526004016105c590611867565b60008111610b505760405162461bcd60e51b8152602060048201526011602482015270496e76616c6964206c696d6974206e756d60781b60448201526064016105c5565b600555565b6008546001600160a01b0316331480610b7857506000546001600160a01b031633145b610b945760405162461bcd60e51b81526004016105c590611817565b610b9d81611235565b50565b6060600060055467ffffffffffffffff811115610bbf57610bbf6119e8565b604051908082528060200260200182016040528015610be8578160200160208202803683370190505b509050600080610bf86001610f57565b90505b600081118015610c0c575060055482105b15610c72576000818152600460205260409020600101544210610c595780838381518110610c3c57610c3c6119d2565b602090810291909101015281610c51816119a1565b925050610c5e565b610c72565b600090815260036020526040902054610bfb565b6005548214610c7f578183525b509092915050565b60008181526003602052604081205461086c565b6000546001600160a01b03163314610cc55760405162461bcd60e51b81526004016105c590611867565b6001600160a01b038116610d2a5760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b60648201526084016105c5565b610b9d81611180565b60008211610d745760405162461bcd60e51b815260206004820152600e60248201526d072657175697265206964203e20360941b60448201526064016105c5565b600082815260038401602052604090206001015415610d9257505050565b6000610d9e8483611240565b600081815260028681016020908152604080842080549089905588855281852081905581516060810183528981528084018981528184018881528b885260038d019095529290952094518555905160018501559051929091019190915590915080610e0f5760018501849055610e26565b600081815260038601602052604090206002018490555b8454856000610e34836119a1565b91905055505050505050565b8154606090821115610e5157825491505b6001821015610e6f575060408051600081526020810190915261086c565b60008267ffffffffffffffff811115610e8a57610e8a6119e8565b604051908082528060200260200182016040528015610eb3578160200160208202803683370190505b5090506000610ec185610f57565b905060005b84811015610f19578115610ef45781838281518110610ee757610ee76119d2565b6020026020010181815250505b6000828152600287016020526040902054915080610f11816119a1565b915050610ec6565b5090949350505050565b6000610f2f83836113c2565b15610f4e5750600081815260038301602052604090206002015461086c565b50600092915050565b600080805260028201602052604081205461086c565b600054600160a01b900460ff16610fbd5760405162461bcd60e51b815260206004820152601460248201527314185d5cd8589b194e881b9bdd081c185d5cd95960621b60448201526064016105c5565b6000805460ff60a01b191690557f5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa335b6040516001600160a01b03909116815260200160405180910390a1565b6000604051806080016040528060065481526020016000815260200160405180604001604052806002815260200161060f60f31b815250815260200160405180604001604052806002815260200161060f60f31b815250815250905060005b82518110156106a7576000838281518110611086576110866119d2565b6020026020010151905061109981611235565b60085460405163779691bb60e11b81526001600160a01b039091169063ef2d2376906110cb90849087906004016118b5565b600060405180830381600087803b1580156110e557600080fd5b505af19250505080156110f6575060015b61116d573d808015611124576040519150601f19603f3d011682016040523d82523d6000602084013e611129565b606091505b507f8a8daba70101a3ef953fcbe396dcf4370b8204bff0f421bdeaac9867e8fcfe0482611155836113ec565b60405161116392919061189c565b60405180910390a1505b5080611178816119a1565b915050611069565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b600054600160a01b900460ff16156111fa5760405162461bcd60e51b81526004016105c59061183d565b6000805460ff60a01b1916600160a01b1790557f62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258610fed3390565b610b9d600182611426565b60008082116112865760405162461bcd60e51b815260206004820152601260248201527107265717569726520746172676574203e20360741b60448201526064016105c5565b82546112945750600061086c565b60018084015460008181526003860160205260409020909101548084106112bd5750905061086c565b60006112c886610f57565b60008181526003880160205260409020600101549091508086116112f357600094505050505061086c565b600060016113018584611942565b901c905080871061136057845b801561135a5761131e8982610f23565b90506000811180156113435750600081815260038a0160205260409020600101548810155b1561135557955061086c945050505050565b61130e565b506113b4565b825b80156113b2576000908152600289016020526040902054801580159061139b5750600081815260038a0160205260409020600101548810155b156113ad57955061086c945050505050565b611362565b505b506000979650505050505050565b60008082116113d057600080fd5b5060009081526003919091016020526040902060010154151590565b606060448251101561140c57505060408051602081019091526000815290565b6004820191508180602001905181019061086c919061168d565b61143082826113c2565b156105ef5760006114418383610f23565b6000838152600285016020526040808220548383529120819055909150801561147b57600081815260038501602052604090206002018290555b8061148857600184018290555b600083815260038501602090815260408083208381556001810184905560029081018490558701909152812081905584549085906114c58361198a565b919050555050505050565b600082601f8301126114e157600080fd5b8135602067ffffffffffffffff8211156114fd576114fd6119e8565b8160051b61150c828201611911565b83815282810190868401838801850189101561152757600080fd5b600093505b8584101561154a57803583526001939093019291840191840161152c565b50979650505050505050565b60006020828403121561156857600080fd5b8135611573816119fe565b9392505050565b60006020828403121561158c57600080fd5b813567ffffffffffffffff8111156115a357600080fd5b6115af848285016114d0565b949350505050565b600080604083850312156115ca57600080fd5b823567ffffffffffffffff808211156115e257600080fd5b6115ee868387016114d0565b9350602085013591508082111561160457600080fd5b50611611858286016114d0565b9150509250929050565b6000806020838503121561162e57600080fd5b823567ffffffffffffffff8082111561164657600080fd5b818501915085601f83011261165a57600080fd5b81358181111561166957600080fd5b86602082850101111561167b57600080fd5b60209290920196919550909350505050565b60006020828403121561169f57600080fd5b815167ffffffffffffffff808211156116b757600080fd5b818401915084601f8301126116cb57600080fd5b8151818111156116dd576116dd6119e8565b6116f0601f8201601f1916602001611911565b915080825285602082850101111561170757600080fd5b61171881602084016020860161195a565b50949350505050565b60006020828403121561173357600080fd5b5035919050565b6000806040838503121561174d57600080fd5b82359150602083013561175f816119fe565b809150509250929050565b6000806040838503121561177d57600080fd5b50508035926020909101359150565b600081518084526117a481602086016020860161195a565b601f01601f19169290920160200192915050565b6020808252825182820181905260009190848201906040850190845b818110156117f0578351835292840192918401916001016117d4565b50909695505050505050565b82151581526040602082015260006115af604083018461178c565b6020808252600c908201526b37b7363ca2bc32b1baba37b960a11b604082015260600190565b60208082526010908201526f14185d5cd8589b194e881c185d5cd95960821b604082015260600190565b6020808252818101527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604082015260600190565b8281526040602082015260006115af604083018461178c565b828152604060208201528151604082015260208201516060820152600060408301516080808401526118ea60c084018261178c565b90506060840151603f198483030160a0850152611907828261178c565b9695505050505050565b604051601f8201601f1916810167ffffffffffffffff8111828210171561193a5761193a6119e8565b604052919050565b60008219821115611955576119556119bc565b500190565b60005b8381101561197557818101518382015260200161195d565b83811115611984576000848401525b50505050565b600081611999576119996119bc565b506000190190565b60006000198214156119b5576119b56119bc565b5060010190565b634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052603260045260246000fd5b634e487b7160e01b600052604160045260246000fd5b6001600160a01b0381168114610b9d57600080fdfea2646970667358221220718fb1520da8ac836becb2b74f5e4cd9d060534a4e8156d9178f133cc15fd14864736f6c63430008060033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "constructor": {
+        "params": {
+          "_executor": "The LucksExecutor contract",
+          "_keeperRegAddr": "The address of the keeper registry contract"
+        }
+      },
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "paused()": {
+        "details": "Returns true if the contract is paused, and false otherwise."
+      },
+      "performUpkeep(bytes)": {
+        "details": "The input to this method should not be trusted, and the caller of the method should not even be restricted to any single registry. Anyone should be able call it, and the input should be validated, there is no guarantee that the data passed in is the performData returned from checkUpkeep. This could happen due to malicious keepers, racing keepers, or simply a state change while the performUpkeep transaction is waiting for confirmation. Always validate the data passed in.",
+        "params": {
+          "performData": "is the data which was passed back from the checkData simulation. If it is encoded, it can easily be decoded into other types by calling `abi.decode`. This data should not be trusted, and should be validated against the contract's current state."
+        }
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      },
+      "withdraw(uint256,address)": {
+        "params": {
+          "amount": "The amount of eth (in wei) to withdraw",
+          "payee": "The address to pay"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "pause()": {
+        "notice": "Pauses the contrac t, which prevents executing performUpkeep"
+      },
+      "performUpkeep(bytes)": {
+        "notice": "method that is actually executed by the keepers, via the registry. The data returned by the checkUpkeep simulation will be passed into this method to actually be executed."
+      },
+      "setExecutor(address)": {
+        "notice": "set operator"
+      },
+      "setKeeper(address)": {
+        "notice": "Sets the keeper registry address"
+      },
+      "unpause()": {
+        "notice": "Unpauses the contract"
+      },
+      "withdraw(uint256,address)": {
+        "notice": "Withdraws the contract balance"
+      }
+    },
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 917,
+        "contract": "contracts/lucks/LucksAutoCloseTask.sol:LucksAutoCloseTask",
+        "label": "_owner",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_address"
+      },
+      {
+        "astId": 1032,
+        "contract": "contracts/lucks/LucksAutoCloseTask.sol:LucksAutoCloseTask",
+        "label": "_paused",
+        "offset": 20,
+        "slot": "0",
+        "type": "t_bool"
+      },
+      {
+        "astId": 12951,
+        "contract": "contracts/lucks/LucksAutoCloseTask.sol:LucksAutoCloseTask",
+        "label": "taskList",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_struct(SortedMap)11957_storage"
+      },
+      {
+        "astId": 12954,
+        "contract": "contracts/lucks/LucksAutoCloseTask.sol:LucksAutoCloseTask",
+        "label": "BATCH_PERFORM_LIMIT",
+        "offset": 0,
+        "slot": "5",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 12957,
+        "contract": "contracts/lucks/LucksAutoCloseTask.sol:LucksAutoCloseTask",
+        "label": "DST_GAS_AMOUNT",
+        "offset": 0,
+        "slot": "6",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 12959,
+        "contract": "contracts/lucks/LucksAutoCloseTask.sol:LucksAutoCloseTask",
+        "label": "KEEPER",
+        "offset": 0,
+        "slot": "7",
+        "type": "t_address"
+      },
+      {
+        "astId": 12962,
+        "contract": "contracts/lucks/LucksAutoCloseTask.sol:LucksAutoCloseTask",
+        "label": "EXECUTOR",
+        "offset": 0,
+        "slot": "8",
+        "type": "t_contract(ILucksExecutor)10554"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_contract(ILucksExecutor)10554": {
+        "encoding": "inplace",
+        "label": "contract ILucksExecutor",
+        "numberOfBytes": "20"
+      },
+      "t_mapping(t_uint256,t_struct(Item)11937_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct SortedLinkMap.Item)",
+        "numberOfBytes": "32",
+        "value": "t_struct(Item)11937_storage"
+      },
+      "t_mapping(t_uint256,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_struct(Item)11937_storage": {
+        "encoding": "inplace",
+        "label": "struct SortedLinkMap.Item",
+        "members": [
+          {
+            "astId": 11932,
+            "contract": "contracts/lucks/LucksAutoCloseTask.sol:LucksAutoCloseTask",
+            "label": "id",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 11934,
+            "contract": "contracts/lucks/LucksAutoCloseTask.sol:LucksAutoCloseTask",
+            "label": "value",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 11936,
+            "contract": "contracts/lucks/LucksAutoCloseTask.sol:LucksAutoCloseTask",
+            "label": "leftId",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256"
+          }
+        ],
+        "numberOfBytes": "96"
+      },
+      "t_struct(SortedMap)11957_storage": {
+        "encoding": "inplace",
+        "label": "struct SortedLinkMap.SortedMap",
+        "members": [
+          {
+            "astId": 11945,
+            "contract": "contracts/lucks/LucksAutoCloseTask.sol:LucksAutoCloseTask",
+            "label": "count",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 11947,
+            "contract": "contracts/lucks/LucksAutoCloseTask.sol:LucksAutoCloseTask",
+            "label": "maxId",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 11951,
+            "contract": "contracts/lucks/LucksAutoCloseTask.sol:LucksAutoCloseTask",
+            "label": "keys",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_uint256)"
+          },
+          {
+            "astId": 11956,
+            "contract": "contracts/lucks/LucksAutoCloseTask.sol:LucksAutoCloseTask",
+            "label": "nodes",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_uint256,t_struct(Item)11937_storage)"
+          }
+        ],
+        "numberOfBytes": "128"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

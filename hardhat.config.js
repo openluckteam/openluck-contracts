@@ -38,18 +38,18 @@ function privatekeys(network) {
   switch (network) {
     case "eth":
     case "bsc":
+    case "polygon":
     case "avalanche":
-    case "aurora":
       accounts = [
         process.env.DEPLOYER_PRIVATE_KEY, 
         process.env.CALLER_PRIVATE_KEY, 
         process.env.JOINER_PRIVATE_KEY,
         process.env.JOINER2_PRIVATE_KEY];
       break;
-    case "bscTestnet":
-    case "avalancheFujiTestnet":
-    case "auroraTestnet":
     case "rinkeby":
+    case "bscTestnet":
+    case "mumbai-testnet":
+    case "avalancheFujiTestnet":
       accounts = [
         process.env.TEST_DEPLOYER_PRIVATE_KEY, 
         process.env.TEST_CALLER_PRIVATE_KEY, 
@@ -161,18 +161,6 @@ module.exports = {
       timeout: 600000,
       network_id: '*'
     },
-    // "localhost-eth": {
-    //   url: 'http://47.241.199.236:8546',
-    //   accounts: privatekeys("dev"),     
-    //   gasPrice: 500000000, // 5Gwei
-    //   network_id: '4337'
-    // },
-    // "localhost-bsc": {
-    //   url: 'http://47.241.199.236:8546',
-    //   accounts: privatekeys("dev"),     
-    //   gasPrice: 500000000, // 5Gwei
-    //   network_id: '4337'
-    // },
     // eth network
     "eth": {
       url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
@@ -205,6 +193,23 @@ module.exports = {
       gas: 8000000,
       timeout: 600000,
     },
+    // polygon network
+    "polygon": {
+      url: 'https://polygon-rpc.com',
+      accounts: privatekeys("polygon"),
+      network_id: 137,
+      gasPrice: 60000000000, //60Gwei
+      gas: 8000000,
+      timeout: 600000,
+    },
+    "mumbai-testnet": {
+      url: 'https://rpc-mumbai.maticvigil.com',
+      accounts: privatekeys("mumbai-testnet"),
+      network_id: 80001,
+      gasPrice: 20000000000, //20Gwei
+      gas: 8000000,
+      timeout: 600000,
+    },
     // avalanche network
     avalanche: {
       url: 'https://api.avax.network/ext/bc/C/rpc',
@@ -212,17 +217,6 @@ module.exports = {
       network_id: 43114
     },
     "fuji-testnet": {
-      url: 'https://api.avax-test.network/ext/bc/C/rpc',
-      accounts: privatekeys("avalancheFujiTestnet"),
-      network_id: 43113,
-    },
-    // polygon network
-    polygon: {
-      url: 'https://api.avax.network/ext/bc/C/rpc',
-      accounts: privatekeys("avalanche"),
-      network_id: 43114
-    },
-    "mumbai-testnet": {
       url: 'https://api.avax-test.network/ext/bc/C/rpc',
       accounts: privatekeys("avalancheFujiTestnet"),
       network_id: 43113,
@@ -254,7 +248,7 @@ module.exports = {
     showTimeSpent: true
   },
   etherscan: {
-    apiKey: process.env.BSCSCAN_API_KEY,
+    apiKey: process.env.SCAN_API_KEY,
     verify_axiosDefaultConfig: {
       proxy: true,
       httpsAgentUrl: "http://127.0.0.1:41091"

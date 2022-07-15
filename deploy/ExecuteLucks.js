@@ -100,7 +100,6 @@ module.exports = async ({ ethers, getNamedAccounts, deployments, getChainId }) =
         log: true,
     });
 
-
     if (isNetworkAllowTaskForTest()) {
 
         ProxyTokenStation = await deploy('ProxyTokenStation', {

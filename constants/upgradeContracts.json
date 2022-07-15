@@ -1,28 +1,42 @@
 {
     "LucksExecutor": {
         "eth": "0x897be0747988558c507aF3fd1e07d55c74EfadE8",
-        "bsc": "0xd667Ae0B67A1f3b92F2dF1219C2C501FECF306bF",      
+        "bsc": "0xd667Ae0B67A1f3b92F2dF1219C2C501FECF306bF",   
+        "polygon": "",
+
         "rinkeby-testnet": "0xF2A09f37aA6FEd4018922Cc9f3ac8f77c8Fb1Cbd",
         "bsctestnet-testnet": "0x51f57486F8b09Df7b37Ee78821E19d566B8dEd3d",
+        "mumbai-testnet": "0x897be0747988558c507aF3fd1e07d55c74EfadE8",
+
         "localhost-eth": "0x4Ae4CCEFFa9790c7BF455e34951C513417Bc4D6D",
         "localhost-bsc": "0x686746214BCc37b7D4935B098C4899031C288fFd"
     },
     "LucksExecutorImpl": {
         "eth": "0x6B6d04c3a2645282daf8D24e688572C6B2005e72",
-        "bsc": "0xe41233356edb5299a051215e56bea6363cf8bcc5",      
+        "bsc": "0xe41233356edb5299a051215e56bea6363cf8bcc5",    
+        "polygon": "",
+
         "rinkeby-testnet": "0x43Aac401D7B545ad9D1f19D7aE5f4A4eC228CE4c",
         "bsctestnet-testnet": "0x90b2441b36e1488a9873eafca9748fd1abcae967",
+        "mumbai-testnet": "0xB9a01e8f0D3d730614B54D7e4b3bEE521E350E9e",
+
         "localhost-eth": "0xc6F5d17426D42C0fd6A5E12bE6df23C68D177914",
         "localhost-bsc": "0x2945D9Ea3BBeE8E42ee5988E49dc49E66BBA3baD"
     },
     "LucksGroup": {
-        "bsc": "0x85C8c8E11aCa93ac7C4e3b5beEf10fA803Bb19b1",      
+        "bsc": "0x85C8c8E11aCa93ac7C4e3b5beEf10fA803Bb19b1",     
+        "polygon": "", 
+        
         "bsctestnet-testnet": "",
+        "mumbai-testnet": "0x14f50cA151DEBA66526Fc2854E4E5fFe4866e788",
         "localhost-bsc": ""
     },
     "LucksGroupImpl": {
-        "bsc": "0x1a403Eb1294aeb6596935e3369Ae1E041C9ADd95",      
+        "bsc": "0x1a403Eb1294aeb6596935e3369Ae1E041C9ADd95",    
+        "polygon": "", 
+
         "bsctestnet-testnet": "",
+        "mumbai-testnet": "0xEEE1ceD926fEf190dB0Ca3fC45b619cBb76a84C8",
         "localhost-bsc": ""
     }
 }

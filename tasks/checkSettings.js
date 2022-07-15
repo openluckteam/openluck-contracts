@@ -149,13 +149,8 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
                     console.log(` ✘ ${hre.network.name} > LucksHelper.acceptTokens - USDT ==> Wrong set`);
                     if(autoFix){
                         await contracts.LucksHelper.connect(deployer).setAcceptTokens(
-                            [
-                                acceptToken.BNB,
-                                acceptToken.WBNB,
-                                acceptToken.BUSD,
-                                acceptToken.USDC,
-                                acceptToken.USDT
-                            ], true
+                            Object.values(ACCEPTTOKEN[hre.network.name]), 
+                            true
                         );
                         console.log(` ✅ ${hre.network.name} > LucksHelper.acceptTokens ==> Fixed`);
                     }
