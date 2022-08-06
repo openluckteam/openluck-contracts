@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 // Openluck interfaces
 import {ILucksGroup} from "../interfaces/ILucksGroup.sol";
-import {ILucksExecutor, TaskItem, TaskStatus} from "../interfaces/ILucksExecutor.sol";
+import {ILucksExecutor, TaskItem, TaskStatus, UserState} from "../interfaces/ILucksExecutor.sol";
 
 
 /** @title Openluck LucksGroup
@@ -41,16 +41,12 @@ contract LucksGroup is ILucksGroup, ReentrancyGuardUpgradeable, OwnableUpgradeab
     function joinGroup(uint256 taskId, uint256 groupId, uint16 seat) override public {   
         address user = msg.sender;                  
         require(groupId > 0 && groupId <= groupIds[taskId], "Invalid groupId");
-        require(seat <= MAX_SEAT, "Invalid seat");
-        require(userGroups[user][taskId] == 0, "Already join a group");
-        require(address(EXECUTOR)!=address(0), "EXECUTOR not set");
-            
-        TaskItem memory item = EXECUTOR.getTask(taskId);        
-        require(block.timestamp <= item.endTime, "endTime");    
-        require(item.status == TaskStatus.Pending || item.status == TaskStatus.Open, "status");
-
+        
         // join
-        if (groups[taskId][groupId].length < MAX_SEAT) {            
+        if (groups[taskId][groupId].length < MAX_SEAT) {      
+
+            _validation(user, taskId, seat);
+
             groups[taskId][groupId].push(user);
             userGroups[user][taskId] = groupId;
 
@@ -73,13 +69,7 @@ contract LucksGroup is ILucksGroup, ReentrancyGuardUpgradeable, OwnableUpgradeab
 
     function _createGroup(address user, uint256 taskId, uint16 seat) internal {            
                  
-        require(seat <= MAX_SEAT && seat > 1, "Invalid seat");
-        require(userGroups[user][taskId] == 0, "Already join a group");
-        require(address(EXECUTOR)!=address(0), "EXECUTOR not set");
-            
-        TaskItem memory item = EXECUTOR.getTask(taskId);        
-        require(block.timestamp <= item.endTime, "endTime");    
-        require(item.status == TaskStatus.Pending || item.status == TaskStatus.Open, "status");
+        _validation(user, taskId, seat);
         
         uint256 groupId = groupIds[taskId] + 1;
         groupIds[taskId] = groupId;
@@ -90,6 +80,18 @@ contract LucksGroup is ILucksGroup, ReentrancyGuardUpgradeable, OwnableUpgradeab
         emit CreateGroup(user, taskId, groupId, seat);
     }
 
+    function _validation(address user, uint256 taskId, uint16 seat) internal view {
+        require(seat <= MAX_SEAT && seat > 1, "Invalid seat");
+        require(userGroups[user][taskId] == 0, "Already join a group");
+        require(address(EXECUTOR)!=address(0), "EXECUTOR not set");
+            
+        TaskItem memory item = EXECUTOR.getTask(taskId);        
+        require(block.timestamp <= item.endTime, "endTime");    
+        require(item.status == TaskStatus.Pending || item.status == TaskStatus.Open, "status");
+
+        UserState memory state = EXECUTOR.getUserState(taskId, user);
+        require(state.num > 0, "No tickets");
+    }
     
     /**
     @notice set operator

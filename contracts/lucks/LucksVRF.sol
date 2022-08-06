@@ -25,16 +25,16 @@ contract LucksVRF is VRFConsumerBaseV2, ILucksVRF, Ownable {
 
     // Rinkeby coordinator. For other networks,
     // see https://docs.chain.link/docs/vrf-contracts/#configurations
-    address vrfCoordinator = 0x6168499c0cFfCaCD319c818142124B7A15E857ab;
+    address public vrfCoordinator;
 
     // Rinkeby LINK token contract. For other networks,
     // see https://docs.chain.link/docs/vrf-contracts/#configurations
-    address link = 0x01BE23585060835E02B77ef475b0Cc51aA1e0709;
+    address public link;
 
     // The gas lane to use, which specifies the maximum gas price to bump to.
     // For a list of available gas lanes on each network,
     // see https://docs.chain.link/docs/vrf-contracts/#configurations
-    bytes32 keyHash = 0xd89b2bf150e3b9e13446986e571fb9cab24b13cea0a43ea20a6049a85cc807cc;
+    bytes32 public keyHash;
 
     // Depends on the number of requested values that you want sent to the
     // fulfillRandomWords() function. Storing each word costs about 20,000 gas,
@@ -42,7 +42,7 @@ contract LucksVRF is VRFConsumerBaseV2, ILucksVRF, Ownable {
     // this limit based on the network that you select, the size of the request,
     // and the processing of the callback request in the fulfillRandomWords()
     // function.
-    uint32 callbackGasLimit = 100000;
+    uint32 public callbackGasLimit = 100000;
 
     // The default is 3, but you can set this higher.
     uint16 requestConfirmations = 3;
@@ -61,6 +61,9 @@ contract LucksVRF is VRFConsumerBaseV2, ILucksVRF, Ownable {
         bytes32 _keyHash,
         address _executor
     ) VRFConsumerBaseV2(_vrfCoordinator) {
+
+        require(_subscriptionId > 0, "Invalid subscriptionId");
+
         s_subscriptionId = _subscriptionId;
         vrfCoordinator = _vrfCoordinator;
         link = _link;

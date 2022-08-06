@@ -85,7 +85,6 @@ interface ILucksExecutor {
     event ClaimToken(uint256 taskId, address caller, uint256 amount, address acceptToken);
     event ClaimNFT(uint256 taskId, address seller, address nftContract, uint256[] tokenIds);    
     event CreateTickets(uint256 taskId, address buyer, uint256 num, uint256 start, uint256 end);
-    event UpdateTaskNote(uint256 taskId, string note);
 
     event TransferFee(uint256 taskId, address to, address token, uint256 amount); // for protocol
     event TransferShareAmount(uint256 taskId, address to, address token, uint256 amount); // for winners
@@ -99,10 +98,10 @@ interface ILucksExecutor {
     function getInfo(uint256 taskId) external view returns (TaskInfo memory);
     function isFail(uint256 taskId) external view returns(bool);
     function getChainId() external view returns (uint16);
+    function getUserState(uint256 taskId, address user) external view returns(UserState memory);
 
     function createTask(TaskItem memory item, TaskExt memory ext, lzTxObj memory _param) external payable;
     function reCreateTask(uint256 taskId, TaskItem memory item, TaskExt memory ext) external payable;
-    function updateTaskNote(uint256, string memory note) external;
     function joinTask(uint256 taskId, uint32 num, string memory note) external payable;
     function cancelTask(uint256 taskId, lzTxObj memory _param) external payable;
     function closeTask(uint256 taskId, lzTxObj memory _param) external payable;

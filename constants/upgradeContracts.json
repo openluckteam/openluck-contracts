@@ -17,8 +17,8 @@
         "polygon": "",
 
         "rinkeby-testnet": "0x43Aac401D7B545ad9D1f19D7aE5f4A4eC228CE4c",
-        "bsctestnet-testnet": "0x90b2441b36e1488a9873eafca9748fd1abcae967",
-        "mumbai-testnet": "0xB9a01e8f0D3d730614B54D7e4b3bEE521E350E9e",
+        "bsctestnet-testnet": "0x78c984c6b803795082ea5f77fc8d692ca91b2ed2",
+        "mumbai-testnet": "0xD7156c05Fb4AC6eb42FCAe41d3115A4A90a602fA",
 
         "localhost-eth": "0xc6F5d17426D42C0fd6A5E12bE6df23C68D177914",
         "localhost-bsc": "0x2945D9Ea3BBeE8E42ee5988E49dc49E66BBA3baD"
@@ -27,16 +27,16 @@
         "bsc": "0x85C8c8E11aCa93ac7C4e3b5beEf10fA803Bb19b1",     
         "polygon": "", 
         
-        "bsctestnet-testnet": "",
+        "bsctestnet-testnet": "0xa0a12b028b1903eb53E7745017EF6A1d60AF2d77",
         "mumbai-testnet": "0x14f50cA151DEBA66526Fc2854E4E5fFe4866e788",
         "localhost-bsc": ""
     },
     "LucksGroupImpl": {
-        "bsc": "0x1a403Eb1294aeb6596935e3369Ae1E041C9ADd95",    
+        "bsc": "0x1329b12003397824150Fe5289204ebCbd8AC09fD",    
         "polygon": "", 
 
-        "bsctestnet-testnet": "",
-        "mumbai-testnet": "0xEEE1ceD926fEf190dB0Ca3fC45b619cBb76a84C8",
+        "bsctestnet-testnet": "0x1329b12003397824150Fe5289204ebCbd8AC09fD",
+        "mumbai-testnet": "0xeee1ced926fef190db0ca3fc45b619cbb76a84c8",
         "localhost-bsc": ""
     }
 }

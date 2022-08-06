@@ -135,6 +135,7 @@ module.exports = async ({ ethers, getNamedAccounts, deployments, getChainId }) =
            // Upgrade Proxy
            if (upgradeContracts["LucksGroup"][hre.network.name] != "" && upgradeContracts["LucksGroupImpl"][hre.network.name] == "") {  
                // deployProxy
+               console.log(`UPDATING >> Proxy LucksGroup ${upgradeContracts["LucksGroup"][hre.network.name]}`)
                const instance = await upgrades.upgradeProxy(upgradeContracts["LucksGroup"][hre.network.name],code);
                LucksGroup = code.attach(instance.address);            
    
@@ -148,6 +149,11 @@ module.exports = async ({ ethers, getNamedAccounts, deployments, getChainId }) =
             skipIfAlreadyDeployed: true,
             log: true,
         });
+
+        if (setting.chainLink_vrfId <1) {
+            console.log(`ERROR >>>>>> chainLink_vrfId not set!`)
+            return false;
+        }
 
         LucksVRF = await deploy('LucksVRF', {
             from: deployer,

@@ -30,13 +30,15 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         let TokenWETH;
         let TokenUSDC;
         let TokenUSDT;
-        let TokenBUSD;        
+        let TokenBUSD;       
+        let TokenERC20ETH; 
 
         // token instances
         let tokenWETH;
         let tokenBUSD;
         let tokenUSDC;
         let tokenUSDT;
+        let tokenERC20ETH;
 
         if (hre.network.name.indexOf("bsc")>=0) {
             // deploy
@@ -49,8 +51,14 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         }
         else {
             TokenWETH = await deploy('TokenWETH', { from: deployer, args: [], log: true, });   
-            tokenWETH = await (await ethers.getContract("TokenWETH")).connect(deployerSign);
+            tokenWETH = await (await ethers.getContract("TokenWETH")).connect(deployerSign);           
         }
+
+        if(hre.network.name.indexOf("mumbai")>=0) {
+            TokenERC20ETH = await deploy('TokenERC20ETH', { from: deployer, args: [], log: true, });   
+            tokenERC20ETH = await (await ethers.getContract("TokenERC20ETH")).connect(deployerSign);    
+        }
+
         // deploy
         TokenUSDC = await deploy('TokenUSDC', { from: deployer, args: [], log: true, });
         TokenUSDT = await deploy('TokenUSDT', { from: deployer, args: [], log: true, });
@@ -69,6 +77,10 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 
         if (TokenBUSD) {
             acceptToken.push(TokenBUSD.address);
+        }
+
+        if(TokenERC20ETH) {
+            acceptToken.push(TokenERC20ETH.address);
         }
 
         // setting AcceptTokens
@@ -103,8 +115,8 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 
             console.log("UPDATE >> mint ERC20 for joiner finished")
         }
-        // mint token for joiner2    
-        if (TokenBUSD && await tokenBUSD.balanceOf(joiner2) < 1) {
+         // mint token for joiner2    
+         if (TokenBUSD && await tokenBUSD.balanceOf(joiner2) < 1) {
             await tokenWETH.mint(joiner2, utils.parseEther('10000'));
             await tokenBUSD.mint(joiner2, utils.parseEther('10000'));
             await tokenUSDC.mint(joiner2, utils.parseEther('10000'));
@@ -112,6 +124,15 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 
             console.log("UPDATE >> mint ERC20 for joiner2 finished")
         }
+
+        // mint TokenERC20ETH for testers
+        if (TokenERC20ETH && await tokenERC20ETH.balanceOf(caller) < 1) {
+            await tokenERC20ETH.mint(caller, utils.parseEther('10000'));
+            await tokenERC20ETH.mint(joiner, utils.parseEther('10000'));
+            await tokenERC20ETH.mint(joiner2, utils.parseEther('10000'));
+
+            console.log("UPDATE >> mint TokenERC20ETH for tester finished")
+        }        
     }
 }
 

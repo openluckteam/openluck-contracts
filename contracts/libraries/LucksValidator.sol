@@ -72,7 +72,7 @@ library LucksValidator {
 
         TaskItem storage task = tasks[taskId];
 
-        require(task.seller == msg.sender, "onlySeller"); // only seller
+        require(task.seller == msg.sender, "owner"); // only seller
 
         bool canReCreate = false;
 
@@ -94,7 +94,7 @@ library LucksValidator {
         require(task.nftContract == item.nftContract, "nft");
         require(keccak256(abi.encodePacked(task.tokenIds)) == keccak256(abi.encodePacked(item.tokenIds)), "tokenIds");
         require(keccak256(abi.encodePacked(task.tokenAmounts)) == keccak256(abi.encodePacked(item.tokenAmounts)), "tokenAmounts");
-        require(task.seller == item.seller, "onlySeller");
+        require(task.seller == item.seller, "owner");
         require(task.depositId == item.depositId, "depositId");
                 
         checkNewTask(msg.sender, item);
@@ -108,11 +108,11 @@ library LucksValidator {
         string memory note, 
         ILucksHelper HELPER) internal view returns(bool) {
 
-        require(bytes(note).length <= 256, "Note too large");
-        require(HELPER.checkPerJoinLimit(num), "Over join limit");                
+        require(bytes(note).length <= 256, "Note len");
+        require(HELPER.checkPerJoinLimit(num), "Join limit");                
         require(num > 0, "num");
 
-        require(item.seller != user, "Not allow owner");
+        require(item.seller != user, "Not owner");
         require(block.timestamp >= item.startTime && block.timestamp <= item.endTime, "endTime");
         require(item.status == TaskStatus.Pending || item.status == TaskStatus.Open, "status");
 
@@ -124,7 +124,7 @@ library LucksValidator {
         if (address(item.exclusiveToken.token) != address(0) && item.exclusiveToken.amount > 0) {
             require(
                 checkExclusive(user, address(item.exclusiveToken.token), item.exclusiveToken.amount),
-                "Not pass EXCLUSIVE"
+                "Exclusive"
             );
         }
 

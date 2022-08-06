@@ -40,11 +40,11 @@
     "keeper": "0xA3E3026562a3ADAF7A761B10a45217c400a4054A"
   },
   "mumbai-testnet": {
-    "vrfId": 0,
+    "vrfId": 1226,
     "linkToken": "0x326C977E6efc84E512bB9C30f76E30c160eD06FB",
     "vrfCoordinator": "0x7a1BaC17Ccc5b313516C5E16fb24f7659aA5ebed",
     "linkKeyHash": "0x4b09e658ed251bcafeebbc69400383d49f344ace09b9576fe248bb02c003fe9f",
-    "keeper": "0x7b3EC232b08BD7b4b3305BE0C044D907B2DF960B"
+    "keeper": "0x6179B349067af80D0c171f43E6d767E4A00775Cd"
   },
   "fuji-testnet": {
     "vrfId": 0,

@@ -63,7 +63,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
 
     // MODIFIERS
     modifier isExists(uint256 taskId) {
-        require(exists(taskId), "Task not exists");
+        require(exists(taskId), "not exists");
         _;
     }
 
@@ -93,11 +93,15 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
     function getChainId() external view override returns (uint16) {
         return lzChainId;
     }
+
+    function getUserState(uint256 taskId, address user) external view override returns(UserState memory){
+        return userState[user][taskId];
+    }
     
     function createTask(TaskItem memory item, TaskExt memory ext, lzTxObj memory _param) external payable override nonReentrant {
         
-        require(lzChainId == item.nftChainId, "Invalid chainId"); // action must start from NFTChain   
-        require(address(NFT) != address(0), "ProxyNFT unset");
+        require(lzChainId == item.nftChainId, "chainId"); // action must start from NFTChain   
+        require(address(NFT) != address(0), "ProxyNFT");
 
         // inputs validation
         LucksValidator.checkNewTask(msg.sender, item);
@@ -153,14 +157,6 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
         _createTask(item, ext);
     }
 
-    function updateTaskNote(uint256 taskId, string memory note) external override isExists(taskId) {
-
-        require(tasks[taskId].seller == msg.sender, "onlySeller");
-        require(bytes(note).length >=0 && bytes(note).length <= 256, "Invalid note len");
-
-        emit UpdateTaskNote(taskId, note);
-    }
-
     /**
     @notice buyer join a task
     num: how many ticket
@@ -201,7 +197,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
     function cancelTask(uint256 taskId, lzTxObj memory _param) external payable override isExists(taskId) nonReentrant 
     {                                
         require((tasks[taskId].status == TaskStatus.Pending || tasks[taskId].status == TaskStatus.Open) && infos[taskId].lastTID <= 0, "Opening or canceled");        
-        require(tasks[taskId].seller == msg.sender, "onlySeller"); // only seller can cancel
+        require(tasks[taskId].seller == msg.sender, "Owner"); // only seller can cancel
         
         // update status
         tasks[taskId].status = TaskStatus.Close;
@@ -265,10 +261,10 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
         // get drawn number from Chainlink VRF
         uint32 finalNo = HELPER.getVRF().viewRandomResult(taskId);
         require(finalNo > 0, "Not Drawn");
-        require(finalNo <= infos[taskId].lastTID, "Invalid finalNo");
+        require(finalNo <= infos[taskId].lastTID, "finalNo");
 
         // find winner by drawn number
-        Ticket memory ticket = _findWinnerTicket(taskId, finalNo);    
+        Ticket memory ticket = _findWinner(taskId, finalNo);    
         require(ticket.number > 0, "Lost winner");
         
         // update store item
@@ -279,7 +275,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
         _withdrawNFTs(taskId, payable(ticket.owner), true, _param);
 
         // dispatch Payment
-        _transferPayment(taskId, ticket.owner);    
+        _payment(taskId, ticket.owner);    
         
         emit PickWinner(taskId, ticket.owner, finalNo);
     }
@@ -324,7 +320,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
 
     function _createTask(TaskItem memory item, TaskExt memory ext) internal 
     {        
-        require(isAllowTask, "Not allow task");
+        require(isAllowTask, "Not allow");
         LucksValidator.checkNewTaskRemote(item, HELPER);  
 
         //create TaskId
@@ -361,7 +357,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
         return lastTID;
     }
 
-    function _findWinnerTicket(
+    function _findWinner(
         uint256 taskId, 
         uint32 number
         ) internal view returns (Ticket memory)
@@ -442,7 +438,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
      * @param winner winner address
      * paymentStrategy for winner share is up to 50% (500 = 5%, 5,000 = 50%)
      */
-    function _transferPayment(uint256 taskId, address winner) internal
+    function _payment(uint256 taskId, address winner) internal
     {
         // inner variables
         address acceptToken = tasks[taskId].acceptToken;
@@ -454,7 +450,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
         // 1. Calculate protocol fee
         uint256 fee = (collected.mul(HELPER.getProtocolFee())).div(10000);
         address feeRecipient = HELPER.getProtocolFeeRecipient();
-        require(fee >= 0, "Invalid fee");
+        require(fee >= 0, "fee");
         sellerAmount = sellerAmount.sub(fee);
 
         // 2. Calculate winner share amount with payment stragey (up to 50%)
@@ -464,8 +460,8 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
         address[] memory splitAddr;
         if (tasks[taskId].paymentStrategy > 0) {
             (winnerShare, splitShare, splitAddr) = HELPER.getSTRATEGY().viewPaymentShares(tasks[taskId].paymentStrategy, winner, taskId);
-            require(winnerShare >= 0 && winnerShare <= 5000, "Invalid strategy");
-            require(splitShare.length <= 10, "Invalid splitShare"); // up to 10 splitter
+            require(winnerShare >= 0 && winnerShare <= 5000, "strategy");
+            require(splitShare.length <= 10, "splitShare"); // up to 10 splitter
             if (winnerShare > 0) {
                 winnerAmount = (collected.mul(winnerShare)).div(10000);
                 sellerAmount = sellerAmount.sub(winnerAmount);
@@ -528,11 +524,11 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
 
     function setBridgeAndProxy(ILucksBridge _bridge, IProxyTokenStation _token, IProxyNFTStation _nft) external onlyOwner {
 
-        require(address(_bridge) != address(0x0), "Invalid BRIDGE");
+        require(address(_bridge) != address(0x0), "BRIDGE");
         if (isAllowTask) {
-            require(address(_token) != address(0x0), "Invalid TOKEN");
+            require(address(_token) != address(0x0), "TOKEN");
         }
-        require(address(_nft) != address(0x0), "Invalid NFT");
+        require(address(_nft) != address(0x0), "NFT");
 
         BRIDGE = _bridge;
         TOKEN = _token;

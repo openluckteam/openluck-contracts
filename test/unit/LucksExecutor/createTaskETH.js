@@ -205,7 +205,7 @@ const tests = {
   ],
   failure: [
     {
-      description: 'createTask - onlySeller',
+      description: 'createTask - owner',
       fn: ({ caller, contracts, acceptToken }) => ({
         arg_item: {
           nftChainId: getNftChainIdForTest(),
@@ -226,7 +226,7 @@ const tests = {
 
           paymentStrategy: 0
         },
-        revert: 'onlySeller',
+        revert: 'owner',
       }),
     },
     {

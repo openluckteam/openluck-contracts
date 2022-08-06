@@ -128,7 +128,7 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
                 }
 
                 // tokens
-                if (await contracts.LucksHelper.acceptTokens(acceptToken.BUSD) == true) {
+                if (acceptToken.BUSD && await contracts.LucksHelper.acceptTokens(acceptToken.BUSD) == true) {
                     console.log(` ✅ ${hre.network.name} > LucksHelper.acceptTokens - BUSD | *already set*`);
                 }
                 else {
@@ -158,14 +158,14 @@ task("checkSettings", "cheking the smartcontracts interfaces and variables setti
 
                 // minTargetAmount
                 {
-                    if (await contracts.LucksHelper.getMinTargetLimit(acceptToken.BNB) == 0) {
+                    if (acceptToken.BNB && await contracts.LucksHelper.getMinTargetLimit(acceptToken.BNB) == 0) {
                         console.log(` ✅ ${hre.network.name} > LucksHelper.getMinTargetLimit - BNB | *already set*`);
                     }
                     else {
                         console.log(` ✘ ${hre.network.name} > LucksHelper.getMinTargetLimit - BNB ==> Wrong set`);
                     }
 
-                    if (await contracts.LucksHelper.getMinTargetLimit(acceptToken.BUSD) == 0) {
+                    if (acceptToken.BUSD && await contracts.LucksHelper.getMinTargetLimit(acceptToken.BUSD) == 0) {
                         console.log(` ✅ ${hre.network.name} > LucksHelper.getMinTargetLimit - BUSD | *already set*`);
                     }
                     else {

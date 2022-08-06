@@ -7,10 +7,10 @@
   "license": "MIT",
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
-    "@nomiclabs/hardhat-etherscan": "^2.1.4",
+    "@nomiclabs/hardhat-etherscan": "3.0.1",
     "@nomiclabs/hardhat-ganache": "^2.0.1",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
-    "@openzeppelin/hardhat-upgrades": "^1.17.0",
+    "@openzeppelin/hardhat-upgrades": "^1.19.1",
     "@rarible/royalties": "^0.7.4",
     "axios": "^0.24.0",
     "chai": "^4.3.4",
@@ -62,91 +62,71 @@
     "compile": "yarn clean && hardhat compile",
     "pretty": "prettier --write \"./**/*.{js,jsx,json}\"",
     "code:check": "yarn solint contracts/**/*.sol",
-
     "comment-mainnet": "//=============== for mainnet ===============================",
     "deploy:eth": "npx hardhat deploy --network eth",
     "deploy:bsc": "npx hardhat deploy --network bsc",
     "deploy:polygon": "npx hardhat deploy --network polygon",
     "deploy:avax": "npx hardhat deploy --network avalanche",
-    
     "verify:eth": "npx hardhat --network eth etherscan-verify",
     "verify:bsc": "npx hardhat --network bsc etherscan-verify",
     "verify:polygon": "npx hardhat --network polygon etherscan-verify",
-    "verify:avax": "npx hardhat --network avalanche etherscan-verify",    
-    
+    "verify:avax": "npx hardhat --network avalanche etherscan-verify",
     "verify:eth-LucksExecutor": "npx hardhat verify --network eth 0x6B6d04c3a2645282daf8D24e688572C6B2005e72",
     "verify:bsc-LucksExecutor": "npx hardhat verify --network bsc 0xe41233356edb5299a051215e56bea6363cf8bcc5",
     "verify:polygon-LucksExecutor": "npx hardhat verify --network polygon ",
     "verify:avax-LucksExecutor": "npx hardhat verify --network avalanche ",
- 
     "verify:bsc-LucksGroup": "npx hardhat verify --network bsc 0x1a403Eb1294aeb6596935e3369Ae1E041C9ADd95",
     "verify:polygon-LucksGroup": "npx hardhat verify --network polygon ",
     "verify:avax-LucksGroup": "npx hardhat verify --network avalanche ",
-
     "wireBridges:eth": "npx hardhat --network eth wireBridges --target-networks bsc",
     "wireBridges:bsc": "npx hardhat --network bsc wireBridges --target-networks eth",
-
     "wireBridges:eth-polygon": "npx hardhat --network eth wireBridges --target-networks polygon",
     "wireBridges:polygon-eth": "npx hardhat --network polygon wireBridges --target-networks eth",
-
     "wireBridges:eth-avax": "npx hardhat --network eth wireBridges --target-networks avalanche",
     "wireBridges:avax-eth": "npx hardhat --network avalanche wireBridges --target-networks eth",
-    
     "checkSettings:eth": "npx hardhat --network eth checkSettings --auto-fix false",
     "checkSettings:bsc": "npx hardhat --network bsc checkSettings --auto-fix false",
     "checkSettings:polygon": "npx hardhat --network polygon checkSettings --auto-fix false",
     "checkSettings:avax": "npx hardhat --network avalanche checkSettings --auto-fix false",
-
     "multiSig:eth": "npx hardhat --network eth multiSig --auto-fix true",
     "multiSig:bsc": "npx hardhat --network bsc multiSig --auto-fix true",
     "multiSig:polygon": "npx hardhat --network polygon multiSig --auto-fix true",
     "multiSig:avax": "npx hardhat --network avalanche multiSig --auto-fix true",
-    
     "comment-testnet": "//=============== for testnet ===============================",
-
     "deploy:test-eth": "npx hardhat deploy --network rinkeby-testnet",
     "deploy:test-bsc": "npx hardhat deploy --network bsctestnet-testnet",
     "deploy:test-polygon": "npx hardhat deploy --network mumbai-testnet",
     "deploy:test-avax": "npx hardhat deploy --network fuji-testnet",
-
     "wireBridges:test-eth-bsc": "npx hardhat --network rinkeby-testnet wireBridges --target-networks bsctestnet-testnet",
     "wireBridges:test-bsc-eth": "npx hardhat --network bsctestnet-testnet wireBridges --target-networks rinkeby-testnet",
-    
     "wireBridges:test-eth-polygon": "npx hardhat --network rinkeby-testnet wireBridges --target-networks mumbai-testnet",
     "wireBridges:test-polygon-eth": "npx hardhat --network mumbai-testnet wireBridges --target-networks rinkeby-testnet",
-    
     "wireBridges:test-eth-avax": "npx hardhat --network rinkeby-testnet wireBridges --target-networks fuji-testnet",
     "wireBridges:test-avax-eth": "npx hardhat --network fuji-testnet wireBridges --target-networks rinkeby-testnet",
-   
     "checkSettings:test-eth": "npx hardhat --network rinkeby-testnet checkSettings --auto-fix false",
-    "checkSettings:test-bsc": "npx hardhat --network bsctestnet-testnet checkSettings --auto-fix false",    
+    "checkSettings:test-bsc": "npx hardhat --network bsctestnet-testnet checkSettings --auto-fix false",
     "checkSettings:test-polygon": "npx hardhat --network mumbai-testnet checkSettings --auto-fix false",
     "checkSettings:test-avax": "npx hardhat --network fuji-testnet checkSettings --auto-fix false",
-    
     "multiSig:test-eth": "npx hardhat --network rinkeby-testnet multiSig --auto-fix true",
-    "multiSig:test-bsc": "npx hardhat --network bsctestnet-testnet multiSig --auto-fix true",    
+    "multiSig:test-bsc": "npx hardhat --network bsctestnet-testnet multiSig --auto-fix true",
     "multiSig:test-polygon": "npx hardhat --network mumbai-testnet multiSig --auto-fix true",
     "multiSig:test-avax": "npx hardhat --network fuji-testnet multiSig --auto-fix true",
-
     "test:test-eth": "npx hardhat test test/index.js --network rinkeby-testnet",
     "test:test-bsc": "npx hardhat test test/index.js --network bsctestnet-testnet",
     "test:test-polygon": "npx hardhat test test/index.js --network mumbai-testnet",
     "test:test-avax": "npx hardhat test test/index.js --network fuji-testnet",
-
     "verify:test-eth": "npx hardhat --network rinkeby-testnet etherscan-verify",
     "verify:test-bsc": "npx hardhat --network bsctestnet-testnet etherscan-verify",
     "verify:test-polygon": "npx hardhat --network mumbai-testnet etherscan-verify",
     "verify:test-avax": "npx hardhat --network fuji-testnet etherscan-verify",
-
     "verify:test-bsc-LucksAutoCloseTask": "npx hardhat verify --network bsctestnet-testnet --constructor-args ./scripts/verify/LucksAutoCloseTask-testnet.js 0x44872da163EDD572fca747c83B0D2BB24f50C8De",
     "verify:test-bsc-LucksAutoDrawTask": "npx hardhat verify --network bsctestnet-testnet --constructor-args ./scripts/verify/LucksAutoDrawTask-testnet.js 0x04cd20a41465C74a1e88c706812430C0adBFd1DF",
     "verify:test-bsc-LucksHelper": "npx hardhat verify --network bsctestnet-testnet --constructor-args ./scripts/verify/LucksHelper-testnet.js 0x071700178d82a838D6AB1639d97d5DFa2098f76E",
     "verify:test-bsc-LucksVRF": "npx hardhat verify --network bsctestnet-testnet --constructor-args ./scripts/verify/LucksVRF-testnet.js 0xA39D630eFE179f65676129b8eEcf605B7b8e909b",
     "verify:test-bsc-LucksExecutor": "npx hardhat verify --network bsctestnet-testnet 0x90b2441b36e1488a9873eafca9748fd1abcae967",
     "verify:test-eth-LucksExecutor": "npx hardhat verify --network rinkeby-testnet 0xF14A9109E78a00324397714b8A783B345926fBE1",
-    "verify:test-polygon-LucksExecutor": "npx hardhat verify --network mumbai-testnet 0xB9a01e8f0D3d730614B54D7e4b3bEE521E350E9e",
-
-
+    "verify:test-polygon-LucksExecutor": "npx hardhat verify --network mumbai-testnet 0xD7156c05Fb4AC6eb42FCAe41d3115A4A90a602fA",
+    "verify:test-polygon-LucksGroup": "npx hardhat verify --network mumbai-testnet 0x30f88b73879e968ba5ed79f1b66f92b9f8e38d89",
     "comment-localhost": "//=============== for localhost ===============================",
     "deploy:localhost-eth": "npx hardhat deploy --network localhost-eth",
     "deploy:localhost-bsc": "npx hardhat deploy --network localhost-bsc",

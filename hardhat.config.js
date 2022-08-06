@@ -203,10 +203,11 @@ module.exports = {
       timeout: 600000,
     },
     "mumbai-testnet": {
-      url: 'https://rpc-mumbai.maticvigil.com',
+      // url: 'https://rpc-mumbai.maticvigil.com',
+      url: 'https://polygon-mumbai.g.alchemy.com/v2/iFDCa7veBgsL-PVpGx8N7ppUgosCGIJP',
       accounts: privatekeys("mumbai-testnet"),
       network_id: 80001,
-      gasPrice: 20000000000, //20Gwei
+      gasPrice: 35000000000, //35Gwei
       gas: 8000000,
       timeout: 600000,
     },
