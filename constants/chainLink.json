@@ -8,11 +8,11 @@
     "keeper": "0x7b3EC232b08BD7b4b3305BE0C044D907B2DF960B"
   },
   "polygon": {
-    "vrfId": 0,
+    "vrfId": 209,
     "linkToken": "0xb0897686c545045afc77cf20ec7a532e3120e0f1",
     "vrfCoordinator": "0xAE975071Be8F8eE67addBC1A82488F1C24858067",
     "linkKeyHash": "0xcc294a196eeeb44da2888d17c0625cc88d70d9760a69d58d853ba6581a9ab0cd",
-    "keeper": ""
+    "keeper": "0x02777053d6764996e594c3E88AF1D58D5363a2e6"
   },
   "avalanche": {
     "vrfId": 0,

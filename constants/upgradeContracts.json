@@ -2,7 +2,7 @@
     "LucksExecutor": {
         "eth": "0x897be0747988558c507aF3fd1e07d55c74EfadE8",
         "bsc": "0xd667Ae0B67A1f3b92F2dF1219C2C501FECF306bF",   
-        "polygon": "",
+        "polygon": "0x95077DaaeA7d45A5D44eD269ec142E78aA13153b",
 
         "rinkeby-testnet": "0xF2A09f37aA6FEd4018922Cc9f3ac8f77c8Fb1Cbd",
         "bsctestnet-testnet": "0x51f57486F8b09Df7b37Ee78821E19d566B8dEd3d",
@@ -14,7 +14,7 @@
     "LucksExecutorImpl": {
         "eth": "0x6B6d04c3a2645282daf8D24e688572C6B2005e72",
         "bsc": "0xe41233356edb5299a051215e56bea6363cf8bcc5",    
-        "polygon": "",
+        "polygon": "0x897be0747988558c507aF3fd1e07d55c74EfadE8",
 
         "rinkeby-testnet": "0x43Aac401D7B545ad9D1f19D7aE5f4A4eC228CE4c",
         "bsctestnet-testnet": "0x78c984c6b803795082ea5f77fc8d692ca91b2ed2",
@@ -25,7 +25,7 @@
     },
     "LucksGroup": {
         "bsc": "0x85C8c8E11aCa93ac7C4e3b5beEf10fA803Bb19b1",     
-        "polygon": "", 
+        "polygon": "0xe6B847179B7ad642ff26D376F7cF0f36297e5e04", 
         
         "bsctestnet-testnet": "0xa0a12b028b1903eb53E7745017EF6A1d60AF2d77",
         "mumbai-testnet": "0x14f50cA151DEBA66526Fc2854E4E5fFe4866e788",
@@ -33,7 +33,7 @@
     },
     "LucksGroupImpl": {
         "bsc": "0x1329b12003397824150Fe5289204ebCbd8AC09fD",    
-        "polygon": "", 
+        "polygon": "0x628FA3d319Bb07Ee4499dc094D6f3c2a9dF48896", 
 
         "bsctestnet-testnet": "0x1329b12003397824150Fe5289204ebCbd8AC09fD",
         "mumbai-testnet": "0xeee1ced926fef190db0ca3fc45b619cbb76a84c8",
