@@ -165,7 +165,7 @@ module.exports = {
     "eth": {
       url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
       accounts: privatekeys("eth"),
-      gasPrice: 10000000000, //10Gwei
+      gasPrice: 50000000000, //50Gwei
       network_id: 1,
       timeout: 600000,
     },

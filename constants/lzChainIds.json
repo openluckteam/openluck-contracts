@@ -1,11 +1,22 @@
 {
-  "eth": 1,
-  "bsc": 2,
-  "avalanche": 6,
-  "polygon": 9,
-  "arbitrum": 10,
-  "optimism": 11,
-  "fantom": 12,
+
+  "ULNv1": {
+    "eth": 1,
+    "bsc": 2,
+    "avalanche": 6,
+    "polygon": 9,
+    "arbitrum": 10,
+    "optimism": 11,
+    "fantom": 12
+  },
+
+  "eth": 101,
+  "bsc": 102,
+  "avalanche": 106,
+  "polygon": 109,
+  "arbitrum": 110,
+  "optimism": 111,
+  "fantom": 112,
 
   "rinkeby-testnet": 10001,
   "bsctestnet-testnet": 10002,

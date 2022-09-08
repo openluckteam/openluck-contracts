@@ -100,7 +100,7 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
     
     function createTask(TaskItem memory item, TaskExt memory ext, lzTxObj memory _param) external payable override nonReentrant {
         
-        require(lzChainId == item.nftChainId, "chainId"); // action must start from NFTChain   
+        require(lzChainId == item.nftChainId || (lzChainId + 100) == item.nftChainId, "chainId"); // action must start from NFTChain   
         require(address(NFT) != address(0), "ProxyNFT");
 
         // inputs validation
@@ -533,6 +533,10 @@ contract LucksExecutor is ILucksExecutor, ReentrancyGuardUpgradeable, OwnableUpg
         BRIDGE = _bridge;
         TOKEN = _token;
         NFT = _nft;
+    }
+
+    function setLzChainId(uint16 chainId) external onlyOwner {
+        lzChainId = chainId;
     }
 
 }
