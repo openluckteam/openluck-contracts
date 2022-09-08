@@ -67,6 +67,7 @@ require("./tasks/lzEndpointMock");
 require("./tasks/wireBridges");
 require("./tasks/checkSettings");
 require("./tasks/multiSig");
+require("./tasks/setTrustedRemote");
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more

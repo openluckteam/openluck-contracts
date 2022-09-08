@@ -1,36 +1,43 @@
-const CHAIN_ID = require("../constants/chainIds.json")
-const { getDeploymentAddresses } = require("../utils/readStatic")
-const OFT_CONFIG = require("../constants/oftConfig.json")
+const CONFIG = require("../constants/config.json")
+const { getDeploymentAddresses } = require("../utils/readDeployments")
+const { getEndpointId, getEndpointIdByName } = require("../utils/network")
+// const { getEndpointIdByName } = require("@layerzerolabs/core-sdk")
 
-module.exports = async function (taskArgs, hre) {
-    let srcContractName = "OpenLuckOFT "
-    let dstContractName = srcContractName
-    if (taskArgs.targetNetwork == OFT_CONFIG.baseChain) {
-        // if its the base chain, we need to grab a different contract
-        // Note: its reversed though!
-        dstContractName = "OpenLuckToken"
-    }
-    if (hre.network.name == OFT_CONFIG.baseChain) {
-        srcContractName = "OpenLuckToken"
-    }
+task("setTrustedRemote", "connect the local openluck to a remote openluck by configuring the remote bridge")
+    .addParam("targetNetworks", "the remote Stargate instance named by network")
 
-    const dstChainId = CHAIN_ID[taskArgs.targetNetwork]
-    // console.log(getDeploymentAddresses(taskArgs.targetNetwork))
-    const dstAddr = getDeploymentAddresses(taskArgs.targetNetwork)[dstContractName]
-    // get local contract instance
-    const contractInstance = await ethers.getContract(srcContractName)
-    console.log(`[source] contract address: ${contractInstance.address}`)
+    .setAction(async (taskArgs, hre) => {
+        let accounts = await ethers.getSigners()
+        let owner = accounts[0] // me
+        // console.log(`owner: ${owner.address}`);
 
-    // setTrustedRemote() on the local contract, so it can receive message from the source contract
-    try {
-        let tx = await (await contractInstance.setTrustedRemote(dstChainId, dstAddr)).wait()
-        console.log(`✅ [${hre.network.name}] setTrustedRemote(${dstChainId}, ${dstAddr})`)
-        console.log(` tx: ${tx.transactionHash}`)
-    } catch (e) {
-        if (e.error.message.includes("The chainId + address is already trusted")) {
-            console.log("*source already set*")
-        } else {
-            console.log(e)
+        const LucksBridge = await ethers.getContractFactory("LucksBridge")
+        const bridgeAddr = (await hre.deployments.get("LucksBridge")).address
+        const bridge = await LucksBridge.attach(bridgeAddr)
+
+        let targetNetworks = taskArgs.targetNetworks.split(",")
+
+        console.log(`${hre.network.name}: setting local functionType gas and remote bridge...`);
+        
+        for (let targetNetwork of targetNetworks) {
+            let targetNetworkAddrs = getDeploymentAddresses(targetNetwork)
+            let chainId = getEndpointIdByName(targetNetwork)        
+          
+            let currBridge = await bridge.trustedRemoteLookup(chainId)
+            let targetBridgeAddr = ethers.utils.getAddress(targetNetworkAddrs["LucksBridge"]) // cast to standardized address
+
+            let trustedRemote = hre.ethers.utils.solidityPack(
+                ['address','address'],
+                [targetBridgeAddr, bridgeAddr]
+            )
+
+            if (currBridge !== "0x" && ethers.utils.getAddress(currBridge) == trustedRemote) {
+                // its nto a bridge
+                console.log(`✅ ${hre.network.name} > setTrustedRemote(${chainId}, ${targetBridgeAddr}) | *already set*`)
+            } else {
+                // setTrustedRemote , 1-time only call. better do it right!
+                let tx = await (await bridge.setTrustedRemote(chainId, trustedRemote)).wait()
+                console.log(` ✅ ${hre.network.name} > setTrustedRemote(${chainId}, ${trustedRemote}) | tx: ${tx.transactionHash}`)
+            }
         }
-    }
-}
+    })
